@@ -10,7 +10,7 @@ class MyDocument extends Document {
             rel="stylesheet"
           />
         </Head>
-        <body className="font-[Kanit] bg-primary">
+        <body className="font-[Kanit]">
           <Main />
           <NextScript />
         </body>

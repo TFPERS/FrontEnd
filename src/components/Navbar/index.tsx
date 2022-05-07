@@ -8,10 +8,10 @@ export default function Navbar() {
         <Image
           src="/images/TFPERSLOGO.png "
           alt="TFPERSLogo"
-          width={130}
+          width={90}
           height={90}
         />
-        <h1 className="text-5xl text-white font-bold">TFPERS</h1>
+        <h1 className="text-5xl text-white font-bold ml-5">TFPERS</h1>
       </div>
       <div className="flex space-x-4">
         <Button text="เข้าสู่ระบบ" color="bg-[#F24B1C]" path="/login" />

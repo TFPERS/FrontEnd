@@ -6,8 +6,8 @@ import Layout from "../components/Layout/index";
 
 const Home: NextPage = () => {
   return (
-    <Layout>
-      <div className="absolute top-[33rem] left-16">
+    <Layout isMain>
+      <div className="absolute top-[33rem] left-[4.5rem]">
         <div className="flex flex-col space-y-10">
           <span className="text-[2.5rem] text-[#4A4A4A] font-bold">
             คำร้องขอค่าเล่าเรียน <br /> ทำได้ง่าย ในเวลาอันสั้น
