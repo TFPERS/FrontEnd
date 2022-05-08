@@ -6,7 +6,7 @@ import Layout from "../components/Layout/index";
 
 const Home: NextPage = () => {
   return (
-    <Layout isMain>
+    <Layout isMain isLogin={false}>
       <div className="absolute top-[33rem] left-[4.5rem]">
         <div className="flex flex-col space-y-10">
           <span className="text-[2.5rem] text-[#4A4A4A] font-bold">

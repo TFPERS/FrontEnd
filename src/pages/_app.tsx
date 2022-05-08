@@ -1,6 +1,7 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import Head from "next/head";
+import "material-icons/iconfont/material-icons.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

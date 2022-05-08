@@ -5,9 +5,10 @@ import React, { ReactNode } from "react";
 type Props = {
   children: ReactNode;
   isMain?: boolean;
+  isLogin?: boolean;
 };
 
-const Layout = ({ children, isMain }: Props) => {
+const Layout = ({ children, isMain, isLogin }: Props) => {
   return (
     <>
       <div
@@ -15,7 +16,7 @@ const Layout = ({ children, isMain }: Props) => {
           isMain ? "bg-hero-pattern" : ""
         }`}
       >
-        <Navbar />
+        <Navbar isLogin={isLogin} />
         <>{children}</>
       </div>
     </>
