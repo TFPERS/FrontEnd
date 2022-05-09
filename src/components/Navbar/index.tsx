@@ -35,7 +35,11 @@ export default function Navbar({ isLogin = true }: Props) {
       ) : (
         <div className="flex space-x-4">
           <Button text="เข้าสู่ระบบ" color="bg-[#F24B1C]" path="/login" />
-          <Button text="สมัคร" color="bg-secondary" path="/register" />
+          <Button
+            text="สมัคร"
+            color="bg-primary-light-yellow"
+            path="/register"
+          />
         </div>
       )}
     </header>

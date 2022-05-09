@@ -1,5 +1,4 @@
 import Navbar from "../Navbar/index";
-import Head from "next/head";
 import React, { FC, ReactNode, useReducer } from "react";
 
 type Props = {
