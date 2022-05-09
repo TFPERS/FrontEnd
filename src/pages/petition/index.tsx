@@ -28,6 +28,7 @@ export default function Petition() {
                 ขยายเวลาชำระเงิน
               </span>
             }
+            path="/petition/extendpayment"
           />
           <PetitionBox
             image="/images/folder.png"
