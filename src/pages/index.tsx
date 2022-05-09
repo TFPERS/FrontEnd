@@ -17,12 +17,12 @@ const Home: NextPage = () => {
           </span>
           <div className="flex cursor-pointer text-[2rem] w-[16.25rem] h-[3.75rem]">
             <Link href="/petition">
-              <a className="flex items-center justify-center text-tertiary bg-primary w-[12.5rem] h-[3.75rem] rounded-l-[0.625rem]">
+              <a className="flex items-center justify-center text-primary-white bg-primary-coquelicot w-[12.5rem] h-[3.75rem] rounded-l-[0.625rem]">
                 เริ่มเลยที่นี่
               </a>
             </Link>
             <Link href="/petition">
-              <a className="flex items-center justify-center text-[#444444] bg-secondary w-[3.75rem] h-[3.75rem] rounded-r-[0.625rem]">
+              <a className="flex items-center justify-center text-[#444444] bg-primary-light-yellow w-[3.75rem] h-[3.75rem] rounded-r-[0.625rem]">
                 &gt;
               </a>
             </Link>
