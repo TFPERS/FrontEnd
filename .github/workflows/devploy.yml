@@ -16,7 +16,7 @@ jobs:
         uses: docker/login-action@v2.0.0
         with:
           registry: ghcr.io
-          username: kenmk
+          username: nattawat.2543@mail.kmutt.ac.th
           password: Saoawmk1234@
 
       - name: Build and push Docker images
