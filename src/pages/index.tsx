@@ -1,8 +1,8 @@
 import type { NextPage } from "next";
 import Button from "../components/Button";
+import Image from "next/image";
 import Link from "next/link";
 import Layout from "../components/Layout/index";
-const assetPrefix = "/TFPERS/FrontEnd";
 
 const Home: NextPage = () => {
   return (
@@ -30,10 +30,11 @@ const Home: NextPage = () => {
         </div>
       </div>
       <div className="absolute right-0 top-44">
-        <img
+        <Image
           src="/images/HappyStudent.png "
           alt="HappyStudent"
-          className="w-[593px] h-[601px]"
+          width={593}
+          height={601}
         />
       </div>
     </Layout>

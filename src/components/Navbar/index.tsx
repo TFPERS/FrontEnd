@@ -1,4 +1,5 @@
 import Button from "../../components/Button";
+import Image from "next/image";
 
 type Props = {
   isLogin?: boolean;
@@ -8,10 +9,11 @@ export default function Navbar({ isLogin = true }: Props) {
   return (
     <header className="flex items-center justify-between">
       <div className="flex items-center cursor-pointer">
-        <img
+        <Image
           src="/images/TFPERSLOGO.png "
           alt="TFPERSLogo"
-          className="w-[90px] h-[90px]"
+          width={90}
+          height={90}
         />
         <h1 className="text-5xl text-white font-bold ml-5">TFPERS</h1>
       </div>
