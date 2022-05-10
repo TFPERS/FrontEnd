@@ -24,4 +24,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/kenmk/tfpers:dev
+          tags: ghcr.io/kenmk/tfpers
