@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import Button from "../components/Button";
 import Link from "next/link";
 import Layout from "../components/Layout/index";
-const assetPrefix = "/FrontEnd";
+const assetPrefix = "/TFPERS/FrontEnd";
 
 const Home: NextPage = () => {
   return (
