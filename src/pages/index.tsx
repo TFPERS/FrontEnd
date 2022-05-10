@@ -1,6 +1,5 @@
 import type { NextPage } from "next";
 import Button from "../components/Button";
-import Image from "next/image";
 import Link from "next/link";
 import Layout from "../components/Layout/index";
 
@@ -30,11 +29,10 @@ const Home: NextPage = () => {
         </div>
       </div>
       <div className="absolute right-0 top-44">
-        <Image
+        <img
           src="/images/HappyStudent.png "
           alt="HappyStudent"
-          width={593}
-          height={601}
+          className="w-[593px] h-[601px]"
         />
       </div>
     </Layout>

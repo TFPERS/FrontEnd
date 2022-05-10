@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Layout from "../../components/Layout/index";
-import Image from "next/image";
 import PetitionBox from "../../components/Petition/Box";
 
 export default function Petition() {
@@ -8,11 +7,10 @@ export default function Petition() {
     <Layout>
       <div className="grid grid-cols-2 mt-20 gap-10">
         <div className="col-span-1 justify-self-end">
-          <Image
+          <img
             src="/images/HandWriting.png "
             alt="HappyStudent"
-            width={593}
-            height={601}
+            className="w-[593px] h-[601px]"
           />
         </div>
         <div className="col-span-1 flex flex-col self-center space-y-4">
