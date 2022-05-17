@@ -10,6 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "axios": "^0.27.2",
     "material-icons": "^1.10.11",
     "next": "12.1.5",
     "prop-types": "^15.8.1",
