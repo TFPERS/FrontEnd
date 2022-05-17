@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Layout from "../../components/Layout/index";
-import Image from "next/image";
 import PetitionBox from "../../components/Petition/Box";
+import Image from "next/image";
 
 export default function Petition() {
   return (
