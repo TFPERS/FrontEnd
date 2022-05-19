@@ -1,7 +1,7 @@
 import axios from "../config/axios.config";
+import { setCookies } from "cookies-next";
 class AuthService {
   login(username, password) {
-    console.log(username, password);
     return axios
       .post("/api/auth/signin", {
         username,
@@ -9,6 +9,9 @@ class AuthService {
       })
       .then((response) => {
         if (response.data.accessToken) {
+          setCookies("TFPERS.token", response.data.accessToken, {
+            maxAge: 86400,
+          });
           localStorage.setItem("user", JSON.stringify(response.data));
         }
         return response.data;

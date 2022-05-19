@@ -19,7 +19,9 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "src/pages/_document.tsx"
+    "src/pages/_document.tsx",
+    "src/components/Form/Field.tsx",
+    "src/pages/_middleware.ts"
   ],
   "exclude": ["node_modules"]
 }

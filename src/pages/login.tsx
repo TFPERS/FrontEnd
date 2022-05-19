@@ -24,6 +24,7 @@ function Login() {
   };
 
   const submit = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    console.log(form.username);
     event.preventDefault();
     try {
       const data = await AuthService.login(form.username, form.password);

@@ -8,11 +8,27 @@ type Props = {
   isLogin?: boolean;
 };
 
+const useOutsideAlerter = (ref: any, handler: any) => {
+  useEffect(() => {
+    function handlerClickOutside(event: any) {
+      if (ref.current && !ref.current.contains(event.target)) {
+        handler();
+      }
+    }
+
+    document.addEventListener("mousedown", handlerClickOutside);
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener("mousedown", handlerClickOutside);
+    };
+  }, [ref]);
+};
+
 export default function Navbar({ isLogin = true }: Props) {
   const router = useRouter();
-  const [currentUser, setCurrentUser] = useState<any>(null);
+  const [currentUser, setCurrentUser] = useState(null);
   const [isProfile, setIsProfile] = useState(false);
-
+  let profileRef = useRef<any>();
   const toggleIsProfile = () => {
     setIsProfile(!isProfile);
   };
@@ -22,12 +38,21 @@ export default function Navbar({ isLogin = true }: Props) {
     router.push("/");
   };
 
+  const routeToProfile = () => {
+    router.push("/profile");
+  };
   useEffect(() => {
-    const data = localStorage.getItem("user");
-    if (data) {
-      setCurrentUser(AuthService.getCurrentUser());
-    }
+    const fetch = async () => {
+      await setCurrentUser(AuthService.getCurrentUser());
+    };
+    fetch();
   }, []);
+
+  const wrapperRef = useRef(null);
+  useOutsideAlerter(wrapperRef, () => {
+    setIsProfile(false);
+  });
+
   return (
     <header className="flex items-center justify-between">
       <div className="flex items-center cursor-pointer">
@@ -49,7 +74,7 @@ export default function Navbar({ isLogin = true }: Props) {
               notifications
             </span>
           </div>
-          <div>
+          <div ref={wrapperRef}>
             <span
               onClick={toggleIsProfile}
               style={{ fontSize: "3.125rem" }}
@@ -59,8 +84,11 @@ export default function Navbar({ isLogin = true }: Props) {
             </span>
             {isProfile && (
               <div className="bg-primary-white p-4 absolute right-16 rounded-[0.625rem]">
-                <ul className="text-black space-y-4">
-                  <li className="flex items-center cursor-pointer">
+                <ul className="text-black space-y-2">
+                  <li
+                    onClick={routeToProfile}
+                    className="flex items-center cursor-pointer space-x-2 hover:bg-slate-200 p-1 rounded-[0.625rem]"
+                  >
                     <span className="material-icons-outlined cursor-pointer text-4xl relative">
                       account_circle
                     </span>
@@ -68,7 +96,7 @@ export default function Navbar({ isLogin = true }: Props) {
                   </li>
                   <li
                     onClick={logOut}
-                    className="flex items-center cursor-pointer"
+                    className="flex items-center cursor-pointer space-x-2 hover:bg-slate-200 p-1 rounded-[0.625rem]"
                   >
                     <span className="material-icons-outlined">logout</span>
                     <span>ออกจากระบบ</span>
