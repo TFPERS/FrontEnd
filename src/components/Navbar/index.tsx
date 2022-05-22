@@ -33,10 +33,10 @@ export default function Navbar({ isLogin = true }: Props) {
     setIsProfile(!isProfile);
   };
 
-  const logOut = () => {
+  const logOut = async () => {
     AuthService.logout();
+    await router.push("/");
     setCurrentUser(AuthService.getCurrentUser());
-    router.push("/");
   };
 
   const routeToProfile = () => {

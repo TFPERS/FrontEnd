@@ -49,16 +49,6 @@ function Profile() {
     fetchData();
   }, []);
 
-  const onFormValueChange = (event: any) => {
-    const { name, value } = event.target;
-    setForm((prevForm: any) => {
-      return {
-        ...prevForm,
-        [name]: value,
-      };
-    });
-  };
-
   const toggleUpdateProfile = () => {
     setIsUpdateProfile(!isUpdateProfile);
     setForm({

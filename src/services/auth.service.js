@@ -45,12 +45,33 @@ class AuthService {
     localStorage.removeItem("user");
     removeCookies("TFPERSTOKEN");
   }
-  register(username, email, password) {
-    return axios.post(API_URL + "signup", {
-      username,
-      email,
-      password,
-    });
+  register({
+    id,
+    firstname,
+    lastname,
+    major,
+    faculty,
+    email,
+    password,
+    telephone = "",
+  }) {
+    if (!telephone) {
+      telephone = "";
+    }
+    return axios
+      .post("/api/auth/signup", {
+        id,
+        firstname,
+        lastname,
+        major,
+        faculty,
+        email,
+        password,
+        telephone,
+      })
+      .then((response) => {
+        return response.data;
+      });
   }
   getCurrentUser() {
     if (typeof window !== "undefined") {
