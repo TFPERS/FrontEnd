@@ -48,7 +48,10 @@ function Register() {
       .transform((value) => (!!value ? value : null)),
     // .required("ต้องการเบอร์โทร")
     email: string().email("รูปแบบไม่ถูกต้องอีเมล").required("ต้องการอีเมล"),
-    id: string().required("ต้องการรหัสนักศึกษา"),
+    id: string()
+      .required("ต้องการรหัสนักศึกษา")
+      .min(11, "ใส่ให้ครบ 11 หลัก")
+      .max(11, "ใส่ให้ครบ 11 หลัก"),
     firstname: string().required("ต้องการชื่อ"),
     lastname: string().required("ต้องการนามสกุล"),
     password: string().required("ต้องการรหัสผ่าน"),
@@ -123,29 +126,29 @@ function Register() {
               />
               <div className="text-sm text-red-500">{errors?.id?.message}</div>
             </div>
-            <div className="flex">
-              <div className="">
+            <div className="flex w-full space-x-4">
+              <div className="flex flex-col w-1/2">
                 <label htmlFor="major" className="text-xl">
                   คณะ
                 </label>{" "}
-                <input
+                <select
                   id="major"
-                  className="border rounded-[0.625rem] p-2"
                   {...methods.register("major")}
-                />
+                  className="border rounded-[0.625rem] p-2"
+                ></select>
                 <div className="text-sm text-red-500">
                   {errors?.major?.message}
                 </div>
               </div>
-              <div className="flex flex-col ">
+              <div className="flex flex-col w-1/2">
                 <label htmlFor="faculty" className="text-xl">
                   สาขา
                 </label>{" "}
-                <input
+                <select
                   id="faculty"
-                  className="border rounded-[0.625rem] p-2"
                   {...methods.register("faculty")}
-                />
+                  className="border rounded-[0.625rem] p-2"
+                ></select>
                 <div className="text-sm text-red-500">
                   {errors?.faculty?.message}
                 </div>
