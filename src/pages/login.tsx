@@ -5,9 +5,11 @@ import { useState } from "react";
 import AuthService from "../services/auth.service";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import LoadingCircle from "../components/Loading/Circle";
 
 function Login() {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
   const [form, setForm] = useState({
     username: "",
     password: "",
@@ -24,16 +26,18 @@ function Login() {
   };
 
   const submit = async (event: React.MouseEvent<HTMLButtonElement>) => {
-    console.log(form.username);
     event.preventDefault();
+    setIsLoading(true);
     try {
       const data = await AuthService.login(form.username, form.password);
-      router.push("/petition");
+      await router.push("/petition");
+      setIsLoading(false);
     } catch (err: any) {
       const { data } = err.response;
       toast.error(data.message, {
         theme: "dark",
       });
+      setIsLoading(false);
     }
   };
 
@@ -68,12 +72,23 @@ function Login() {
           />
         </div>
         <div className="self-end">ลืมรหัสผ่าน ?</div>
-        <button
-          onClick={submit}
-          className="mt-6 w-[26.875rem] p-2 bg-primary-coquelicot text-primary-white self-center flex justify-center items-center shadow-3xl rounded-[0.625rem]"
-        >
-          เข้าสู่ระบบ
-        </button>
+        {!isLoading ? (
+          <>
+            <button
+              onClick={submit}
+              className="mt-6 w-[26.875rem] p-2 bg-primary-coquelicot text-primary-white self-center flex justify-center items-center shadow-3xl rounded-[0.625rem]"
+            >
+              เข้าสู่ระบบ
+            </button>
+          </>
+        ) : (
+          <>
+            <div className="cursor-not-allowed mt-6 w-[26.875rem] p-2 opacity-40 bg-primary-coquelicot text-primary-white self-center flex justify-center items-center shadow-3xl rounded-[0.625rem]">
+              <LoadingCircle />
+            </div>
+          </>
+        )}
+
         <div className="mt-6 flex justify-center items-center">
           <div className="h-[10px] w-[100px] bg-secondary-gray rounded-lg"></div>
           <span className="px-10">Or</span>
@@ -84,7 +99,9 @@ function Login() {
         </div>
         <div className="mt-6 space-x-2">
           <span>ยังไม่มีบัญชีใช่ไหม?</span>
-          <span className="text-[#162FB4]">สมัครเลย</span>
+          <Link href="/register">
+            <span className="text-[#162FB4] cursor-pointer">สมัครเลย</span>
+          </Link>
         </div>
       </div>
       <Link href="/">Back</Link>

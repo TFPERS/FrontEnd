@@ -7,7 +7,7 @@ import axios from "../config/axios.config";
 import { useForm, FormProvider } from "react-hook-form";
 import { string, number, object } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import LoadingCircle from "../components/Loading/circle";
+import LoadingCircle from "../components/Loading/Circle";
 import { useState } from "react";
 import { useRouter } from "next/router";
 function Register() {
