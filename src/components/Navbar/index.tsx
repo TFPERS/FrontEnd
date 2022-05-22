@@ -35,6 +35,7 @@ export default function Navbar({ isLogin = true }: Props) {
 
   const logOut = () => {
     AuthService.logout();
+    setCurrentUser(AuthService.getCurrentUser());
     router.push("/");
   };
 
@@ -83,8 +84,8 @@ export default function Navbar({ isLogin = true }: Props) {
               account_circle
             </span>
             {isProfile && (
-              <div className="bg-primary-white p-4 absolute right-16 rounded-[0.625rem]">
-                <ul className="text-black space-y-2">
+              <div className="bg-primary-white p-4 absolute z-40 right-16 rounded-[0.625rem]">
+                <ul className="text-black space-y-2 ">
                   <li
                     onClick={routeToProfile}
                     className="flex items-center cursor-pointer space-x-2 hover:bg-slate-200 p-1 rounded-[0.625rem]"
@@ -96,7 +97,7 @@ export default function Navbar({ isLogin = true }: Props) {
                   </li>
                   <li
                     onClick={logOut}
-                    className="flex items-center cursor-pointer space-x-2 hover:bg-slate-200 p-1 rounded-[0.625rem]"
+                    className="z-50 flex items-center cursor-pointer space-x-2 hover:bg-slate-200 p-1 rounded-[0.625rem]"
                   >
                     <span className="material-icons-outlined">logout</span>
                     <span>ออกจากระบบ</span>

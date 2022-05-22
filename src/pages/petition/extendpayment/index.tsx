@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
-import StepProgressBar from "react-step-progress";
-import "react-step-progress/dist/index.css";
+// import StepProgressBar from "react-step-progress";
+// import "react-step-progress/dist/index.css";
 import Layout from "../../../components/Layout/main";
 
 function ExtentPayment() {
@@ -19,7 +19,7 @@ function ExtentPayment() {
   }
   return (
     <Layout>
-      <StepProgressBar
+      {/* <StepProgressBar
         startingStep={0}
         steps={[
           {
@@ -38,7 +38,7 @@ function ExtentPayment() {
             content: step3Content,
           },
         ]}
-      />
+      /> */}
       <div>
         <Link href="/petition">
           <a>back</a>

@@ -1,5 +1,5 @@
 import axios from "../config/axios.config";
-import { setCookies } from "cookies-next";
+import { setCookies, removeCookies } from "cookies-next";
 class AuthService {
   login(username, password) {
     return axios
@@ -9,16 +9,41 @@ class AuthService {
       })
       .then((response) => {
         if (response.data.accessToken) {
-          setCookies("TFPERS.token", response.data.accessToken, {
+          setCookies("TFPERSTOKEN", response.data.accessToken, {
             maxAge: 86400,
           });
-          localStorage.setItem("user", JSON.stringify(response.data));
+          const {
+            id,
+            firstname,
+            lastname,
+            email,
+            major,
+            faculty,
+            telephone,
+            updatedAt,
+            createdAt,
+          } = response.data;
+          localStorage.setItem(
+            "user",
+            JSON.stringify({
+              id,
+              firstname,
+              lastname,
+              email,
+              major,
+              faculty,
+              telephone,
+              updatedAt,
+              createdAt,
+            })
+          );
         }
         return response.data;
       });
   }
   logout() {
     localStorage.removeItem("user");
+    removeCookies("TFPERSTOKEN");
   }
   register(username, email, password) {
     return axios.post(API_URL + "signup", {

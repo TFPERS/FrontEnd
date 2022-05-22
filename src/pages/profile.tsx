@@ -14,10 +14,10 @@ import { string, number, object } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 function Profile() {
-  useEffect(() => {
-    const user = localStorage.getItem("user");
-    user ? "" : router.push("/");
-  });
+  // useEffect(() => {
+  //   const user = localStorage.getItem("user");
+  //   user ? "" : router.push("/");
+  // });
 
   const [profile, setProfile] = useState<any>(null);
   const router = useRouter();
@@ -31,25 +31,22 @@ function Profile() {
 
   useEffect(() => {
     const user = localStorage.getItem("user");
-    if (!user) {
-      router.push("/login");
-    } else {
-      const fetchData = async () => {
-        const { data } = await axios.get(
-          `/api/student/me/${AuthService.getCurrentUser().id}`
-        );
-        await setProfile(data);
-        if (data) {
-          await setForm({
-            firstname: data.firstname,
-            lastname: data.lastname,
-            email: data.email,
-            telephone: data.telephone,
-          });
-        }
-      };
-      fetchData();
-    }
+
+    const fetchData = async () => {
+      const { data } = await axios.get(
+        `/api/student/me/${AuthService.getCurrentUser().id}`
+      );
+      await setProfile(data);
+      if (data) {
+        await setForm({
+          firstname: data.firstname,
+          lastname: data.lastname,
+          email: data.email,
+          telephone: data.telephone,
+        });
+      }
+    };
+    fetchData();
   }, []);
 
   const onFormValueChange = (event: any) => {
@@ -82,7 +79,7 @@ function Profile() {
       const { data } = await axios.put(
         `/api/student/update/${AuthService.getCurrentUser().id}`,
         formData,
-        { headers: authHeader() }
+        { headers: authHeader() as any }
       );
       const student = await axios.get(
         `/api/student/me/${AuthService.getCurrentUser().id}`
@@ -101,7 +98,6 @@ function Profile() {
       localStorage.setItem(
         "user",
         JSON.stringify({
-          accessToken: AuthService.getCurrentUser().accessToken,
           id,
           firstname,
           lastname,
