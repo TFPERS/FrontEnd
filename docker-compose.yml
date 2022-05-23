@@ -1,8 +1,13 @@
 version: "3"
 services:
   nextjs:
-    build: ./
+    build:
+      context: ./
+      args:
+        - APP_API_BASE_URL=http://20.205.128.164:5000
+      container_name: tfpersui:dev
   nginx:
     build: ./nginx
+    container_name: reverseproxy
     ports:
       - 80:80
