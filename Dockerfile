@@ -20,5 +20,5 @@ COPY --from=builder /tfpers-ui/.next ./.next
 COPY --from=builder /tfpers-ui/node_modules ./node_modules
 COPY --from=builder /tfpers-ui/package.json ./package.json
 
-EXPOSE 9090
+EXPOSE 3000
 CMD ["yarn", "start"]

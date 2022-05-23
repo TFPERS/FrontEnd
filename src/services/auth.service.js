@@ -1,5 +1,5 @@
 import axios from "../config/axios.config";
-import { setCookies, removeCookies } from "cookies-next";
+import { setCookies, removeCookies, getCookie } from "cookies-next";
 class AuthService {
   login(username, password) {
     return axios
@@ -78,6 +78,10 @@ class AuthService {
       const user = JSON.parse(localStorage.getItem("user"));
       return user;
     }
+  }
+  checkToken() {
+    const token = getCookie("TFPERSTOKEN");
+    return token ? true : false;
   }
 }
 export default new AuthService();

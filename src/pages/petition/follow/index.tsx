@@ -5,9 +5,11 @@ import { useState, useEffect } from "react";
 import axios from "../../../config/axios.config";
 import AuthService from "../../../services/auth.service";
 import dayjs from "dayjs";
+import { useRouter } from "next/router";
 
 function Follow() {
   const [petitions, setPetitions] = useState<any>([]);
+  const router = useRouter();
   useEffect(() => {
     const fetchPetition = async () => {
       const { data } = await axios.get(
@@ -15,6 +17,7 @@ function Follow() {
       );
       setPetitions(data);
     };
+    AuthService.checkToken() ? fetchPetition() : router.push("/login");
     fetchPetition();
   }, []);
 

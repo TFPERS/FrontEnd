@@ -9,6 +9,7 @@ import { string, object } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import FormBind from "../../../components/Petition/ExtendPayment/FormBind";
 import Swal from "sweetalert2";
+import { useRouter } from "next/router";
 interface Student {
   id?: string;
   firstname?: string;
@@ -30,6 +31,8 @@ function ExtentPayment() {
     note: string().required("โปรดกรอกหมายเหตุ"),
   });
 
+  const router = useRouter();
+
   useEffect(() => {
     const fetchUser = async () => {
       const { data } = await axios.get(
@@ -37,7 +40,7 @@ function ExtentPayment() {
       );
       setUser(data);
     };
-    fetchUser();
+    AuthService.checkToken() ? fetchUser() : router.push("/login");
   }, []);
 
   const increaseStep = () => {

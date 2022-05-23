@@ -8,11 +8,6 @@ export function middleware(req: NextRequest, ev: NextFetchEvent) {
       return NextResponse.redirect(`${origin}/login`);
     }
   }
-  if (pathname == "/petition/extendpayment") {
-    if (!token) {
-      return NextResponse.redirect(`${origin}/login`);
-    }
-  }
   if (pathname == "/petition/follow") {
     if (!token) {
       return NextResponse.redirect(`${origin}/login`);
