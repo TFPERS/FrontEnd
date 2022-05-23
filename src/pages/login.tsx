@@ -45,7 +45,7 @@ function Login() {
     <div className="flex flex-col items-center justify-center h-screen max-w-lg max-h-screen mx-auto bg-primary-light-orange">
       <ToastContainer />
       <Image src="/images/TFPERSLOGO.png" width={70} height={70} />
-      <div className="my-2.5 text-4xl font-bold text-primary-white">
+      <div className="my-2.5 sm:text-4xl text-3xl font-bold text-primary-white">
         เข้าสู่ระบบ TFPERS
       </div>
       <div className="w-full px-4">
@@ -90,10 +90,10 @@ function Login() {
             </>
           )}
 
-          <div className="flex items-center justify-center mt-6">
-            <div className="h-[10px] w-[100px] bg-secondary-gray rounded-lg"></div>
+          <div className="flex items-center justify-center mt-6 w-full">
+            <div className="h-[10px] w-1/2 mx-8 bg-secondary-gray rounded-lg" />
             <span className="px-10">Or</span>
-            <div className="h-[10px] w-[100px] bg-secondary-gray rounded-lg"></div>
+            <div className="h-[10px] w-1/2 mx-8 bg-secondary-gray rounded-lg" />
           </div>
           <div className="flex items-center justify-center mt-6">
             <Image src="/images/LogoGoogle.png" width={50} height={50} />
