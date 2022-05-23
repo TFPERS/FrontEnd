@@ -54,6 +54,7 @@ export default function Petition() {
                 <span className="text-2xl">ติดตามคำร้องและสถานะ </span>
               </>
             }
+            path="/petition/follow"
           />
         </div>
         <Link href="/">
