@@ -20,10 +20,10 @@ function Register() {
     console.log(formData);
     await setIsLoading(true);
     try {
-      // const data = await AuthService.register(formData);
-      // toast.success(data.message, {
-      //   theme: "dark",
-      // });
+      const data = await AuthService.register(formData);
+      toast.success(data.message, {
+        theme: "dark",
+      });
       const { id, password } = formData;
       await AuthService.login(id, password);
       router.push("/petition");
@@ -81,7 +81,7 @@ function Register() {
 
   return (
     <div>
-      <div className="flex flex-col items-center justify-center h-screen max-w-lg max-h-screen mx-auto">
+      <div className="flex space-y-4 flex-col items-center justify-center h-screen max-w-lg max-h-screen mx-auto">
         <ToastContainer />
         <Image src="/images/TFPERSLOGO.png" width={70} height={70} />
         <div className="sm:text-[2.5rem] text-3xl font-bold text-primary-white">
