@@ -14,11 +14,6 @@ import { string, number, object } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 function Profile() {
-  // useEffect(() => {
-  //   const user = localStorage.getItem("user");
-  //   user ? "" : router.push("/");
-  // });
-
   const [profile, setProfile] = useState<any>(null);
   const router = useRouter();
   const [isUpdateProfile, setIsUpdateProfile] = useState<boolean>(false);
@@ -46,7 +41,7 @@ function Profile() {
         });
       }
     };
-    fetchData();
+    AuthService.checkToken() ? fetchData() : router.push("/login");
   }, []);
 
   const toggleUpdateProfile = () => {
