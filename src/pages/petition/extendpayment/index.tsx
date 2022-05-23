@@ -35,7 +35,6 @@ function ExtentPayment() {
       const { data } = await axios.get(
         `/api/student/me/${AuthService.getCurrentUser().id}`
       );
-      console.log(data);
       setUser(data);
     };
     fetchUser();
@@ -55,7 +54,6 @@ function ExtentPayment() {
   const {
     register,
     handleSubmit,
-    watch,
     setValue,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
@@ -70,12 +68,12 @@ function ExtentPayment() {
         const status = "pending";
         try {
           increaseStep();
-          // const { data } = await axios.post("/api/petition/form", {
-          //   type,
-          //   status,
-          //   description: note,
-          //   studentId: user.id,
-          // });
+          const { data } = await axios.post("/api/petition/form", {
+            type,
+            status,
+            description: note,
+            studentId: user.id,
+          });
           Swal.fire({
             background: "#FA4616",
             color: "#fff",
