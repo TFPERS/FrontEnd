@@ -48,7 +48,6 @@ function Login() {
       <div className="my-2.5 text-4xl font-bold text-primary-white">
         เข้าสู่ระบบ TFPERS
       </div>
-      {/* <div className="flex flex-col items-center bg-primary-white w-[31.25rem] h-[34.6875rem] p-4 rounded-[0.625rem]"> */}
       <div className="w-full px-4">
         <div className="flex flex-col items-center px-5 py-5 bg-primary-white rounded-xl">
           <div className="flex flex-col w-full mt-6 space-y-3">

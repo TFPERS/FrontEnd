@@ -10,16 +10,20 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import LoadingCircle from "../components/Loading/Circle";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { faculties } from "../data/faculties";
+import { majors } from "../data/majors";
 function Register() {
   const [isLoading, setIsLoading] = useState(false);
+  const [optionMajor, setOptionMajor] = useState([]);
   const router = useRouter();
   const register = async (formData: any) => {
+    console.log(formData);
     await setIsLoading(true);
     try {
-      const data = await AuthService.register(formData);
-      toast.success(data.message, {
-        theme: "dark",
-      });
+      // const data = await AuthService.register(formData);
+      // toast.success(data.message, {
+      //   theme: "dark",
+      // });
       const { id, password } = formData;
       await AuthService.login(id, password);
       router.push("/petition");
@@ -55,8 +59,8 @@ function Register() {
     firstname: string().required("ต้องการชื่อ"),
     lastname: string().required("ต้องการนามสกุล"),
     password: string().required("ต้องการรหัสผ่าน"),
-    major: string().required("ต้องการชื่อคณะ"),
-    faculty: string().required("ต้องการชื่อสาขา"),
+    major: string().required("ต้องการชื่อสาขา"),
+    faculty: string().required("ต้องการชื่อคณะ"),
   });
 
   const methods = useForm({
@@ -66,16 +70,25 @@ function Register() {
     formState: { errors },
   } = methods;
 
+  const changeData = (e: any) => {
+    const facultyValue = e.target.value;
+    const selectMajor: any = majors.find(
+      (value) => value.name === facultyValue
+    );
+    const arrayMajor = selectMajor.majors;
+    setOptionMajor(arrayMajor);
+  };
+
   return (
     <div>
-      <div className="max-h-screen h-screen flex flex-col justify-center items-center bg-primary-coquelicot">
+      <div className="flex flex-col items-center justify-center h-screen max-w-lg max-h-screen mx-auto">
         <ToastContainer />
         <Image src="/images/TFPERSLOGO.png" width={70} height={70} />
-        <div className="text-[2.5rem] font-bold text-primary-white">
+        <div className="sm:text-[2.5rem] text-3xl font-bold text-primary-white">
           สมัครสมาชิก TFPERS
         </div>
-        <form onSubmit={methods.handleSubmit(register)}>
-          <div className="flex flex-col items-center bg-primary-white w-[31.25rem] p-4 rounded-[0.625rem]">
+        <form onSubmit={methods.handleSubmit(register)} className="w-full px-4">
+          <div className="flex flex-col items-center bg-primary-white p-4 rounded-[0.625rem]">
             <div className="flex flex-col w-full">
               <label htmlFor="email" className="text-xl">
                 อีเมลมหาวิทยาลัย
@@ -128,29 +141,59 @@ function Register() {
             </div>
             <div className="flex w-full space-x-4">
               <div className="flex flex-col w-1/2">
-                <label htmlFor="major" className="text-xl">
+                <label htmlFor="faculty" className="text-xl">
                   คณะ
+                </label>{" "}
+                <select
+                  id="faculty"
+                  defaultValue={"default"}
+                  {...methods.register("faculty")}
+                  onChange={(e) => changeData(e)}
+                  className="border rounded-[0.625rem] p-2"
+                >
+                  <option value="default" disabled hidden>
+                    เลือกคณะ
+                  </option>
+                  {faculties.map((faculty: any) => (
+                    <option
+                      value={faculty.value}
+                      key={faculty.value}
+                      className="cursor-pointer"
+                    >
+                      {faculty.label}
+                    </option>
+                  ))}
+                </select>
+                <div className="text-sm text-red-500">
+                  {errors?.faculty?.message}
+                </div>
+              </div>
+              <div className="flex flex-col w-1/2">
+                <label htmlFor="major" className="text-xl">
+                  สาขา
                 </label>{" "}
                 <select
                   id="major"
                   {...methods.register("major")}
-                  className="border rounded-[0.625rem] p-2"
-                ></select>
+                  defaultValue={"default"}
+                  disabled={optionMajor.length > 0 ? false : true}
+                  className={`${
+                    optionMajor.length > 0
+                      ? ""
+                      : "cursor-not-allowed bg-gray-200"
+                  } border rounded-[0.625rem] p-2 overflow-auto`}
+                >
+                  <option value="default" disabled hidden>
+                    {optionMajor.length > 0 ? "เลือกสาขา" : "เลือกคณะก่อน"}
+                  </option>
+                  {optionMajor.map((data: any) => (
+                    <option value={data.value} key={data.value}>
+                      {data.label}
+                    </option>
+                  ))}
+                </select>
                 <div className="text-sm text-red-500">
                   {errors?.major?.message}
-                </div>
-              </div>
-              <div className="flex flex-col w-1/2">
-                <label htmlFor="faculty" className="text-xl">
-                  สาขา
-                </label>{" "}
-                <select
-                  id="faculty"
-                  {...methods.register("faculty")}
-                  className="border rounded-[0.625rem] p-2"
-                ></select>
-                <div className="text-sm text-red-500">
-                  {errors?.faculty?.message}
                 </div>
               </div>
             </div>
@@ -160,6 +203,7 @@ function Register() {
               </label>{" "}
               <input
                 id="password"
+                type="password"
                 className="border rounded-[0.625rem] p-2"
                 {...methods.register("password")}
               />
@@ -173,6 +217,7 @@ function Register() {
               </label>{" "}
               <input
                 id="telephone"
+                placeholder="0999999999"
                 className="border rounded-[0.625rem] p-2"
                 {...methods.register("telephone")}
               />
@@ -182,13 +227,13 @@ function Register() {
             </div>
             {!isLoading ? (
               <>
-                <button className="mt-6 w-[26.875rem] p-2 bg-primary-coquelicot text-primary-white self-center flex justify-center items-center shadow-3xl rounded-[0.625rem]">
+                <button className="mt-6 w-full p-2 bg-primary-coquelicot text-primary-white self-center flex justify-center items-center shadow-3xl rounded-[0.625rem]">
                   สร้างบัญชี
                 </button>
               </>
             ) : (
               <>
-                <div className="cursor-not-allowed mt-6 w-[26.875rem] p-2 opacity-40 bg-primary-coquelicot text-primary-white self-center flex justify-center items-center shadow-3xl rounded-[0.625rem]">
+                <div className="cursor-not-allowed mt-6 w-full p-2 opacity-40 bg-primary-coquelicot text-primary-white self-center flex justify-center items-center shadow-3xl rounded-[0.625rem]">
                   <LoadingCircle />
                 </div>
               </>
