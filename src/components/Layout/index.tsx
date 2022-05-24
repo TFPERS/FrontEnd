@@ -12,7 +12,7 @@ const Layout = ({ children, isMain, isLogin }: Props) => {
   return (
     <>
       <div
-        className={`min-h-screen flex flex-col p-10 bg-primary-coquelicot ${
+        className={`min-h-screen flex flex-col p-10 bg-primary-light-orange ${
           isMain ? "bg-hero-pattern" : ""
         }`}
       >
