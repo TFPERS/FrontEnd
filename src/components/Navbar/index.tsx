@@ -3,11 +3,14 @@ import Image from "next/image";
 import AuthService from "../../services/auth.service";
 import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/router";
-import { windowSize } from "../../helper/useDevice";
+import { WindowSize } from "../../helper/reactResponsive";
+import useBreakpoint from "use-breakpoint";
 
 type Props = {
   isLogin?: boolean;
 };
+
+const BREAKPOINTS = { mobile: 0, tablet: 768, desktop: 1280 };
 
 const useOutsideAlerter = (ref: any, handler: any) => {
   useEffect(() => {
@@ -55,8 +58,11 @@ export default function Navbar({ isLogin = true }: Props) {
     setIsProfile(false);
   });
 
-  const { isMOBILE, isTABLET, isLAPTOP, isDESKTOP } = windowSize();
-  console.log(isMOBILE, isTABLET, isLAPTOP, isDESKTOP);
+  const { breakpoint, maxWidth, minWidth } = useBreakpoint(
+    BREAKPOINTS,
+    "desktop"
+  );
+  console.log(breakpoint);
 
   return (
     <header className="flex items-center justify-between">
@@ -67,7 +73,9 @@ export default function Navbar({ isLogin = true }: Props) {
           width={90}
           height={90}
         />
-        <h1 className="text-5xl text-white font-bold ml-5">TFPERS</h1>
+        <h1 className="text-5xl text-white font-bold ml-5">
+          {breakpoint === "desktop" ? "TFPERS" : ""}
+        </h1>
       </div>
       {currentUser ? (
         <div className="flex space-x-4 text-white font-normal">
