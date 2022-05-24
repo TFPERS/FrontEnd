@@ -3,8 +3,12 @@ import Button from "../components/Button";
 import Image from "next/image";
 import Link from "next/link";
 import Layout from "../components/Layout/index";
+import { WindowSize } from "../helper/useBreakpoint";
+import { useEffect } from "react";
 
 const Home: NextPage = () => {
+  const { isMobile } = WindowSize();
+
   return (
     <Layout isMain isLogin={false}>
       <div className="absolute top-[33rem] left-[4.5rem]">
@@ -29,14 +33,16 @@ const Home: NextPage = () => {
           </div>
         </div>
       </div>
-      <div className="absolute right-0 top-44">
-        <Image
-          src="/images/HappyStudent.png "
-          alt="HappyStudent"
-          width={593}
-          height={601}
-        />
-      </div>
+      {!isMobile && (
+        <div className="absolute right-0 top-44">
+          <Image
+            src="/images/HappyStudent.png "
+            alt="HappyStudent"
+            width={593}
+            height={601}
+          />
+        </div>
+      )}
     </Layout>
   );
 };

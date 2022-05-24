@@ -2,7 +2,7 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import "material-icons/iconfont/material-icons.css";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { getCookie } from "cookies-next";
 
 function MyApp({ Component, pageProps: { ...pageProps } }: AppProps) {
@@ -27,5 +27,4 @@ function MyApp({ Component, pageProps: { ...pageProps } }: AppProps) {
     </>
   );
 }
-
 export default MyApp;

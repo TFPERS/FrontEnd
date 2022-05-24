@@ -57,7 +57,7 @@ export default function Navbar({ isLogin = true }: Props) {
   const { isMobile, isTablet, isDesktop } = WindowSize();
 
   return (
-    <header className="flex items-center justify-between">
+    <header className="flex items-center justify-between ">
       <div className="flex items-center cursor-pointer">
         <Image
           src="/images/TFPERSLOGO.png "
