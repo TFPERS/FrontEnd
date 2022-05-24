@@ -3,6 +3,7 @@ import Image from "next/image";
 import AuthService from "../../services/auth.service";
 import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/router";
+import { windowSize } from "../../helper/useDevice";
 
 type Props = {
   isLogin?: boolean;
@@ -53,6 +54,9 @@ export default function Navbar({ isLogin = true }: Props) {
   useOutsideAlerter(wrapperRef, () => {
     setIsProfile(false);
   });
+
+  const { isMOBILE, isTABLET, isLAPTOP, isDESKTOP } = windowSize();
+  console.log(isMOBILE, isTABLET, isLAPTOP, isDESKTOP);
 
   return (
     <header className="flex items-center justify-between">
