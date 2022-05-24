@@ -21,7 +21,6 @@
     "react": "18.0.0",
     "react-dom": "18.0.0",
     "react-hook-form": "^7.31.1",
-    "react-responsive": "^9.0.0-beta.8",
     "react-toastify": "^9.0.1",
     "sweetalert2": "^11.4.15",
     "use-breakpoint": "^3.0.2",

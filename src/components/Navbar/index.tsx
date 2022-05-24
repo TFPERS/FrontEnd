@@ -3,14 +3,11 @@ import Image from "next/image";
 import AuthService from "../../services/auth.service";
 import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/router";
-import { WindowSize } from "../../helper/reactResponsive";
-import useBreakpoint from "use-breakpoint";
+import { WindowSize } from "../../helper/useBreakpoint";
 
 type Props = {
   isLogin?: boolean;
 };
-
-const BREAKPOINTS = { mobile: 0, tablet: 768, desktop: 1280 };
 
 const useOutsideAlerter = (ref: any, handler: any) => {
   useEffect(() => {
@@ -22,7 +19,6 @@ const useOutsideAlerter = (ref: any, handler: any) => {
 
     document.addEventListener("mousedown", handlerClickOutside);
     return () => {
-      // Unbind the event listener on clean up
       document.removeEventListener("mousedown", handlerClickOutside);
     };
   }, [ref]);
@@ -58,11 +54,7 @@ export default function Navbar({ isLogin = true }: Props) {
     setIsProfile(false);
   });
 
-  const { breakpoint, maxWidth, minWidth } = useBreakpoint(
-    BREAKPOINTS,
-    "desktop"
-  );
-  console.log(breakpoint);
+  const { isMobile, isTablet, isDesktop } = WindowSize();
 
   return (
     <header className="flex items-center justify-between">
@@ -73,9 +65,7 @@ export default function Navbar({ isLogin = true }: Props) {
           width={90}
           height={90}
         />
-        <h1 className="text-5xl text-white font-bold ml-5">
-          {breakpoint === "desktop" ? "TFPERS" : ""}
-        </h1>
+        <h1 className="text-5xl text-white font-bold ml-5">TFPERS</h1>
       </div>
       {currentUser ? (
         <div className="flex space-x-4 text-white font-normal">
