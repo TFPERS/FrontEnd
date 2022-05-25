@@ -3,8 +3,6 @@ services:
   nextjs:
     build:
       context: ./
-      # args:
-      #   - APP_API_BASE_URL=http://20.205.128.164:5000
   nginx:
     build: ./nginx
     ports:
