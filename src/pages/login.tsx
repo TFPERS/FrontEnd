@@ -1,13 +1,18 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AuthService from "../services/auth.service";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import LoadingCircle from "../components/Loading/Circle";
+import { useHeadTitle } from "../context/HeadContext";
 
 function Login() {
+  const { setHeadTitle } = useHeadTitle();
+  useEffect(() => {
+    setHeadTitle("เข้าสู่ระบบ");
+  });
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [form, setForm] = useState({
@@ -42,7 +47,7 @@ function Login() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen max-w-lg max-h-screen mx-auto bg-primary-light-orange">
+    <div className="flex flex-col items-center justify-center max-w-lg min-h-screen mx-auto bg-primary-light-orange">
       <ToastContainer />
       <Image src="/images/TFPERSLOGO.png" width={70} height={70} />
       <div className="my-2.5 sm:text-4xl text-3xl font-bold text-primary-white">

@@ -4,18 +4,22 @@ import "react-toastify/dist/ReactToastify.css";
 import Image from "next/image";
 import AuthService from "../services/auth.service";
 import axios from "../config/axios.config";
-import { useForm, FormProvider } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { string, number, object } from "yup";
+import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import LoadingCircle from "../components/Loading/Circle";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { faculties } from "../data/faculties";
 import { majors } from "../data/majors";
+import { useHeadTitle } from "../context/HeadContext";
 function Register() {
   const [isLoading, setIsLoading] = useState(false);
   const [optionMajor, setOptionMajor] = useState([]);
   const router = useRouter();
+  const { setHeadTitle } = useHeadTitle();
+  setHeadTitle("สมัครสมาชิก");
   const register = async (formData: any) => {
     console.log(formData);
     await setIsLoading(true);
@@ -51,7 +55,12 @@ function Register() {
       )
       .transform((value) => (!!value ? value : null)),
     // .required("ต้องการเบอร์โทร")
-    email: string().email("รูปแบบไม่ถูกต้องอีเมล").required("ต้องการอีเมล"),
+    email: string()
+      .required("ต้องการอีเมล")
+      .matches(
+        /^\w+([-+.']\w+)*@?(mail.kmutt.ac.th)$/,
+        "รูปแบบอีเมลไม่ถูกต้อง"
+      ),
     id: string()
       .required("ต้องการรหัสนักศึกษา")
       .min(11, "ใส่ให้ครบ 11 หลัก")
@@ -60,7 +69,9 @@ function Register() {
     lastname: string().required("ต้องการนามสกุล"),
     password: string().required("ต้องการรหัสผ่าน"),
     major: string().required("ต้องการชื่อสาขา"),
-    faculty: string().required("ต้องการชื่อคณะ"),
+    faculty: string()
+      .notOneOf(["default"], "เลือกคณะ")
+      .required("ต้องการชื่อคณะ"),
   });
 
   const methods = useForm({
@@ -72,6 +83,7 @@ function Register() {
 
   const changeData = (e: any) => {
     const facultyValue = e.target.value;
+    methods.setError("faculty", { type: "custom", message: "" });
     const selectMajor: any = majors.find(
       (value) => value.name === facultyValue
     );
@@ -81,7 +93,7 @@ function Register() {
 
   return (
     <div>
-      <div className="flex space-y-4 flex-col items-center justify-center h-screen max-w-lg max-h-screen mx-auto">
+      <div className="flex space-y-4 flex-col items-center min-h-screen justify-center max-w-lg mx-auto">
         <ToastContainer />
         <Image src="/images/TFPERSLOGO.png" width={70} height={70} />
         <div className="sm:text-[2.5rem] text-3xl font-bold text-primary-white">
@@ -96,6 +108,7 @@ function Register() {
               <input
                 id="email"
                 className="border rounded-[0.625rem] p-2"
+                placeholder="xxx.xxx@mail.kmutt.ac.th"
                 {...methods.register("email")}
               />
               <div className="text-sm text-red-500">
@@ -155,11 +168,7 @@ function Register() {
                     เลือกคณะ
                   </option>
                   {faculties.map((faculty: any) => (
-                    <option
-                      value={faculty.value}
-                      key={faculty.value}
-                      className="cursor-pointer"
-                    >
+                    <option value={faculty.value} key={faculty.value}>
                       {faculty.label}
                     </option>
                   ))}

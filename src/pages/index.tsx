@@ -3,8 +3,14 @@ import Button from "../components/Button";
 import Image from "next/image";
 import Link from "next/link";
 import Layout from "../components/Layout/index";
+import { useHeadTitle } from "../context/HeadContext";
+import { useEffect } from "react";
 
 const Home: NextPage = () => {
+  const { setHeadTitle } = useHeadTitle();
+  useEffect(() => {
+    setHeadTitle("หน้าหลัก");
+  });
   return (
     <Layout isMain isLogin={false}>
       <div className="absolute top-[33rem] left-[4.5rem]">

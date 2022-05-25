@@ -1,15 +1,16 @@
 import Link from "next/link";
 import React from "react";
 import Layout from "../../../components/Layout/main";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import axios from "../../../config/axios.config";
 import AuthService from "../../../services/auth.service";
-import { useForm, FormProvider } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { string, object } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import FormBind from "../../../components/Petition/ExtendPayment/FormBind";
 import Swal from "sweetalert2";
 import { useRouter } from "next/router";
+import { useHeadTitle } from "../../../context/HeadContext";
 interface Student {
   id?: string;
   firstname?: string;
@@ -23,6 +24,8 @@ interface Student {
 }
 
 function ExtentPayment() {
+  const { setHeadTitle } = useHeadTitle();
+  setHeadTitle("แจ้งคำร้องขยายเวลาชำระเงิน");
   const [user, setUser] = useState<Student>({});
   const [step, setStep] = useState(1);
   const [note, setNote] = useState();

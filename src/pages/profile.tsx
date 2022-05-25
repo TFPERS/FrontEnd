@@ -12,8 +12,11 @@ import React from "react";
 import FormField from "../components/Form/Field";
 import { string, number, object } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useHeadTitle } from "../context/HeadContext";
 
 function Profile() {
+  const { setHeadTitle } = useHeadTitle();
+  setHeadTitle("ข้อมูลส่วนตัว");
   const [profile, setProfile] = useState<any>(null);
   const router = useRouter();
   const [isUpdateProfile, setIsUpdateProfile] = useState<boolean>(false);

@@ -2,8 +2,11 @@ import Link from "next/link";
 import Layout from "../../components/Layout/index";
 import PetitionBox from "../../components/Petition/Box";
 import Image from "next/image";
+import { useHeadTitle } from "../../context/HeadContext";
 
 export default function Petition() {
+  const { setHeadTitle } = useHeadTitle();
+  setHeadTitle("แจ้งคำร้อง");
   return (
     <Layout>
       <div className="grid grid-cols-2 mt-20 gap-10">

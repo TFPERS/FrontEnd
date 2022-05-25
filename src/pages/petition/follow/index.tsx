@@ -6,8 +6,11 @@ import axios from "../../../config/axios.config";
 import AuthService from "../../../services/auth.service";
 import dayjs from "dayjs";
 import { useRouter } from "next/router";
+import { useHeadTitle } from "../../../context/HeadContext";
 
 function Follow() {
+  const { setHeadTitle } = useHeadTitle();
+  setHeadTitle("ติดตามคำร้องและสถานะ");
   const [petitions, setPetitions] = useState<any>([]);
   const router = useRouter();
   useEffect(() => {

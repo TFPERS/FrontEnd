@@ -4,8 +4,11 @@ import Head from "next/head";
 import "material-icons/iconfont/material-icons.css";
 import { useState, useEffect } from "react";
 import { getCookie } from "cookies-next";
+import { AuthContextProvider } from "../context/AuthContext";
+import { HeadTitleContext } from "../context/HeadContext";
 
 function MyApp({ Component, pageProps: { ...pageProps } }: AppProps) {
+  const [headTitle, setHeadTitle] = useState("");
   useEffect(() => {
     const token = getCookie("TFPERSTOKEN");
     if (!token) {
@@ -14,17 +17,19 @@ function MyApp({ Component, pageProps: { ...pageProps } }: AppProps) {
   });
 
   return (
-    <>
-      <Head>
-        <title>TFPERS</title>
-        <link
-          rel="icon"
-          href="/images/TFPERSLOGO.png"
-          type="image/icon type"
-        ></link>
-      </Head>
-      <Component {...pageProps} />
-    </>
+    <HeadTitleContext.Provider value={{ headTitle, setHeadTitle }}>
+      <AuthContextProvider>
+        <Head>
+          <title>TFPERS {headTitle && `- ${headTitle}`}</title>
+          <link
+            rel="icon"
+            href="/images/TFPERSLOGO.png"
+            type="image/icon type"
+          ></link>
+        </Head>
+        <Component {...pageProps} />
+      </AuthContextProvider>
+    </HeadTitleContext.Provider>
   );
 }
 
