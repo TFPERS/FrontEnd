@@ -8,7 +8,7 @@ WORKDIR /tfpers-ui
 COPY . .
 # ARG APP_API_BASE_URL
 # ENV BACKEND_URL=$APP_API_BASE_URL
-ENV NODE_ENV=development
+ENV NODE_ENV production
 COPY --from=dependencies /tfpers-ui/node_modules ./node_modules
 RUN yarn build
 
