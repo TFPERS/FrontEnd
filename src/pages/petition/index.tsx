@@ -4,10 +4,13 @@ import PetitionBox from "../../components/Petition/Box";
 import Image from "next/image";
 import { useHeadTitle } from "../../context/HeadContext";
 import { WindowSize } from "../../helper/useBreakpoint";
+import { useEffect } from "react";
 
 export default function Petition() {
   const { setHeadTitle } = useHeadTitle();
-  setHeadTitle("แจ้งคำร้อง");
+  useEffect(() => {
+    setHeadTitle("แจ้งคำร้อง");
+  });
   const { isMobile, isTablet, isDesktop } = WindowSize();
   return (
     <Layout>

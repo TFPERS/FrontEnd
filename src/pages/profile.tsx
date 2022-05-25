@@ -16,7 +16,6 @@ import { useHeadTitle } from "../context/HeadContext";
 
 function Profile() {
   const { setHeadTitle } = useHeadTitle();
-  setHeadTitle("ข้อมูลส่วนตัว");
   const [profile, setProfile] = useState<any>(null);
   const router = useRouter();
   const [isUpdateProfile, setIsUpdateProfile] = useState<boolean>(false);
@@ -28,8 +27,8 @@ function Profile() {
   });
 
   useEffect(() => {
+    setHeadTitle("ข้อมูลส่วนตัว");
     const user = localStorage.getItem("user");
-
     const fetchData = async () => {
       const { data } = await axios.get(
         `/api/student/me/${AuthService.getCurrentUser().id}`

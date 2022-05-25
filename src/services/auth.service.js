@@ -13,6 +13,7 @@ class AuthService {
             maxAge: 86400,
           });
           const {
+            message,
             id,
             firstname,
             lastname,

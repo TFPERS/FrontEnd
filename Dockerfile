@@ -6,8 +6,9 @@ RUN yarn install --frozen-lockfile
 FROM node:16-alpine as builder
 WORKDIR /tfpers-ui
 COPY . .
-ARG APP_API_BASE_URL
-ENV BACKEND_URL=$APP_API_BASE_URL
+# ARG APP_API_BASE_URL
+# ENV BACKEND_URL=$APP_API_BASE_URL
+ENV NODE_ENV=development
 COPY --from=dependencies /tfpers-ui/node_modules ./node_modules
 RUN yarn build
 

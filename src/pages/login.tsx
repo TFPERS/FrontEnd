@@ -35,14 +35,21 @@ function Login() {
     setIsLoading(true);
     try {
       const data = await AuthService.login(form.username, form.password);
-      await router.push("/petition");
-      setIsLoading(false);
+      await toast.success(data.message, {
+        theme: "dark",
+      });
+      await setTimeout(() => {
+        router.push("/petition");
+        setIsLoading(false);
+      }, 1200);
     } catch (err: any) {
       const { data } = err.response;
       toast.error(data.message, {
         theme: "dark",
       });
-      setIsLoading(false);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 500);
     }
   };
 

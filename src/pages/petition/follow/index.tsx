@@ -10,7 +10,9 @@ import { useHeadTitle } from "../../../context/HeadContext";
 
 function Follow() {
   const { setHeadTitle } = useHeadTitle();
-  setHeadTitle("ติดตามคำร้องและสถานะ");
+  useEffect(() => {
+    setHeadTitle("ติดตามคำร้องและสถานะ");
+  });
   const [petitions, setPetitions] = useState<any>([]);
   const router = useRouter();
   useEffect(() => {

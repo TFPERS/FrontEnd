@@ -2,13 +2,13 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 const firebaseConfig = {
-  apiKey: "AIzaSyAU-CeTSxBQyLfG0h22FNFWRd2nmA-p_XA",
-  authDomain: "tfpers.firebaseapp.com",
-  projectId: "tfpers",
-  storageBucket: "tfpers.appspot.com",
-  messagingSenderId: "351724766872",
-  appId: "1:351724766872:web:e5c8e0f2bc6277122b32ed",
-  measurementId: "G-MVBQHEF7Z1",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
 // Initialize Firebase

@@ -25,7 +25,9 @@ interface Student {
 
 function ExtentPayment() {
   const { setHeadTitle } = useHeadTitle();
-  setHeadTitle("แจ้งคำร้องขยายเวลาชำระเงิน");
+  useEffect(() => {
+    setHeadTitle("แจ้งคำร้องขยายเวลาชำระเงิน");
+  });
   const [user, setUser] = useState<Student>({});
   const [step, setStep] = useState(1);
   const [note, setNote] = useState();
