@@ -17,7 +17,7 @@ COPY . .
 # ENV NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=G-MVBQHEF7Z1
 # ARG APP_API_BASE_URL
 # ENV BACKEND_URL=$APP_API_BASE_URL
-COPY /tfpers-ui/.env ./.env.development
+COPY ./.env.development /tfpers-ui/.env
 COPY --from=dependencies /tfpers-ui/node_modules ./node_modules
 RUN yarn build
 
