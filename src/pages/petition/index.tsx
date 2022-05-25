@@ -3,22 +3,31 @@ import Layout from "../../components/Layout/index";
 import PetitionBox from "../../components/Petition/Box";
 import Image from "next/image";
 import { useHeadTitle } from "../../context/HeadContext";
+import { WindowSize } from "../../helper/useBreakpoint";
 
 export default function Petition() {
   const { setHeadTitle } = useHeadTitle();
   setHeadTitle("แจ้งคำร้อง");
+  const { isMobile, isTablet, isDesktop } = WindowSize();
   return (
     <Layout>
-      <div className="grid grid-cols-2 mt-20 gap-10">
-        <div className="col-span-1 justify-self-end">
-          <Image
-            src="/images/HandWriting.png "
-            alt="HappyStudent"
-            width={593}
-            height={601}
-          />
-        </div>
-        <div className="col-span-1 flex flex-col self-center space-y-4">
+      <div
+        className={`grid grid-cols-${
+          isDesktop ? "2" : "1"
+        } mt-20 gap-10 justify-items-center mx-auto`}
+      >
+        {isDesktop && (
+          <div className="col-span-1 justify-self-end">
+            <Image
+              src="/images/HandWriting.png "
+              alt="HappyStudent"
+              width={593}
+              height={601}
+            />
+          </div>
+        )}
+
+        <div className={`col-span-1 flex flex-col self-center space-y-4`}>
           <PetitionBox
             image="/images/note.png"
             altImage="note"

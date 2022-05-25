@@ -2,7 +2,7 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import "material-icons/iconfont/material-icons.css";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { getCookie } from "cookies-next";
 import { AuthContextProvider } from "../context/AuthContext";
 import { HeadTitleContext } from "../context/HeadContext";
@@ -32,5 +32,4 @@ function MyApp({ Component, pageProps: { ...pageProps } }: AppProps) {
     </HeadTitleContext.Provider>
   );
 }
-
 export default MyApp;

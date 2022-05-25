@@ -3,7 +3,10 @@ import useBreakpoint from "use-breakpoint";
 const BREAKPOINTS = { mobile: 0, tablet: 768, desktop: 1280 };
 
 export function WindowSize() {
-  const { breakpoint, maxWidth, minWidth } = useBreakpoint(BREAKPOINTS);
+  const { breakpoint, maxWidth, minWidth } = useBreakpoint(
+    BREAKPOINTS,
+    "desktop"
+  );
   let isMobile,
     isTablet,
     isDesktop = false;

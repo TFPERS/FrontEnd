@@ -20,7 +20,7 @@ export default function PetitionBox({
 }: Props) {
   return (
     <Link href={path}>
-      <a className="grid grid-cols-2 bg-primary-white rounded-3xl w-[37.5rem] h-[9.375rem] cursor-pointer overflow-hidden">
+      <a className="grid grid-cols-2 bg-primary-white rounded-3xl h-[9.375rem] cursor-pointer overflow-hidden shadow-3xl hover:shadow-4xl active:shadow-3xl">
         <div className="col-span-1 justify-self-center">
           <Image src={image} alt={altImage} width={width} height={height} />
         </div>
