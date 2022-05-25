@@ -15,6 +15,7 @@ RUN yarn build
 FROM node:16-alpine as runner
 WORKDIR /tfpers-ui
 
+COPY --from=builder /tfpers-ui/.env.development ./
 COPY --from=builder /tfpers-ui/next.config.js ./
 COPY --from=builder /tfpers-ui/public ./public
 COPY --from=builder /tfpers-ui/.next ./.next
