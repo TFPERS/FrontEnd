@@ -14,7 +14,7 @@ const Layout = ({ children, isMain, isLogin }: Props) => {
   return (
     <>
       <div
-        className={`min-h-screen flex flex-col ${
+        className={`min-h-screen ${
           isDesktop ? "p-10" : "p-5"
         } bg-primary-light-orange  ${
           isMain ? "bg-hero-pattern h-full bg-cover min-h-screen" : ""

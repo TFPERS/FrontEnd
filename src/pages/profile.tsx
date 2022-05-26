@@ -9,10 +9,10 @@ import Link from "next/link";
 import authHeader from "../services/auth-header";
 import { useForm, FormProvider } from "react-hook-form";
 import React from "react";
-import FormField from "../components/Form/Field";
-import { string, number, object } from "yup";
+import { string, object } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useHeadTitle } from "../context/HeadContext";
+import { WindowSize } from "../helper/useBreakpoint";
 
 function Profile() {
   const { setHeadTitle } = useHeadTitle();
@@ -140,26 +140,34 @@ function Profile() {
     formState: { errors },
   } = methods;
 
+  const { isMobile, isTablet, isDesktop } = WindowSize();
   return (
     <Layout>
       <ToastContainer />
       <div className="flex items-center justify-center h-full mt-28">
-        <div className="relative flex flex-col items-center bg-primary-white w-[62.5rem] h-[36.25rem] rounded-[1.25rem]">
-          <div className="absolute -top-24 bg-[#FFC72C] flex items-center rounded-full">
+        <div className="relative flex flex-col items-center bg-primary-white pb-20 w-[62.5rem] rounded-[1.25rem]">
+          <div
+            className={`absolute bg-[#FFC72C] flex items-center rounded-full ${
+              isMobile ? "-top-20" : "-top-24"
+            }`}
+          >
             <span
-              style={{ fontSize: "200px" }}
+              style={{ fontSize: `${isMobile ? "150px" : "200px"}` }}
               className="text-primary-white material-icons-outlined"
             >
               account_circle
             </span>
           </div>
-          <div className="text-5xl mt-32">ประวัติส่วนตัว</div>
+          <div className={` mt-32 ${isMobile ? "text-4xl" : "text-5xl"}`}>
+            ประวัติส่วนตัว
+          </div>
           {profile && (
-            <div className="flex flex-col text-3xl mt-8 space-y-1">
+            <div className="flex flex-col text-3xl mt-8 space-y-3 p-2">
               {!isUpdateProfile ? (
                 <>
                   {profile.firstname.length > 15 ||
-                  profile.lastname.length > 15 ? (
+                  profile.lastname.length > 15 ||
+                  isMobile ? (
                     <>
                       <span>ชื่อ : {profile.firstname}</span>
                       <span>นามสกุล : {profile.firstname}</span>
@@ -184,11 +192,13 @@ function Profile() {
                       className="flex flex-col"
                       onSubmit={methods.handleSubmit(updateProfile)}
                     >
-                      <span>
-                        <label htmlFor="ชื่อ">ชื่อ :</label>{" "}
+                      <span className="w-full">
+                        <label htmlFor="ชื่อ" className="w-1/4">
+                          ชื่อ :
+                        </label>{" "}
                         <input
                           id="ชื่อ"
-                          className="border-b px-3 focus:outline-0 focus:border-b-2"
+                          className="border-b px-3 focus:outline-0 focus:border-b-2 w-3/4"
                           placeholder={profile.firstname}
                           {...methods.register("firstname")}
                         />
@@ -197,7 +207,9 @@ function Profile() {
                         </div>
                       </span>
                       <span>
-                        <label htmlFor="นามสกุล">นามสกุล :</label>{" "}
+                        <label htmlFor="นามสกุล" className="w-1/4">
+                          นามสกุล :
+                        </label>{" "}
                         <input
                           id="นามสกุล"
                           className="border-b px-3 focus:outline-0 focus:border-b-2"
@@ -211,8 +223,10 @@ function Profile() {
                       <span>รหัสนักศึกษา : {profile.id}</span>
                       <span>คณะ : {profile.major}</span>
                       <span>สาขา : {profile.faculty}</span>
-                      <span>
-                        <label htmlFor="เบอร์โทรศัพท์">เบอร์โทรศัพท์ :</label>{" "}
+                      <span className="w-full">
+                        <label htmlFor="เบอร์โทรศัพท์" className="w-1/4">
+                          เบอร์โทรศัพท์ :
+                        </label>{" "}
                         <input
                           id="เบอร์โทรศัพท์"
                           className="border-b px-3 focus:outline-0 focus:border-b-2"
@@ -247,7 +261,11 @@ function Profile() {
               )}
             </div>
           )}
-          <div className="absolute right-10 top-10">
+          <div
+            className={`absolute  ${
+              isMobile ? "right-4 top-10" : "right-10 top-10"
+            }`}
+          >
             <button
               onClick={toggleUpdateProfile}
               className="flex rounded-[0.625rem] p-2 items-center bg-primary-coquelicot text-primary-white"

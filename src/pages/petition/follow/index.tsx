@@ -7,6 +7,7 @@ import AuthService from "../../../services/auth.service";
 import dayjs from "dayjs";
 import { useRouter } from "next/router";
 import { useHeadTitle } from "../../../context/HeadContext";
+import { WindowSize } from "../../../helper/useBreakpoint";
 
 function Follow() {
   const { setHeadTitle } = useHeadTitle();
@@ -51,24 +52,38 @@ function Follow() {
     return <div>{format}</div>;
   };
 
+  const { isMobile, isTablet, isDesktop } = WindowSize();
+
   return (
     <Layout>
-      <div className="bg-primary-white rounded-[0.625rem] w-[1200px] h-[700px] mx-auto mt-10">
-        <div className="text-4xl font-semibold p-8 ">ติดตามคำร้องและสถานะ</div>
-        <table className="table-fixed w-full text-center text-2xl">
+      <div className="bg-primary-white rounded-[0.625rem] h-[80vh] max-w-7xl mx-auto mt-10">
+        <div
+          className={`${
+            isMobile ? "text-3xl p-4 text-center" : "text-4xl p-8"
+          } font-semibold `}
+        >
+          ติดตามคำร้องและสถานะ
+        </div>
+        <table
+          className={`table-fixed w-full text-center overflow-auto ${
+            isMobile ? "text-xl" : "text-2xl"
+          }`}
+        >
           <thead className="border-y-4">
             <tr>
-              <th className="p-3">หมายเลขคำร้อง</th>
+              <th className={`${isMobile ? "p-1" : "p-3"}`}>หมายเลขคำร้อง</th>
               <th>ประเภทคำร้อง</th>
               <th>สถานะคำร้อง</th>
               <th>วันที่</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className={`${isMobile ? "text-lg" : "text-2xl"}`}>
             {petitions.map((petition: any) => (
               <tr key={petition.id}>
                 <td className="py-7">{petition.id}</td>
-                <td>{formatTypePetition(petition.type)}ค่าลงทะเบียน</td>
+                <td className="overflow-auto">
+                  {formatTypePetition(petition.type)}ค่าลงทะเบียน
+                </td>
                 <td>
                   <div className="flex justify-center">
                     {formatStatus(petition.status)}
