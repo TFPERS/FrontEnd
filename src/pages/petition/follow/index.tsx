@@ -24,7 +24,6 @@ function Follow() {
       setPetitions(data);
     };
     AuthService.checkToken() ? fetchPetition() : router.push("/login");
-    fetchPetition();
   }, []);
 
   const formatTypePetition = (type: any) => {
