@@ -153,8 +153,6 @@ function Profile() {
   };
 
   const findMajor = (major: any, faculty: any) => {
-    console.log(majors);
-    console.log(major);
     let maj: any = {};
     maj = majors.find((ma: any) => ma.name === faculty);
     maj = maj.majors.find((ma: any) => ma.value === major);
@@ -244,8 +242,10 @@ function Profile() {
                         </div>
                       </span>
                       <span>รหัสนักศึกษา : {profile.id}</span>
-                      <span>คณะ : {profile.major}</span>
-                      <span>สาขา : {profile.faculty}</span>
+                      <span>คณะ : {findFaculty(profile.faculty)}</span>
+                      <span>
+                        สาขา : {findMajor(profile.major, profile.faculty)}
+                      </span>
                       <span className="w-full">
                         <label htmlFor="เบอร์โทรศัพท์" className="w-1/4">
                           เบอร์โทรศัพท์ :

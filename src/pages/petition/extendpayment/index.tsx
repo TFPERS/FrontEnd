@@ -28,9 +28,6 @@ interface Student {
 
 function ExtentPayment() {
   const { setHeadTitle } = useHeadTitle();
-  useEffect(() => {
-    setHeadTitle("แจ้งคำร้องขยายเวลาชำระเงิน");
-  });
   const [user, setUser] = useState<Student>({});
   const [step, setStep] = useState(1);
   const [note, setNote] = useState();
@@ -42,11 +39,12 @@ function ExtentPayment() {
   const router = useRouter();
 
   useEffect(() => {
+    setHeadTitle("แจ้งคำร้องขยายเวลาชำระเงิน");
     const fetchUser = async () => {
       const { data } = await axios.get(
         `/api/student/me/${AuthService.getCurrentUser().id}`
       );
-      setUser(data);
+      await setUser(data);
     };
     AuthService.checkToken() ? fetchUser() : router.push("/login");
   }, []);
@@ -113,13 +111,10 @@ function ExtentPayment() {
   const findFaculty = (faculty: any) => {
     let fac: any = {};
     fac = faculties.find((fac: any) => fac.value === faculty);
-    console.log(fac);
-    // return fac.label;
+    return fac.label;
   };
 
   const findMajor = (major: any, faculty: any) => {
-    console.log(majors);
-    console.log(major);
     let maj: any = {};
     maj = majors.find((ma: any) => ma.name === faculty);
     maj = maj.majors.find((ma: any) => ma.value === major);
@@ -171,20 +166,26 @@ function ExtentPayment() {
                 label="ชื่อ-นามสกุล"
                 value={`${user.firstname} ${user.lastname}`}
               />
-              <div className="flex w-full space-x-16">
-                <div className="w-1/2">
-                  <div className="text-[2rem]">คณะ</div>
-                  <div className="pl-6 text-2xl bg-[#C4C4C4] rounded-lg p-2 cursor-not-allowed">
-                    {user.faculty}
+              {user && (
+                <div className="flex w-full space-x-16">
+                  <div className="w-1/2">
+                    <div className="text-[2rem]">คณะ</div>
+                    {user.faculty && (
+                      <div className="pl-6 text-2xl bg-[#C4C4C4] rounded-lg p-2 cursor-not-allowed">
+                        {findFaculty(user.faculty)}
+                      </div>
+                    )}
+                  </div>
+                  <div className="w-1/2">
+                    <div className="text-[2rem]">สาขา</div>
+                    {user.major && (
+                      <div className="pl-6 text-2xl bg-[#C4C4C4] rounded-lg p-2 cursor-not-allowed">
+                        {findMajor(user.major, user.faculty)}
+                      </div>
+                    )}
                   </div>
                 </div>
-                <div className="w-1/2">
-                  <div className="text-[2rem]">สาขา</div>
-                  <div className="pl-6 text-2xl bg-[#C4C4C4] rounded-lg p-2 cursor-not-allowed">
-                    {/* {findMajor(user.major, user.faculty)} */}
-                  </div>
-                </div>
-              </div>
+              )}
 
               <div className="flex flex-col">
                 <label htmlFor="note" className="text-[2rem]">
