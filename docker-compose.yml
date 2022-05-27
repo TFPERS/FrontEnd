@@ -1,12 +1,24 @@
 version: "3"
+
+networks:
+  https:
+    external:
+      name: api_service
+
 services:
   nextjs:
     build:
       context: ./
     restart: on-failure
+    networks:
+      - https
   nginx:
     build: ./nginx
     restart: on-failure
+    volumes:
+      - ./nginx/ssl:/etc/nginx/ssl
     ports:
       - 80:80
       - 443:443
+    networks:
+      - https

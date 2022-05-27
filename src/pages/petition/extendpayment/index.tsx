@@ -12,6 +12,8 @@ import Swal from "sweetalert2";
 import { useRouter } from "next/router";
 import { useHeadTitle } from "../../../context/HeadContext";
 import { WindowSize } from "../../../helper/useBreakpoint";
+import { faculties } from "../../../data/faculties";
+import { majors } from "../../../data/majors";
 interface Student {
   id?: string;
   firstname?: string;
@@ -108,6 +110,22 @@ function ExtentPayment() {
     }
   };
 
+  const findFaculty = (faculty: any) => {
+    let fac: any = {};
+    fac = faculties.find((fac: any) => fac.value === faculty);
+    console.log(fac);
+    // return fac.label;
+  };
+
+  const findMajor = (major: any, faculty: any) => {
+    console.log(majors);
+    console.log(major);
+    let maj: any = {};
+    maj = majors.find((ma: any) => ma.name === faculty);
+    maj = maj.majors.find((ma: any) => ma.value === major);
+    return maj.label;
+  };
+
   const { isMobile, isTablet, isDesktop } = WindowSize();
 
   return (
@@ -157,13 +175,13 @@ function ExtentPayment() {
                 <div className="w-1/2">
                   <div className="text-[2rem]">คณะ</div>
                   <div className="pl-6 text-2xl bg-[#C4C4C4] rounded-lg p-2 cursor-not-allowed">
-                    {user.major}
+                    {user.faculty}
                   </div>
                 </div>
                 <div className="w-1/2">
                   <div className="text-[2rem]">สาขา</div>
                   <div className="pl-6 text-2xl bg-[#C4C4C4] rounded-lg p-2 cursor-not-allowed">
-                    {user.faculty}
+                    {/* {findMajor(user.major, user.faculty)} */}
                   </div>
                 </div>
               </div>
