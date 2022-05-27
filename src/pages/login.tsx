@@ -76,7 +76,7 @@ function Login() {
           <div className="flex flex-col w-full mt-4 space-y-3">
             <label className="text-xl">รหัสผ่าน</label>
             <input
-              type="text"
+              type="password"
               placeholder="รหัสผ่าน"
               name="password"
               value={form.password}
