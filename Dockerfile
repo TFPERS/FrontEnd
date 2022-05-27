@@ -19,5 +19,11 @@ COPY --from=builder /tfpers-ui/.next ./.next
 COPY --from=builder /tfpers-ui/node_modules ./node_modules
 COPY --from=builder /tfpers-ui/package.json ./package.json
 
-EXPOSE 3000
-CMD ["yarn", "start"]
+# EXPOSE 3000
+# CMD ["yarn", "start"]
+
+FROM nginx as production-stage
+RUN mkdir /app
+COPY --from=runner /app/dist /app
+COPY nginx.conf /etc/nginx/nginx.conf
+CMD ["nginx", "-g", "daemon off;"]
