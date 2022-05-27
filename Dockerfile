@@ -12,12 +12,17 @@ RUN yarn build
 
 FROM node:16-alpine as runner
 WORKDIR /tfpers-ui
-
 COPY --from=builder /tfpers-ui/next.config.js ./
 COPY --from=builder /tfpers-ui/public ./public
 COPY --from=builder /tfpers-ui/.next ./.next
 COPY --from=builder /tfpers-ui/node_modules ./node_modules
 COPY --from=builder /tfpers-ui/package.json ./package.json
+# EXPOSE 3000
+# CMD ["yarn", "start"]
 
-EXPOSE 3000
-CMD ["yarn", "start"]
+FROM nginx as production-stage
+RUN mkdir /tfpers-ui
+COPY --from=runner /tfpers-ui/dist /tfpers-ui
+COPY nginx.conf /etc/nginx/nginx.conf
+CMD ["nginx", "-g", "daemon off;"]
+
