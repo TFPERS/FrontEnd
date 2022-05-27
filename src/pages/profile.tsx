@@ -13,6 +13,8 @@ import { string, object } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useHeadTitle } from "../context/HeadContext";
 import { WindowSize } from "../helper/useBreakpoint";
+import { faculties } from "../data/faculties";
+import { majors } from "../data/majors";
 
 function Profile() {
   const { setHeadTitle } = useHeadTitle();
@@ -144,6 +146,21 @@ function Profile() {
     formState: { errors },
   } = methods;
 
+  const findFaculty = (faculty: any) => {
+    let fac: any = {};
+    fac = faculties.find((fac: any) => fac.value === faculty);
+    return fac.label;
+  };
+
+  const findMajor = (major: any, faculty: any) => {
+    console.log(majors);
+    console.log(major);
+    let maj: any = {};
+    maj = majors.find((ma: any) => ma.name === faculty);
+    maj = maj.majors.find((ma: any) => ma.value === major);
+    return maj.label;
+  };
+
   const { isMobile, isTablet, isDesktop } = WindowSize();
   return (
     <Layout>
@@ -184,8 +201,10 @@ function Profile() {
                     </>
                   )}
                   <span>รหัสนักศึกษา : {profile.id} </span>
-                  <span>คณะ : {profile.major}</span>
-                  <span>สาขา : {profile.faculty}</span>
+                  <span>คณะ : {findFaculty(profile.faculty)}</span>
+                  <span>
+                    สาขา : {findMajor(profile.major, profile.faculty)}
+                  </span>
                   <span>เบอร์โทรศัพท์ : {profile.telephone || "-"}</span>
                   <span>อีเมล : {profile.email}</span>
                 </>
