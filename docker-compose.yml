@@ -6,20 +6,20 @@ networks:
       name: serviceapi_api_service
 
 services:
-  dohttps:
-    # image: nginx:latest
-    build: ./dohttps
-    container_name: dohttps
-    # depends_on:
-    #   - frontend
-    # volumes:
-    #   - ./dohttps/nginx/config/nginx.conf:/etc/nginx/nginx.conf
-    #   - ./dohttps/nginx/ssl:/etc/nginx/ssl
-    ports:
-      - "80:80"
-      - "443:443"
-    networks:
-      - https
+  # dohttps:
+  #   # image: nginx:latest
+  #   build: ./dohttps
+  #   container_name: dohttps
+  #   # depends_on:
+  #   #   - frontend
+  #   # volumes:
+  #   #   - ./dohttps/nginx/config/nginx.conf:/etc/nginx/nginx.conf
+  #   #   - ./dohttps/nginx/ssl:/etc/nginx/ssl
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   networks:
+  #     - https
   frontend:
     build:
       context: ./
@@ -27,16 +27,16 @@ services:
     container_name: frontend
     networks:
       - https
-  # nginx:
-  #   build: ./nginx
-  #   restart: on-failure
-  #   volumes:
-  #     - ./dohttps/nginx/config/nginx.conf:/etc/nginx/nginx.conf
-  #     - ./dohttps/nginx/ssl:/etc/nginx/ssl
-  #     # - ./nginx/ssl:/etc/nginx/ssl
-  #     # - ./nginx/config/nginx.conf:/etc/nginx/nginx.conf
-  #   ports:
-  #     - 80:80
-  #     - 443:443
-  #   networks:
-  #     - https
+  nginx:
+    build: ./nginx
+    restart: on-failure
+    # volumes:
+    #   - ./dohttps/nginx/config/nginx.conf:/etc/nginx/nginx.conf
+    #   - ./dohttps/nginx/ssl:/etc/nginx/ssl
+    # - ./nginx/ssl:/etc/nginx/ssl
+    # - ./nginx/config/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - https
