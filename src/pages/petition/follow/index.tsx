@@ -8,24 +8,27 @@ import dayjs from "dayjs";
 import { useRouter } from "next/router";
 import { useHeadTitle } from "../../../context/HeadContext";
 import { WindowSize } from "../../../helper/useBreakpoint";
-import Pagination from "@mui/material/Pagination";
-import Stack from "@mui/material/Stack";
+import Paginate from "../../../components/Paginate/index";
 
 function Follow() {
   const { setHeadTitle } = useHeadTitle();
-  const [page, setPage] = useState(1);
+  const [currentPage, setcurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
   const handleChange = async (
     event: React.ChangeEvent<unknown>,
     value: number
   ) => {
-    setPage(value);
-    const { data } = await axios.get(
-      `/api/petition/me/${AuthService.getCurrentUser().id}?page=${
-        value - 1
-      }&size=5`
-    );
-    setPetitions(data.content);
+    if (value !== currentPage) {
+      setcurrentPage(value);
+      console.log(value);
+      const { data } = await axios.get(
+        `/api/petition/me/${AuthService.getCurrentUser().id}?page=${
+          value - 1
+        }&size=5`
+      );
+      setPetitions(data.content);
+    }
   };
 
   useEffect(() => {
@@ -121,15 +124,11 @@ function Follow() {
         ""
       ) : (
         <div className="mt-3 max-w-lg bg-white mx-auto p-2 rounded-2xl">
-          <Stack spacing={2} alignItems="center" color="white">
-            <Pagination
-              count={totalPage}
-              color="secondary"
-              size="large"
-              page={page}
-              onChange={handleChange}
-            />
-          </Stack>
+          <Paginate
+            totalPage={totalPage}
+            currentPage={currentPage}
+            handleChange={handleChange}
+          />
         </div>
       )}
 
