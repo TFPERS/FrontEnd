@@ -1,7 +1,7 @@
 FROM node:16-alpine as dependencies
 WORKDIR /tfpers-ui
 COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
+RUN yarn install 
 
 FROM node:16-alpine as builder
 WORKDIR /tfpers-ui
