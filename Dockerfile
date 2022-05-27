@@ -22,8 +22,7 @@ COPY --from=builder /tfpers-ui/package.json ./package.json
 # EXPOSE 3000
 # CMD ["yarn", "start"]
 
-FROM nginx as production-stage
-RUN mkdir /app
-COPY --from=runner /app/dist /app
+FROM nginx:alpine as production-stage
+
 COPY nginx.conf /etc/nginx/nginx.conf
 CMD ["nginx", "-g", "daemon off;"]
