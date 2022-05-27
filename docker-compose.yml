@@ -23,6 +23,7 @@ services:
     build:
       context: ./
     restart: on-failure
+    container_name: frontend
     networks:
       - https
   # nginx:
