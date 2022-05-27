@@ -66,7 +66,10 @@ export default function Navbar({ isLogin = true }: Props) {
 
   return (
     <header className="flex items-center justify-between max-w-[122.5rem] mx-auto">
-      <div className="flex items-center cursor-pointer">
+      <div
+        onClick={() => router.push("/petition")}
+        className="flex items-center cursor-pointer"
+      >
         <Image
           src="/images/TFPERSLOGO.png "
           alt="TFPERSLogo"

@@ -214,9 +214,9 @@ function ExtentPayment() {
             </div>
           </div>
         </div>
-        <Link href="/petition">
+        {/* <Link href="/petition">
           <a>back</a>
-        </Link>
+        </Link> */}
       </div>
     </Layout>
   );

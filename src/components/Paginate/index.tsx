@@ -1,7 +1,10 @@
 import React from "react";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
+import { PaginationItem } from "@mui/material";
+import { purple } from "@mui/material/colors";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Button from "@mui/material/Button";
 
 interface Props {
   totalPage: number;
@@ -11,39 +14,26 @@ interface Props {
 
 const theme = createTheme({
   palette: {
-    neutral: {
+    primary: {
+      // Purple and green play nicely together.
+      main: purple[500],
+    },
+    secondary: {
+      // This is green.A700 as hex.
       main: "#FA6C16",
-      contrastText: "#fff",
     },
   },
 });
 
-declare module "@mui/material/styles" {
-  interface Palette {
-    neutral: Palette["primary"];
-  }
-
-  // allow configuration using `createTheme`
-  interface PaletteOptions {
-    neutral?: PaletteOptions["primary"];
-  }
-}
-
-// Update the Button's color prop options
-declare module "@mui/material/Button" {
-  interface ButtonPropsColorOverrides {
-    neutral: true;
-  }
-}
 function Paginate({ totalPage, currentPage, handleChange }: Props) {
   return (
     <ThemeProvider theme={theme}>
       <Stack spacing={2} alignItems="center">
         <Pagination
           count={totalPage}
-          color="neutral"
-          size="large"
+          color="secondary"
           page={currentPage}
+          renderItem={(item) => <PaginationItem {...item} size="large" />}
           // hidePrevButton={currentPage === 1}
           // hideNextButton={currentPage === totalPage}
           onChange={handleChange}

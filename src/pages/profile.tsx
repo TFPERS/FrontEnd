@@ -128,8 +128,12 @@ function Profile() {
       )
       .transform((value) => (!!value ? value : null)),
     // .required("ต้องการเบอร์โทร")
-
-    email: string().email("รูปแบบไม่ถูกต้องอีเมล").required("ต้องการอีเมล"),
+    email: string()
+      .required("ต้องการอีเมล")
+      .matches(
+        /^\w+([-+.']\w+)*@?(mail.kmutt.ac.th)$/,
+        "รูปแบบอีเมลไม่ถูกต้อง"
+      ),
   });
 
   const methods = useForm({
@@ -144,8 +148,8 @@ function Profile() {
   return (
     <Layout>
       <ToastContainer />
-      <div className="flex items-center justify-center h-full mt-28">
-        <div className="relative flex flex-col items-center bg-primary-white pb-20 w-[62.5rem] rounded-[1.25rem]">
+      <div className="h-full mt-28 max-w-5xl mx-auto">
+        <div className="relative flex flex-col items-center bg-primary-white pb-20 shadow-3xl  rounded-[1.25rem]">
           <div
             className={`absolute bg-[#FFC72C] flex items-center rounded-full ${
               isMobile ? "-top-20" : "-top-24"
@@ -285,7 +289,7 @@ function Profile() {
           </div>
         </div>
       </div>
-      <Link href="/petition">back</Link>
+      {/* <Link href="/petition">back</Link> */}
     </Layout>
   );
 }

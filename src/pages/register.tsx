@@ -249,7 +249,7 @@ function Register() {
             )}
           </div>
         </form>
-        <Link href="/">Back</Link>
+        {/* <Link href="/">Back</Link> */}
       </div>
     </div>
   );

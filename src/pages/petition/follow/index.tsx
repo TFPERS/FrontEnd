@@ -21,7 +21,6 @@ function Follow() {
   ) => {
     if (value !== currentPage) {
       setcurrentPage(value);
-      console.log(value);
       const { data } = await axios.get(
         `/api/petition/me/${AuthService.getCurrentUser().id}?page=${
           value - 1
@@ -76,7 +75,7 @@ function Follow() {
 
   return (
     <Layout>
-      <div className="bg-primary-white rounded-[0.625rem] min-h-[67vh] h-full flex flex-col max-w-7xl mx-auto mt-10">
+      <div className="bg-primary-white rounded-[0.625rem] min-h-[67vh] shadow-4xl h-full flex flex-col max-w-7xl mx-auto mt-10">
         <div
           className={`${
             isMobile ? "text-3xl p-4 text-center" : "text-4xl p-8"
@@ -123,7 +122,7 @@ function Follow() {
       {totalPage === 0 ? (
         ""
       ) : (
-        <div className="mt-3 max-w-lg bg-white mx-auto p-2 rounded-2xl">
+        <div className="mt-3 max-w-lg bg-white shadow-4xl mx-auto p-2 rounded-2xl">
           <Paginate
             totalPage={totalPage}
             currentPage={currentPage}
@@ -132,7 +131,7 @@ function Follow() {
         </div>
       )}
 
-      <Link href="/petition">back </Link>
+      {/* <Link href="/petition">back </Link> */}
     </Layout>
   );
 }

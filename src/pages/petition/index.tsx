@@ -17,7 +17,7 @@ export default function Petition() {
       <div
         className={`grid grid-cols-${
           isDesktop ? "2" : "1"
-        } mt-20 gap-10 justify-items-center mx-auto`}
+        } mt-20 gap-10 justify-items-center mx-auto max-w-7xl`}
       >
         {isDesktop && (
           <div className="col-span-1 justify-self-end">
@@ -72,10 +72,12 @@ export default function Petition() {
             path="/petition/follow"
           />
         </div>
-        <Link href="/">
-          <a>back</a>
-        </Link>
-      </div>
+      </div>{" "}
+      {/* <Link href="/">
+        <span className="material-icons-outlined cursor-pointer">
+          arrow_back
+        </span>
+      </Link> */}
     </Layout>
   );
 }
