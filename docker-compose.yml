@@ -3,7 +3,7 @@ version: "3"
 networks:
   https:
     external:
-      name: api_service
+      name: serviceapi_api_service
 
 services:
   nextjs:
