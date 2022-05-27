@@ -7,8 +7,8 @@ networks:
 
 services:
   dohttps:
-    image: nginx:latest
-    # build: ./dohttps
+    # image: nginx:latest
+    build: ./dohttps
     container_name: dohttps
     depends_on:
       - frontend
