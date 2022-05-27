@@ -3,8 +3,10 @@ services:
   nextjs:
     build:
       context: ./
+    restart: on-failure
   nginx:
     build: ./nginx
+    restart: on-failure
     ports:
       - 80:80
       - 443:443

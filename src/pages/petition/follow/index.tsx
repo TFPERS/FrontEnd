@@ -8,9 +8,26 @@ import dayjs from "dayjs";
 import { useRouter } from "next/router";
 import { useHeadTitle } from "../../../context/HeadContext";
 import { WindowSize } from "../../../helper/useBreakpoint";
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
 
 function Follow() {
   const { setHeadTitle } = useHeadTitle();
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(0);
+  const handleChange = async (
+    event: React.ChangeEvent<unknown>,
+    value: number
+  ) => {
+    setPage(value);
+    const { data } = await axios.get(
+      `/api/petition/me/${AuthService.getCurrentUser().id}?page=${
+        value - 1
+      }&size=5`
+    );
+    setPetitions(data.content);
+  };
+
   useEffect(() => {
     setHeadTitle("ติดตามคำร้องและสถานะ");
   });
@@ -19,9 +36,10 @@ function Follow() {
   useEffect(() => {
     const fetchPetition = async () => {
       const { data } = await axios.get(
-        `/api/petition/me/${AuthService.getCurrentUser().id}`
+        `/api/petition/me/${AuthService.getCurrentUser().id}?page=0&size=5`
       );
-      setPetitions(data);
+      setPetitions(data.content);
+      setTotalPage(data.totalPages);
     };
     AuthService.checkToken() ? fetchPetition() : router.push("/login");
   }, []);
@@ -55,7 +73,7 @@ function Follow() {
 
   return (
     <Layout>
-      <div className="bg-primary-white rounded-[0.625rem] h-[80vh] max-w-7xl mx-auto mt-10">
+      <div className="bg-primary-white rounded-[0.625rem] min-h-[67vh] h-full flex flex-col max-w-7xl mx-auto mt-10">
         <div
           className={`${
             isMobile ? "text-3xl p-4 text-center" : "text-4xl p-8"
@@ -76,7 +94,7 @@ function Follow() {
               <th>วันที่</th>
             </tr>
           </thead>
-          <tbody className={`${isMobile ? "text-lg" : "text-2xl"}`}>
+          <tbody className={`${isMobile ? "text-lg" : "text-2xl"} `}>
             {petitions.map((petition: any) => (
               <tr key={petition.id}>
                 <td className="py-7">{petition.id}</td>
@@ -93,7 +111,28 @@ function Follow() {
             ))}
           </tbody>
         </table>
+        {petitions.length === 0 ? (
+          <div className="text-center h-4/6 my-auto text-3xl">ไม่มีคำร้อง</div>
+        ) : (
+          ""
+        )}
       </div>
+      {totalPage === 0 ? (
+        ""
+      ) : (
+        <div className="mt-3 max-w-lg bg-white mx-auto p-2 rounded-2xl">
+          <Stack spacing={2} alignItems="center" color="white">
+            <Pagination
+              count={totalPage}
+              color="secondary"
+              size="large"
+              page={page}
+              onChange={handleChange}
+            />
+          </Stack>
+        </div>
+      )}
+
       <Link href="/petition">back </Link>
     </Layout>
   );
