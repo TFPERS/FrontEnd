@@ -10,6 +10,7 @@ services:
     # build:
     #   context: ./
     images: ghcr.io/tfpers/tfpers-ui:dev
+    container_name: nextjs
     restart: on-failure
     env_file:
       - ./.env.development
@@ -18,6 +19,7 @@ services:
   nginx:
     # build: ./nginx
     images: ghcr.io/tfpers/tfpers-nginx:dev
+    container_name: nginx
     restart: on-failure
     volumes:
       - ./nginx/ssl:/etc/nginx/ssl
