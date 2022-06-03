@@ -6,7 +6,7 @@ RUN yarn install
 FROM node:16-alpine as builder
 WORKDIR /tfpers-ui
 COPY . .
-COPY ./.env.development /tfpers-ui/.env
+# COPY ./.env.development /tfpers-ui/.env
 COPY --from=dependencies /tfpers-ui/node_modules ./node_modules
 RUN yarn build
 
