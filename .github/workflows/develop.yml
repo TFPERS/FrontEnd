@@ -17,14 +17,21 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
-          password: ${{ secrets.GHCR_PASSWORD }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-      # - name: Build and push Docker images
-      #   uses: docker/build-push-action@v3.0.0
-      #   with:
-      #     context: .
-      #     push: true
-      #     tags: ghcr.io/tfpers/frontend:dev
+      - name: Build frontend and push Docker images
+        uses: docker/build-push-action@v3.0.0
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/tfpers/tfpers-ui:dev
+
+      - name: Build nginx and push Docker images
+        uses: docker/build-push-action@v3.0.0
+        with:
+          context: ./nginx
+          push: true
+          tags: ghcr.io/tfpers/tfpers-nginx:dev
 
   deploy:
     needs: build
@@ -37,6 +44,9 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           script: |
+            sudo echo ${{ secrets.GHCR_PASSWORD  }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
+            sudo docker pull ghcr.io/tfpers/tfpers-ui:dev
+            sudo docker pull ghcr.io/tfpers/tfpers-nginx:dev
             cd FrontEnd
             sudo git pull
             sudo docker-compose up -d --build
