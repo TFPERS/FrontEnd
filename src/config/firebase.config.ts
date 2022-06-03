@@ -12,8 +12,6 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-if (process.env.NEXT_PUBLIC_FIREBASE_API_KEY) {
-  const app = initializeApp(firebaseConfig);
-}
+const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth();
