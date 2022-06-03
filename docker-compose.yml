@@ -18,7 +18,6 @@ services:
   nginx:
     # build: ./nginx
     image: ghcr.io/tfpers/tfpers-nginx:dev
-    container_name:
     restart: on-failure
     volumes:
       - ./nginx/ssl:/etc/nginx/ssl
