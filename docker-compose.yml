@@ -7,8 +7,6 @@ networks:
 
 services:
   nextjs:
-    # build:
-    #   context: ./
     image: ghcr.io/tfpers/tfpers-ui:dev
     restart: on-failure
     env_file:
