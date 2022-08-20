@@ -4,7 +4,6 @@ import Head from "next/head";
 import "material-icons/iconfont/material-icons.css";
 import { useEffect, useState } from "react";
 import { getCookie } from "cookies-next";
-import { AuthContextProvider } from "../context/AuthContext";
 import { HeadTitleContext } from "../context/HeadContext";
 
 function MyApp({ Component, pageProps: { ...pageProps } }: AppProps) {
@@ -18,7 +17,6 @@ function MyApp({ Component, pageProps: { ...pageProps } }: AppProps) {
 
   return (
     <HeadTitleContext.Provider value={{ headTitle, setHeadTitle }}>
-      <AuthContextProvider>
         <Head>
           <title>TFPERS {headTitle && `- ${headTitle}`}</title>
           <link
@@ -28,7 +26,6 @@ function MyApp({ Component, pageProps: { ...pageProps } }: AppProps) {
           ></link>
         </Head>
         <Component {...pageProps} />
-      </AuthContextProvider>
     </HeadTitleContext.Provider>
   );
 }
