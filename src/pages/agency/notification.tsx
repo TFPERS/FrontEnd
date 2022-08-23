@@ -1,12 +1,12 @@
 import React from "react";
 import Agency from "../../components/Layout/agency";
 
-const application = () => {
+const notice = () => {
   return (
     <Agency>
-      <div>application</div>
+      <div>notice</div>
     </Agency>
   );
 };
 
-export default application;
+export default notice;

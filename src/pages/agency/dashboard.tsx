@@ -1,7 +1,12 @@
 import React from "react";
+import Agency from "../../components/Layout/agency";
 
 const dashboard = () => {
-  return <div>dashboard</div>;
+  return (
+    <Agency>
+      <div>dashboard</div>
+    </Agency>
+  );
 };
 
 export default dashboard;

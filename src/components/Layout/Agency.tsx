@@ -1,15 +1,19 @@
-import React from "react";
-import Sidebar from "../../components/Agency/Sidebar";
-import Card from "../../components/Agency/Card";
+import React, { ReactNode } from "react";
+import Card from "../Agency/Card";
+import Sidebar from "../Agency/Sidebar";
 import Image from "next/image";
 
-const agency = () => {
+type Props = {
+  children: ReactNode;
+};
+
+const Agency = ({ children }: Props) => {
   return (
     <div className="flex min-h-screen">
       <div className="bg-slate-700 min-w-[270px]">
         <Sidebar />
       </div>
-      <div className="w-full bg-white">col2</div>
+      <div className="w-full bg-white">{children}</div>
       <div className="bg-white min-w-[270px] py-8 pr-7 flex flex-col space-y-5 ">
         <Card>
           <div className="flex flex-col items-center justify-center h-full space-y-5">
@@ -50,4 +54,4 @@ const agency = () => {
   );
 };
 
-export default agency;
+export default Agency;
