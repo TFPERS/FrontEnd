@@ -6,14 +6,14 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'primary-coquelicot': "#FA4616",
-        'primary-light-orange': "#FA6C16",
-        'primary-light-yellow': "#FFC72C",
-        'primary-white': "#FFFFFF",
-        'primary-black': "#000000",
-        'secondary-gray': "#C4C4C4",
-        'secondary-green': "#17A87B",
-        'secondary-red': "#FA2816",
+        "primary-coquelicot": "#FA4616",
+        "primary-light-orange": "#FA6C16",
+        "primary-light-yellow": "#FFC72C",
+        "primary-white": "#FFFFFF",
+        "primary-black": "#000000",
+        "secondary-gray": "#C4C4C4",
+        "secondary-green": "#17A87B",
+        "secondary-red": "#FA2816",
         secondary: "#FFC72C",
         tertiary: "#FFFFFF",
       },
