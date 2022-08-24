@@ -13,7 +13,7 @@ const Agency = ({ children }: Props) => {
       <div className="bg-slate-700 min-w-[270px]">
         <Sidebar />
       </div>
-      <div className="w-full bg-white">{children}</div>
+      <div className="w-full bg-white p-10">{children}</div>
       <div className="bg-white min-w-[270px] py-8 pr-7 flex flex-col space-y-5 ">
         <Card>
           <div className="flex flex-col items-center justify-center h-full space-y-5">
