@@ -32,29 +32,29 @@ const dashboard = () => {
             />
           </Card>
         </div>
-        <div className="h-full">
-          <table
-            className={`table-fixed min-w-full h-full shadow-md rounded text-center`}
-          >
-            <thead className=" text-white text-2xl rounded">
-              <tr className="bg-primary-light-orange">
-                <th className="p-4">รหัสเอกสาร</th>
-                <th className="p-4">รหัสนักศึกษา</th>
-                <th className="p-4">สถานะคำร้อง</th>
-                <th className="p-4">วันที่</th>
-              </tr>
-            </thead>
-            <tbody className="">
-              <tr>
-                <td className="py-4">4</td>
-                <td className="overflow-auto">ค่าลงทะเบียน</td>
-                <td>
-                  <div className="flex justify-center"></div>
-                </td>
-                <td></td>
-              </tr>
-            </tbody>
-          </table>
+        <div>
+          <div>
+            <table className={`table-fixed w-full text-center overflow-auto`}>
+              <thead className="border-y-4">
+                <tr>
+                  <th>รหัสเอกสาร</th>
+                  <th>รหัสนักศึกษา</th>
+                  <th>สถานะคำร้อง</th>
+                  <th>วันที่</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className="py-7">4</td>
+                  <td className="overflow-auto">ค่าลงทะเบียน</td>
+                  <td>
+                    <div className="flex justify-center"></div>
+                  </td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </Agency>
