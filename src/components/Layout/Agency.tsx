@@ -13,7 +13,7 @@ const Agency = ({ children }: Props) => {
       <div className="bg-slate-700 min-w-[270px]">
         <Sidebar />
       </div>
-      <div className="w-full bg-white p-10">{children}</div>
+      <div className="w-full p-10 bg-white">{children}</div>
       <div className="bg-white min-w-[270px] py-8 pr-7 flex flex-col space-y-5 ">
         <Card>
           <div className="flex flex-col items-center justify-center h-full space-y-5">
@@ -30,9 +30,9 @@ const Agency = ({ children }: Props) => {
           <div className="text-xl">การแจ้งเตือน</div>
           <div className="space-y-4 overflow-auto h-5/6 " id="journal-scroll">
             <div className="rounded-[0.625rem] text-black flex h-24 w-full bg-white">
-              <div className="self-center w-1/6 m-2 text-black bg-black">
+              <div className="self-center w-1/6 m-2 text-black">
                 <Image
-                  src="/images/Mask_user_profile.png "
+                  src="/images/Profile.png "
                   alt="HappyStudent"
                   width={30}
                   height={30}
