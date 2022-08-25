@@ -45,12 +45,10 @@ const dashboard = () => {
               </thead>
               <tbody>
                 <tr>
-                  <td className="py-7">4</td>
-                  <td className="overflow-auto">ค่าลงทะเบียน</td>
-                  <td>
-                    <div className="flex justify-center"></div>
-                  </td>
-                  <td></td>
+                  <td className="">kmutt_sit_nr01_001</td>
+                  <td className="">621305000**</td>
+                  <td className="">กำลังดำเนินการ</td>
+                  <td className="">3/มีนาคม/2022</td>
                 </tr>
               </tbody>
             </table>
