@@ -22,7 +22,8 @@
     "src/pages/_document.tsx",
     "src/components/Form/Field.tsx",
     "src/pages/_middleware.ts",
-    "src/context/head-context.js"
+    "src/context/head-context.js",
+    "src/data/icons.js"
   ],
   "exclude": ["node_modules"]
 }

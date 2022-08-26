@@ -35,9 +35,9 @@ const dashboard = () => {
         <div>
           <div>
             <table className={`table-fixed w-full text-center overflow-auto`}>
-              <thead className="border-y-4">
+              <thead className="bg-primary-light-orange text-white text-2xl">
                 <tr>
-                  <th>รหัสเอกสาร</th>
+                  <th className="py-5">รหัสเอกสาร</th>
                   <th>รหัสนักศึกษา</th>
                   <th>สถานะคำร้อง</th>
                   <th>วันที่</th>
