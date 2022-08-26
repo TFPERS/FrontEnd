@@ -1,5 +1,5 @@
 import React from "react";
-import Agency from "../../components/Layout/agency";
+import Agency from "../../components/Layout/Agency";
 
 const notice = () => {
   return (

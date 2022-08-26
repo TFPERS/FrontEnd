@@ -1,18 +1,16 @@
 import React from "react";
 import Image from "next/image";
 type Props = {
-  img: string;
   title: string;
   number: number;
+  children: React.ReactNode;
 };
 
-const Card = ({ img, title, number }: Props) => {
+const Card = ({ title, number, children }: Props) => {
   return (
-    <div className="flex">
-      <div className="">
-        <Image src={img} alt="" width={30} height={30} />
-      </div>
-      <div className="w-full">
+    <div className="flex justify-center items-center space-x-2">
+      <div>{children}</div>
+      <div>
         <span>{title}</span> <br />
         <span>{number}</span>
       </div>

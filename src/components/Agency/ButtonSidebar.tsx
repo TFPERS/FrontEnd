@@ -25,7 +25,7 @@ const ButtonSidebar = ({
           router.pathname === path
             ? "bg-primary-light-yellow text-primary-coquelicot"
             : " hover:bg-primary-light-yellow hover:text-primary-coquelicot text-primary-white "
-        } p-2 rounded-lg cursor-pointer text-xl flex justify-between py-2`}
+        } p-3 rounded-lg cursor-pointer text-xl flex justify-between py-2`}
         onMouseEnter={mouseEnter}
         onMouseLeave={mouseLeave}
       >
