@@ -116,9 +116,7 @@ const dashboard = () => {
             </tbody>
           </table>
           {petitions.length === 0 ? (
-            <div className="text-center h-4/6 my-auto text-3xl">
-              ไม่มีคำร้อง
-            </div>
+            <div className="text-center h-4/6 text-3xl py-60">ไม่มีคำร้อง</div>
           ) : (
             ""
           )}
