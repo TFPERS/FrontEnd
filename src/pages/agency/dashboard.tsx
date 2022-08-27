@@ -7,12 +7,15 @@ import Group from "../../../public/svg/Icon_Group.svg";
 import Confirm from "../../../public/svg/Icon_Confirm.svg";
 import axios from "../../config/axios.config";
 import dayjs from "dayjs";
+import Paginate from "../../components/Paginate";
 
 const dashboard = () => {
   const [numberStudent, setNumberStudent] = useState<number>(0);
   const [numberRequest, setNumberRequest] = useState<number>(0);
   const [numberSuccess, setNumberSuccess] = useState<number>(0);
   const [petitions, setPetitions] = useState<any>([]);
+  const [totalPage, setTotalPage] = useState(0);
+  const [currentPage, setcurrentPage] = useState(1);
   const fetchNumberStudent = async () => {
     const { data } = await axios.get(`/api/agency/numberOfStudent`);
     setNumberStudent(data.numberAllStudent);
@@ -33,6 +36,18 @@ const dashboard = () => {
       <div>เสร็จสิ้น</div>;
     }
   };
+  const handleChange = async (
+    event: React.ChangeEvent<unknown>,
+    value: number
+  ) => {
+    if (value !== currentPage) {
+      setcurrentPage(value);
+      const { data } = await axios.get(
+        `/api/petition/paginate?page=${value - 1}&size=7`
+      );
+      setPetitions(data.content);
+    }
+  };
   const formatDD = (date: any) => {
     const format = dayjs(date).format("DD/MM/YYYY \n HH:mm A");
     return <div>{format}</div>;
@@ -45,8 +60,9 @@ const dashboard = () => {
 
   useEffect(() => {
     const fetchPetitions = async () => {
-      const { data } = await axios.get(`/api/petition/paginate?page=0&size=5`);
-      setPetitions(data.rows);
+      const { data } = await axios.get(`/api/petition/paginate?page=0&size=7`);
+      setPetitions(data.content);
+      setTotalPage(data.totalPages);
     };
     fetchPetitions();
   }, []);
@@ -99,7 +115,25 @@ const dashboard = () => {
               ))}
             </tbody>
           </table>
+          {petitions.length === 0 ? (
+            <div className="text-center h-4/6 my-auto text-3xl">
+              ไม่มีคำร้อง
+            </div>
+          ) : (
+            ""
+          )}
         </div>
+        {totalPage === 0 ? (
+          ""
+        ) : (
+          <div className="mt-3 max-w-lg bg-white shadow-4xl mx-auto p-2 rounded-2xl">
+            <Paginate
+              totalPage={totalPage}
+              currentPage={currentPage}
+              handleChange={handleChange}
+            />
+          </div>
+        )}
       </div>
     </Agency>
   );
