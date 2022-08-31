@@ -8,6 +8,7 @@ import Confirm from "../../../public/svg/Icon_Confirm.svg";
 import axios from "../../config/axios.config";
 import dayjs from "dayjs";
 import Paginate from "../../components/Paginate";
+import Table from "../../components/Agency/Table";
 
 const dashboard = () => {
   const [numberStudent, setNumberStudent] = useState<number>(0);
@@ -88,39 +89,7 @@ const dashboard = () => {
             </DashboardCard>
           </Card>
         </div>
-        <div className="h-full border-2">
-          <table className={`table-fixed w-full text-center overflow-auto`}>
-            <thead className="bg-primary-light-orange text-white text-2xl">
-              <tr>
-                <th className="py-9">รหัสเอกสาร</th>
-                <th>รหัสนักศึกษา</th>
-                <th>สถานะคำร้อง</th>
-                <th>วันที่</th>
-              </tr>
-            </thead>
-            <tbody className="">
-              {petitions.map((petition: any) => (
-                <tr key={petition.id}>
-                  <td className="py-7">{petition.id}</td>
-                  <td className="overflow-auto">
-                    {petition.student ? petition.student.id : ""}
-                  </td>
-                  <td>
-                    <div className="flex justify-center">
-                      {formatStatus(petition.status)}
-                    </div>
-                  </td>
-                  <td>{formatDD(petition.createdAt)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          {petitions.length === 0 ? (
-            <div className="text-center h-4/6 text-3xl py-60">ไม่มีคำร้อง</div>
-          ) : (
-            ""
-          )}
-        </div>
+        <Table petitions={petitions} />
         {totalPage === 0 ? (
           ""
         ) : (

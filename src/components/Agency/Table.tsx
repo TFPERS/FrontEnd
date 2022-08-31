@@ -23,7 +23,7 @@ const Table = ({ petitions }: Props) => {
       <table className={`table-fixed w-full text-center overflow-auto`}>
         <thead className="bg-primary-light-orange text-white text-2xl">
           <tr>
-            <th className="py-9">รหัสเอกสาร</th>
+            <th className="py-9">หมายเลขคำร้อง</th>
             <th>รหัสนักศึกษา</th>
             <th>สถานะคำร้อง</th>
             <th>วันที่</th>
