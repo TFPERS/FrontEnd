@@ -4,6 +4,8 @@ import AuthService from "../../services/auth.service";
 import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/router";
 import { WindowSize } from "../../helper/useBreakpoint";
+import Notification from "../../services/notification.service";
+import axios from "../../config/axios.config";
 
 type Props = {
   isLogin?: boolean;
@@ -23,12 +25,29 @@ const useOutsideAlerter = (ref: any, handler: any) => {
     };
   }, [ref]);
 };
+const useNotiOutside = (ref: any, handler: any) => {
+  useEffect(() => {
+    function handlerClickOutside(event: any) {
+      if (ref.current && !ref.current.contains(event.target)) {
+        handler();
+      }
+    }
+
+    document.addEventListener("mousedown", handlerClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handlerClickOutside);
+    };
+  }, [ref]);
+};
 
 export default function Navbar({ isLogin = true }: Props) {
   const router = useRouter();
   const [currentUser, setCurrentUser] = useState(null);
   const [isProfile, setIsProfile] = useState(false);
   const [isOpenMenu, setIsOpenMenu] = useState(false);
+  const [isOpenNoti, setIsOpenNoti] = useState(false);
+  const [isReadNoti, setIsReadNoti] = useState(false);
+
   let profileRef = useRef<any>();
   const toggleIsProfile = () => {
     setIsProfile(!isProfile);
@@ -43,29 +62,54 @@ export default function Navbar({ isLogin = true }: Props) {
   const routeToProfile = () => {
     router.push("/profile");
   };
-  useEffect(() => {
-    const fetch = async () => {
-      await setCurrentUser(AuthService.getCurrentUser());
-    };
-    fetch();
-  }, []);
+  const toggleIsNoti = async () => {
+    setIsOpenNoti(!isOpenNoti);
+    if (isOpenNoti) {
+      axios.put(
+        `/api/notification/update/status/${AuthService.getCurrentUser().id}`
+      );
+    }
+    setIsReadNoti(true);
+  };
 
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef, () => {
     setIsProfile(false);
     setIsOpenMenu(false);
   });
+  const notiRef = useRef(null);
+  useNotiOutside(notiRef, () => {
+    setIsOpenNoti(false);
+  });
+  const { isMobile, isTablet, isDesktop } = WindowSize();
 
   useEffect(() => {
     if (!isMobile) {
       setIsOpenMenu(false);
     }
-  });
-
-  const { isMobile, isTablet, isDesktop } = WindowSize();
+    const fetch = async () => {
+      await setCurrentUser(AuthService.getCurrentUser());
+    };
+    fetch();
+  }, []);
+  const [stdNotifications, setStdNotifications] = useState<any>([]);
+  useEffect(() => {
+    const fetchNoti = async () => {
+      const { data } = await Notification.getNotificationByStudentId(
+        AuthService.getCurrentUser().id
+      );
+      setIsReadNoti(data.isRead);
+      setStdNotifications(data.studentNotification);
+    };
+    AuthService.checkToken() ? fetchNoti() : "";
+  }, []);
 
   return (
-    <header className="flex items-center justify-between max-w-[122.5rem] mx-auto">
+    <header
+      className={`flex items-center justify-between max-w-[122.5rem] mx-auto bg-primary-light-orange
+    ${isMobile ? "p-4" : "p-4"}
+    `}
+    >
       <div
         onClick={() => router.push("/petition")}
         className="flex items-center cursor-pointer"
@@ -168,13 +212,58 @@ export default function Navbar({ isLogin = true }: Props) {
         <>
           {currentUser ? (
             <div className="flex space-x-4 text-white font-normal">
-              <div>
-                <span
-                  style={{ fontSize: "3.125rem" }}
-                  className="material-icons-outlined cursor-pointer"
-                >
-                  notifications
-                </span>
+              <div ref={notiRef} className="relative">
+                <div className="relative cursor-pointer">
+                  <span
+                    style={{ fontSize: "3.125rem" }}
+                    className="material-icons-outlined cursor-pointer"
+                    onClick={toggleIsNoti}
+                  >
+                    notifications
+                  </span>
+                  {!isReadNoti ? (
+                    <span
+                      className="bg-yellow-300 w-5 h-5 rounded-full absolute bottom-2 right-0 cursor-pointer"
+                      onClick={toggleIsNoti}
+                    />
+                  ) : (
+                    ""
+                  )}
+                </div>
+                {isOpenNoti && (
+                  <div className="bg-primary-white border p-4 absolute z-40 right-4 rounded-[0.625rem] w-96 text-black max-h-[31.25rem] overflow-auto">
+                    <ul className="space-y-2 text-black">
+                      <li className="text-3xl font-bold">การแจ้งเตือน</li>
+                      {
+                        stdNotifications.map((noti: any) => {
+                          return (
+                            <li key={noti.id}>
+                              <div className="flex space-x-4">
+                                <div>
+                                  <Image
+                                    src="/images/Profile.png"
+                                    width={50}
+                                    height={50}
+                                    alt="profile"
+                                  />
+                                </div>
+                                <div className="flex flex-col">
+                                  <span className="font-bold text-2xl">
+                                    {noti.notification.agency.name}
+                                  </span>
+                                  <span>{noti.notification.description}</span>
+                                </div>
+                              </div>
+                            </li>
+                          );
+                        })
+                        // ) : (
+                        //   <li>ไม่มีแจ้งเตือน</li>
+                        // )
+                      }
+                    </ul>
+                  </div>
+                )}
               </div>
               <div ref={wrapperRef}>
                 <span
@@ -185,7 +274,7 @@ export default function Navbar({ isLogin = true }: Props) {
                   account_circle
                 </span>
                 {isProfile && (
-                  <div className="bg-primary-white p-4 absolute z-40 right-16 rounded-[0.625rem]">
+                  <div className="bg-primary-white p-4 absolute z-40 right-16 rounded-[0.625rem] border">
                     <ul className="text-black space-y-2 ">
                       <li
                         onClick={routeToProfile}

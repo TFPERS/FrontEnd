@@ -177,11 +177,15 @@ function Profile() {
               account_circle
             </span>
           </div>
-          <div className={` mt-32 ${isMobile ? "text-4xl" : "text-5xl"}`}>
+          <div className={` mt-32 ${isMobile ? "text-3xl" : "text-5xl"}`}>
             ประวัติส่วนตัว
           </div>
           {profile && (
-            <div className="flex flex-col text-3xl mt-8 space-y-3 p-2">
+            <div
+              className={`flex flex-col  mt-8 space-y-3 p-2
+            ${isMobile ? "text-xl" : "text-3xl"}
+            `}
+            >
               {!isUpdateProfile ? (
                 <>
                   {profile.firstname.length > 15 ||
@@ -210,7 +214,7 @@ function Profile() {
                 <>
                   <FormProvider {...methods}>
                     <form
-                      className="flex flex-col"
+                      className="flex flex-col space-y-4"
                       onSubmit={methods.handleSubmit(updateProfile)}
                     >
                       <span className="w-full">
@@ -264,7 +268,7 @@ function Profile() {
                         <label htmlFor="อีเมล">อีเมล :</label>{" "}
                         <input
                           id="อีเมล"
-                          className="border-b px-3 focus:outline-0 focus:border-b-2"
+                          className="border-b px-3 focus:outline-0 focus:border-b-2 w-full"
                           placeholder={profile.email}
                           {...methods.register("email")}
                         />
@@ -284,11 +288,7 @@ function Profile() {
               )}
             </div>
           )}
-          <div
-            className={`absolute  ${
-              isMobile ? "right-4 top-10" : "right-10 top-10"
-            }`}
-          >
+          <div className={`${isMobile ? "pt-5" : "absolute right-10 top-10"}`}>
             <button
               onClick={toggleUpdateProfile}
               className="flex rounded-[0.625rem] p-2 items-center bg-primary-coquelicot text-primary-white"

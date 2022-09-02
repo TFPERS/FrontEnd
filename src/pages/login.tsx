@@ -30,7 +30,32 @@ function Login() {
     });
   };
 
-  const submit = async (event: React.MouseEvent<HTMLButtonElement>) => {
+  const submitEnter = async (event: any) => {
+    try {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        setIsLoading(true);
+        const data = await AuthService.login(form.username, form.password);
+        await toast.success(data.message, {
+          theme: "dark",
+        });
+        await setTimeout(() => {
+          router.push("/petition");
+          setIsLoading(false);
+        }, 1200);
+      }
+    } catch (err: any) {
+      const { data } = err.response;
+      toast.error(data.message, {
+        theme: "dark",
+      });
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 500);
+    }
+  };
+
+  const submit = async (event: any) => {
     event.preventDefault();
     setIsLoading(true);
     try {
@@ -70,6 +95,7 @@ function Login() {
               name="username"
               value={form.username}
               onChange={onFormValueChange}
+              onKeyPress={(e: any) => submitEnter(e)}
               className="border rounded-[0.625rem] p-2"
             />
           </div>
@@ -81,6 +107,7 @@ function Login() {
               name="password"
               value={form.password}
               onChange={onFormValueChange}
+              onKeyPress={(e: any) => submitEnter(e)}
               className="border rounded-[0.625rem] p-2"
             />
           </div>
@@ -89,6 +116,7 @@ function Login() {
             <>
               <button
                 onClick={submit}
+                onKeyPress={(e: any) => submitEnter(e)}
                 className="mt-6 w-full p-2 bg-primary-coquelicot text-primary-white self-center flex justify-center items-center shadow-3xl rounded-[0.625rem]"
               >
                 เข้าสู่ระบบ

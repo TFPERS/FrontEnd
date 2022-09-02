@@ -45,7 +45,7 @@ function Follow() {
     };
     AuthService.checkToken() ? fetchPetition() : router.push("/login");
   }, []);
-
+  console.log(petitions);
   const formatTypePetition = (type: any) => {
     if (type === "extendPayment") {
       return "ขยายเวลาชำระเงิน";
@@ -119,7 +119,7 @@ function Follow() {
           ""
         )}
       </div>
-      {totalPage === 0 ? (
+      {totalPage === 1 ? (
         ""
       ) : (
         <div className="mt-3 max-w-lg bg-white shadow-4xl mx-auto p-2 rounded-2xl">
@@ -130,8 +130,6 @@ function Follow() {
           />
         </div>
       )}
-
-      {/* <Link href="/petition">back </Link> */}
     </Layout>
   );
 }

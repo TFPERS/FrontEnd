@@ -30,14 +30,18 @@ export default function Petition() {
           </div>
         )}
 
-        <div className={`col-span-1 flex flex-col self-center space-y-4`}>
+        <div
+          className={`col-span-1 flex flex-col self-center space-y-4
+          ${isMobile ? "text-2xl" : "text-4xl"}
+          `}
+        >
           <PetitionBox
             image="/images/note.png"
             altImage="note"
-            width={141}
-            height={145}
+            width={isMobile ? 140 : 140}
+            height={isMobile ? 120 : 145}
             htmlText={
-              <span className="text-4xl font-semibold">
+              <span className="font-semibold">
                 แจ้งคำร้อง
                 <br />
                 ขยายเวลาชำระเงิน
@@ -48,10 +52,10 @@ export default function Petition() {
           <PetitionBox
             image="/images/folder.png"
             altImage="folder"
-            width={157}
-            height={151}
+            width={isMobile ? 120 : 157}
+            height={isMobile ? 140 : 151}
             htmlText={
-              <span className="text-4xl font-semibold">
+              <span className="font-semibold">
                 แจ้งคำร้อง <br />
                 ผ่อนผันค่าเล่าเรียน
               </span>
@@ -60,13 +64,15 @@ export default function Petition() {
           <PetitionBox
             image="/images/search.png"
             altImage="search"
-            width={315.79}
-            height={150}
+            width={isMobile ? 250 : 240}
+            height={isMobile ? 130 : 150}
             htmlText={
               <>
-                <span className="text-4xl font-semibold">ติดตามคำร้อง</span>
+                <span className="font-semibold">ติดตามคำร้อง</span>
                 <br />
-                <span className="text-2xl">ติดตามคำร้องและสถานะ </span>
+                <span className={`${isMobile ? "text-xl" : "text-2xl"}`}>
+                  ติดตามคำร้องและสถานะ{" "}
+                </span>
               </>
             }
             path="/petition/follow"
