@@ -33,7 +33,10 @@ function ExtentPayment() {
   const [note, setNote] = useState();
 
   const schema = object({
-    note: string().required("โปรดกรอกหมายเหตุ"),
+    note: string()
+      .trim()
+      .max(255, "จำกัดข้อความละ 255 ตัวอักษร")
+      .required("โปรดกรอกหมายเหตุ"),
   });
 
   const router = useRouter();
@@ -101,8 +104,10 @@ function ExtentPayment() {
             color: "#fff",
             title: "ผิดพลาด",
             icon: "error",
+            text: "Something went wrong!",
             confirmButtonText: "ปิด",
           });
+          setStep(1);
         }
       }
     }
@@ -154,7 +159,7 @@ function ExtentPayment() {
         <div className="bg-primary-white mx-auto rounded-[0.625rem] mt-10 pt-16 pb-8">
           <div className="max-w-5xl mx-auto p-2 px-3">
             <div
-              className={`${isMobile ? "text-3xl text-center" : "text-4xl"} ${
+              className={`${isMobile ? "text-2xl text-center" : "text-4xl"} ${
                 isTablet ? "" : ""
               } font-semibold`}
             >
@@ -167,19 +172,35 @@ function ExtentPayment() {
                 value={`${user.firstname} ${user.lastname}`}
               />
               {user && (
-                <div className="flex w-full space-x-16">
+                <div
+                  className={`flex w-full ${
+                    isMobile ? "space-x-5" : "space-x-16"
+                  }`}
+                >
                   <div className="w-1/2">
-                    <div className="text-[2rem]">คณะ</div>
+                    <div className={`${isMobile ? "text-2xl" : "text-[2rem]"}`}>
+                      คณะ
+                    </div>
                     {user.faculty && (
-                      <div className="pl-6 text-2xl bg-[#C4C4C4] rounded-lg p-2 cursor-not-allowed">
+                      <div
+                        className={`${
+                          isMobile ? "text-xl" : "text-2xl"
+                        } pl-6 bg-[#C4C4C4] rounded-lg p-2 cursor-not-allowed`}
+                      >
                         {findFaculty(user.faculty)}
                       </div>
                     )}
                   </div>
                   <div className="w-1/2">
-                    <div className="text-[2rem]">สาขา</div>
+                    <div className={`${isMobile ? "text-2xl" : "text-[2rem]"}`}>
+                      สาขา
+                    </div>
                     {user.major && (
-                      <div className="pl-6 text-2xl bg-[#C4C4C4] rounded-lg p-2 cursor-not-allowed">
+                      <div
+                        className={`${
+                          isMobile ? "text-xl" : "text-2xl"
+                        } pl-6 bg-[#C4C4C4] rounded-lg p-2 cursor-not-allowed`}
+                      >
                         {findMajor(user.major, user.faculty)}
                       </div>
                     )}
@@ -188,15 +209,20 @@ function ExtentPayment() {
               )}
 
               <div className="flex flex-col">
-                <label htmlFor="note" className="text-[2rem]">
+                <label
+                  htmlFor="note"
+                  className={`${isMobile ? "text-2xl" : "text-[2rem]"}`}
+                >
                   หมายเหตุ
                 </label>
                 {step === 1 ? (
                   <>
-                    <input
+                    <textarea
                       placeholder="หมายเหตุ"
                       {...register("note")}
-                      className="pl-6 text-2xl rounded-lg p-2 border-4 border-[#C4C4C4]"
+                      className={`
+                      ${isMobile ? "text-xl" : "text-2xl"}
+                      pl-6 rounded-lg p-2 border-4 border-[#C4C4C4] h-28`}
                     />
                     <span className="text-red-500">
                       {errors?.note?.message}
@@ -204,8 +230,12 @@ function ExtentPayment() {
                   </>
                 ) : (
                   <>
-                    <div className="pl-6 text-2xl bg-[#C4C4C4] rounded-lg p-2 cursor-not-allowed">
-                      {note}
+                    <div
+                      className={`
+                    ${isMobile ? "text-xl" : "text-2xl"}
+                    pl-6 bg-[#C4C4C4] rounded-lg p-2 cursor-not-allowed overflow-auto overflow-x-hidden h-28`}
+                    >
+                      <span className="break-words">{note}</span>
                     </div>
                   </>
                 )}
@@ -233,9 +263,6 @@ function ExtentPayment() {
             </div>
           </div>
         </div>
-        {/* <Link href="/petition">
-          <a>back</a>
-        </Link> */}
       </div>
     </Layout>
   );

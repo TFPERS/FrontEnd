@@ -119,7 +119,7 @@ function Follow() {
           ""
         )}
       </div>
-      {totalPage === 1 ? (
+      {totalPage === 1 || totalPage === 0 ? (
         ""
       ) : (
         <div className="mt-3 max-w-lg bg-white shadow-4xl mx-auto p-2 rounded-2xl">
