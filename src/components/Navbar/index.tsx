@@ -237,7 +237,7 @@ export default function Navbar({ isLogin = true }: Props) {
                       {
                         stdNotifications.map((noti: any) => {
                           return (
-                            <li key={noti.id}>
+                            <li key={noti.id} className="border-b pb-2">
                               <div className="flex space-x-4">
                                 <div>
                                   <Image
@@ -248,10 +248,12 @@ export default function Navbar({ isLogin = true }: Props) {
                                   />
                                 </div>
                                 <div className="flex flex-col">
-                                  <span className="font-bold text-2xl">
+                                  <span className="font-bold text-2xl break-words">
                                     {noti.notification.agency.name}
                                   </span>
-                                  <span>{noti.notification.description}</span>
+                                  <span className="break-words">
+                                    {noti.notification.description}
+                                  </span>
                                 </div>
                               </div>
                             </li>

@@ -4,6 +4,7 @@ import Paginate from "../../components/Paginate";
 import axios from "../../config/axios.config";
 type Props = {
   petitions: any;
+  isShowModal: boolean;
 };
 const formatStatus = (status: any) => {
   if (status === "pending") {
@@ -17,9 +18,16 @@ const formatDD = (date: any) => {
   const format = dayjs(date).format("DD/MM/YYYY \n HH:mm A");
   return <div>{format}</div>;
 };
-const Table = ({ petitions }: Props) => {
+const Table = ({ petitions, isShowModal = false }: Props) => {
+  const [selectedPetition, setSelectedPetition] = useState<any>(null);
+
+  const copyPetitionDetail: any = (petition: any) => {
+    console.log(petition);
+    setSelectedPetition(petition);
+  };
+
   return (
-    <div className="h-full border-2">
+    <div className="h-full border-2 relative">
       <table className={`table-fixed w-full text-center overflow-auto`}>
         <thead className="bg-primary-light-orange text-white text-2xl">
           <tr>
@@ -31,7 +39,11 @@ const Table = ({ petitions }: Props) => {
         </thead>
         <tbody>
           {petitions.map((petition: any) => (
-            <tr key={petition.id}>
+            <tr
+              key={petition.id}
+              className="cursor-pointer hover:bg-primary-light-yellow"
+              // onClick={copyPetitionDetail(petition)}
+            >
               <td className="py-7">{petition.id}</td>
               <td className="overflow-auto">
                 {petition.student ? petition.student.id : ""}
@@ -52,6 +64,21 @@ const Table = ({ petitions }: Props) => {
         </div>
       ) : (
         ""
+      )}
+      {isShowModal && (
+        <div className="absolute z-20 bg-primary-white h-[50rem] w-96 top-[-50px] right-0 border-2 rounded-[0.625rem]">
+          <div className="flex flex-col p-10 space-y-5">
+            <div>
+              <span>หมายเลขคำร้อง</span>
+            </div>
+            <div>ประเภทคำร้อง</div>
+            <div>รหัสนักศึกษา</div>
+            <div>สถานะคำร้อง</div>
+            <div>วันที่</div>
+            <div>หมายเหตุ</div>
+            <div>ไฟล์เอกสาร</div>
+          </div>
+        </div>
       )}
     </div>
   );

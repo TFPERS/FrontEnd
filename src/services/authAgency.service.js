@@ -9,7 +9,7 @@ class AuthAgencyService {
       })
       .then((response) => {
         if (response.data.accessToken) {
-          setCookies("TFPERSTOKEN", response.data.accessToken, {
+          setCookies("TFPERSAGENCYTOKEN", response.data.accessToken, {
             maxAge: 86400,
           });
           const { message, id, name, username, updatedAt, createdAt, role } =
@@ -31,7 +31,7 @@ class AuthAgencyService {
   }
   logout() {
     localStorage.removeItem("agency");
-    removeCookies("TFPERSTOKEN");
+    removeCookies("TFPERSAGENCYTOKEN");
   }
   getCurrentUser() {
     if (typeof window !== "undefined") {
@@ -40,7 +40,7 @@ class AuthAgencyService {
     }
   }
   checkToken() {
-    const token = getCookie("TFPERSTOKEN");
+    const token = getCookie("TFPERSAGENCYTOKEN");
     return token ? true : false;
   }
 }

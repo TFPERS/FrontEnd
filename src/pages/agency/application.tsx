@@ -33,7 +33,7 @@ const application = () => {
     <Agency>
       <div className="flex flex-col h-full space-y-5">
         <div className="text-3xl">คำร้องขอ</div>
-        <Table petitions={petitions} />
+        <Table petitions={petitions} isShowModal />
         {totalPage === 0 ? (
           ""
         ) : (

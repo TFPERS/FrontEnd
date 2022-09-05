@@ -21,11 +21,14 @@ const notification = () => {
       <div className=" mt-4 pb-2 max-w-5xl mx-auto">
         <div className="bg-white min-h-[48rem] max-h-[48rem] p-4 rounded-[0.625rem] overflow-auto">
           <div className="text-3xl font-bold">การแจ้งเตือน</div>
-          <div className="overflow-auto h-4/6">
+          <div className="">
             {
               stdNotifications.map((noti: any) => {
                 return (
-                  <div key={noti.id} className="mt-3 pb-2 border-b">
+                  <div
+                    key={noti.id}
+                    className="mt-3 pb-2 border-b max-h-[6rem] overflow-auto"
+                  >
                     <div className="flex space-x-4">
                       <div className="pt-1">
                         <Image
@@ -35,11 +38,13 @@ const notification = () => {
                           alt="profile"
                         />
                       </div>
-                      <div className="flex flex-col w-full">
-                        <span className="font-bold text-2xl">
+                      <div className="flex flex-col w-full overflow-auto">
+                        <span className="font-bold text-2xl break-words">
                           {noti.notification.agency.name}
                         </span>
-                        <span>{noti.notification.description}</span>
+                        <span className="break-words">
+                          {noti.notification.description}
+                        </span>
                       </div>
                     </div>
                   </div>

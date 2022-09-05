@@ -89,7 +89,7 @@ const dashboard = () => {
             </DashboardCard>
           </Card>
         </div>
-        <Table petitions={petitions} />
+        <Table petitions={petitions} isShowModal={false} />
         {totalPage === 0 ? (
           ""
         ) : (
