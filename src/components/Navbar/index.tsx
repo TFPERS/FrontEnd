@@ -231,24 +231,27 @@ export default function Navbar({ isLogin = true }: Props) {
                   )}
                 </div>
                 {isOpenNoti && (
-                  <div className="bg-primary-white border p-4 absolute z-40 right-4 rounded-[0.625rem] w-96 text-black max-h-[31.25rem] overflow-auto">
+                  <div className="bg-primary-white border-2 p-4 absolute z-40 right-4 rounded-[0.625rem] w-96 text-black max-h-[31.25rem] overflow-auto">
                     <ul className="space-y-2 text-black">
                       <li className="text-3xl font-bold">การแจ้งเตือน</li>
                       {
                         stdNotifications.map((noti: any) => {
                           return (
-                            <li key={noti.id} className="border-b pb-2">
+                            <li
+                              key={noti.notification.id}
+                              className="border-b pb-2 last:border-b-0"
+                            >
                               <div className="flex space-x-4">
-                                <div>
+                                <div className="pt-2 h-20 w-2/12">
                                   <Image
                                     src="/images/Profile.png"
-                                    width={50}
-                                    height={50}
+                                    width={60}
+                                    height={60}
                                     alt="profile"
                                   />
                                 </div>
-                                <div className="flex flex-col">
-                                  <span className="font-bold text-2xl break-words">
+                                <div className="flex flex-col overflow-auto w-10/12">
+                                  <span className="font-bold text-xl break-words">
                                     {noti.notification.agency.name}
                                   </span>
                                   <span className="break-words">

@@ -44,7 +44,7 @@ const Agency = ({ children }: Props) => {
                   className="rounded-[0.625rem] text-black flex max-h-[6rem] w-full bg-white"
                   key={noti.id}
                 >
-                  <div className="w-1/6 m-2 text-black">
+                  <div className="w-2/12 p-2 text-black">
                     <Image
                       src="/images/Profile.png "
                       alt="HappyStudent"
@@ -52,7 +52,7 @@ const Agency = ({ children }: Props) => {
                       height={30}
                     />
                   </div>
-                  <div className="flex flex-col w-5/6 overflow-auto text-left pr-2">
+                  <div className="flex flex-col w-10/12 overflow-auto text-left pr-2">
                     <div className="font-semibold break-words">
                       {noti.agency.name}
                     </div>

@@ -9,6 +9,8 @@ import axios from "../../config/axios.config";
 import dayjs from "dayjs";
 import Paginate from "../../components/Paginate";
 import Table from "../../components/Agency/Table";
+import { useRouter } from "next/router";
+import AuthAgencyService from "../../services/authAgency.service";
 
 const dashboard = () => {
   const [numberStudent, setNumberStudent] = useState<number>(0);
@@ -49,11 +51,14 @@ const dashboard = () => {
       setPetitions(data.content);
     }
   };
+  const router = useRouter();
+
   const formatDD = (date: any) => {
     const format = dayjs(date).format("DD/MM/YYYY \n HH:mm A");
     return <div>{format}</div>;
   };
   useEffect(() => {
+    AuthAgencyService.checkToken() ? "" : router.push("/agency");
     fetchNumberStudent();
     fetchNumberRequest();
     fetchNumberSuccess();

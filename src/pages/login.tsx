@@ -10,10 +10,13 @@ import { useHeadTitle } from "../context/HeadContext";
 
 function Login() {
   const { setHeadTitle } = useHeadTitle();
+  const router = useRouter();
   useEffect(() => {
+    if (AuthService.getCurrentUser()) {
+      router.push("/petition");
+    }
     setHeadTitle("เข้าสู่ระบบ");
   });
-  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [form, setForm] = useState({
     username: "",

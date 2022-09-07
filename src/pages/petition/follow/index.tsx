@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import { useHeadTitle } from "../../../context/HeadContext";
 import { WindowSize } from "../../../helper/useBreakpoint";
 import Paginate from "../../../components/Paginate/index";
+import { StatusPetition } from "../../../enum/StatusPetition";
 
 function Follow() {
   const { setHeadTitle } = useHeadTitle();
@@ -53,17 +54,33 @@ function Follow() {
   };
 
   const formatStatus = (status: any) => {
-    if (status === "pending") {
+    if (status === StatusPetition.Pending) {
+      return (
+        <div className="bg-[#C4C4C4] text-primary-white w-[11.25rem] h-[3.75rem] rounded-[0.625rem] flex items-center justify-center">
+          รอดำเนินการ
+        </div>
+      );
+    }
+    if (status === StatusPetition.InProgress) {
       return (
         <div className="bg-[#FFC72C] text-primary-white w-[11.25rem] h-[3.75rem] rounded-[0.625rem] flex items-center justify-center">
           กำลังดำเนินการ
         </div>
       );
     }
-    if (status === "success") {
-      <div className="bg-[#17A87B] text-primary-white w-[11.25rem] h-[3.75rem] rounded-[0.625rem] flex items-center justify-center">
-        เสร็จสิ้น
-      </div>;
+    if (status === StatusPetition.Reject) {
+      return (
+        <div className="bg-[#FA2816] text-primary-white w-[11.25rem] h-[3.75rem] rounded-[0.625rem] flex items-center justify-center">
+          ปฏิเสธ
+        </div>
+      );
+    }
+    if (status === StatusPetition.Done) {
+      return (
+        <div className="bg-[#17A87B] text-primary-white w-[11.25rem] h-[3.75rem] rounded-[0.625rem] flex items-center justify-center">
+          เสร็จสิ้น
+        </div>
+      );
     }
   };
   const formatDD = (date: any) => {

@@ -3,9 +3,13 @@ import Layout from "../components/Layout";
 import Notification from "../services/notification.service";
 import AuthService from "../services/auth.service";
 import Image from "next/image";
+import { WindowSize } from "../helper/useBreakpoint";
+import { useRouter } from "next/router";
 
 const notification = () => {
   const [stdNotifications, setStdNotification] = useState<any>([]);
+  const { isMobile, isTablet, isDesktop } = WindowSize();
+  const router = useRouter();
   useEffect(() => {
     const fetchNoti = async () => {
       const { data } = await Notification.getNotificationByStudentId(
@@ -13,7 +17,16 @@ const notification = () => {
       );
       setStdNotification(data.studentNotification);
     };
-    AuthService.getCurrentUser() ? fetchNoti() : "";
+    AuthService.checkToken() ? fetchNoti() : "";
+  }, []);
+
+  useEffect(() => {
+    console.log(isMobile);
+    if (isMobile) {
+      console.log("d");
+    } else {
+      console.log("dd");
+    }
   }, []);
 
   return (
@@ -26,7 +39,7 @@ const notification = () => {
               stdNotifications.map((noti: any) => {
                 return (
                   <div
-                    key={noti.id}
+                    key={noti.notification.id}
                     className="mt-3 pb-2 border-b max-h-[6rem] overflow-auto"
                   >
                     <div className="flex space-x-4">

@@ -4,7 +4,7 @@ const getNotificationByStudentId = (studentId) => {
 };
 const addNotiAgency = (agencyId, description) => {
   console.log(agencyId, description);
-  return axios.post(`/api/notification/agency/addNoti`, {
+  return axios.post(`/api/notification/agency/addNotiForAllStd`, {
     description: description,
     agencyId: agencyId,
   });

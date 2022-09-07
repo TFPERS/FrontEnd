@@ -6,6 +6,7 @@ import Document from "../../../public/svg/Icon_Document.svg";
 import Exit from "../../../public/svg/Icon_Exit.svg";
 import Notification from "../../../public/svg/Icon_Notification.svg";
 import { useRouter } from "next/router";
+import AuthAgencyService from "../../services/authAgency.service";
 
 const Sidebar = () => {
   const router = useRouter();
@@ -13,6 +14,9 @@ const Sidebar = () => {
   const [iconDocument, setIconDocument] = useState(false);
   const [iconNotification, setIconNotification] = useState(false);
   const [iconExit, setIconExit] = useState(false);
+  const logoutAgency = () => {
+    AuthAgencyService.logout();
+  };
 
   return (
     <div className="flex flex-col items-center w-full h-full py-10 px-7 bg-primary-light-orange">
@@ -70,10 +74,10 @@ const Sidebar = () => {
           />
         </ButtonSidebar>
       </div>
-      <div className="w-full mt-auto">
+      <div className="w-full mt-auto" onClick={logoutAgency}>
         <ButtonSidebar
           text="ออกจากระบบ"
-          path="/"
+          path="/agency"
           mouseEnter={() => setIconExit(true)}
           mouseLeave={() => setIconExit(false)}
         >

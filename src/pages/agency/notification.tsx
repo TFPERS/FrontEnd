@@ -6,11 +6,15 @@ import { string, number, object } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Swal from "sweetalert2";
 import Notification from "../../services/notification.service";
+import { useRouter } from "next/router";
 const notice = () => {
   const [notiDescription, setNotiDescription] = useState("");
   const [agency, setAgency] = useState<any>(null);
+  const router = useRouter();
   useEffect(() => {
-    setAgency(AuthAgencyService.getCurrentUser());
+    AuthAgencyService.checkToken()
+      ? setAgency(AuthAgencyService.getCurrentUser())
+      : router.push("/agency");
   }, []);
 
   const schema = object({
@@ -27,7 +31,6 @@ const notice = () => {
   } = useForm({ resolver: yupResolver(schema) });
 
   const submit = async ({ notiDescription }: any) => {
-    console.log(errors.notiDescription.message);
     try {
       const agencyId = agency.id;
       const description = notiDescription;
