@@ -84,7 +84,7 @@ function Login() {
   return (
     <div className="flex flex-col items-center justify-center max-w-lg min-h-screen mx-auto bg-primary-light-orange">
       <ToastContainer />
-      <Image src="/images/TFPERSLOGO.png" width={70} height={70} />
+      <Image src="/images/TFPERSLOGO.png" width={70} height={70} alt="" />
       <div className="my-2.5 sm:text-4xl text-3xl font-bold text-primary-white">
         เข้าสู่ระบบ TFPERS
       </div>

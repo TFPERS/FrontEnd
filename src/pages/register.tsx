@@ -95,7 +95,7 @@ function Register() {
     <div>
       <div className="flex space-y-4 flex-col items-center min-h-screen justify-center max-w-lg mx-auto">
         <ToastContainer />
-        <Image src="/images/TFPERSLOGO.png" width={70} height={70} />
+        <Image src="/images/TFPERSLOGO.png" width={70} height={70} alt="" />
         <div className="sm:text-[2.5rem] text-3xl font-bold text-primary-white">
           สมัครสมาชิก TFPERS
         </div>
