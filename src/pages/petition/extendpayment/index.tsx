@@ -14,6 +14,8 @@ import { useHeadTitle } from "../../../context/HeadContext";
 import { WindowSize } from "../../../helper/useBreakpoint";
 import { faculties } from "../../../data/faculties";
 import { majors } from "../../../data/majors";
+import { StatusPetition } from "../../../enum/StatusPetition";
+import { TypePetition } from "../../../enum/TypePetition";
 interface Student {
   id?: string;
   firstname?: string;
@@ -76,8 +78,8 @@ function ExtentPayment() {
         increaseStep();
       }
       if (step === 2) {
-        const type = "extendPayment";
-        const status = "pending";
+        const type = TypePetition.extendPayment;
+        const status = StatusPetition.Pending;
         try {
           increaseStep();
           const { data } = await axios.post("/api/petition/form", {

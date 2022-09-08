@@ -75,14 +75,14 @@ const Table = ({ petitions, isShowModal = false, submit }: Props) => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isShowSelectedStatus, setIsShowSelectedStatus] = useState(false);
   return (
-    <div className="h-full border-2 relative">
-      <table className={`table-fixed w-full text-center overflow-auto`}>
+    <div className="h-full relative border rounded-[0.625rem]">
+      <table className={`table-fixed w-full text-center overflow-auto `}>
         <thead className="bg-primary-light-orange text-white text-2xl">
           <tr>
-            <th className="py-9">หมายเลขคำร้อง</th>
+            <th className="py-9 rounded-tl-[0.625rem]">หมายเลขคำร้อง</th>
             <th>รหัสนักศึกษา</th>
             <th>สถานะคำร้อง</th>
-            <th>วันที่</th>
+            <th className="py-9 rounded-tr-[0.625rem]">วันที่</th>
           </tr>
         </thead>
         <tbody>

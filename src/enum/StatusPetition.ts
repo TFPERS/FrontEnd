@@ -1,6 +1,6 @@
 export enum StatusPetition {
-    Pending = "pending",
-    InProgress = "inprogress",
-    Reject = "reject",
-    Done = "done"
+    Pending = "รอดำเนินการ",
+    InProgress = "กำลังดำเนินการ",
+    Reject = "ปฏิเสธ",
+    Done = "เสร็จสิ้น"
 }

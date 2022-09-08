@@ -5,6 +5,7 @@ import { PaginationItem } from "@mui/material";
 import { purple } from "@mui/material/colors";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Button from "@mui/material/Button";
+import { WindowSize } from "../../helper/useBreakpoint";
 
 interface Props {
   totalPage: number;
@@ -26,6 +27,8 @@ const theme = createTheme({
 });
 
 function Paginate({ totalPage, currentPage, handleChange }: Props) {
+  const { isMobile } = WindowSize();
+
   return (
     <ThemeProvider theme={theme}>
       <Stack spacing={2} alignItems="center">
@@ -33,9 +36,11 @@ function Paginate({ totalPage, currentPage, handleChange }: Props) {
           count={totalPage}
           color="secondary"
           page={currentPage}
-          renderItem={(item) => <PaginationItem {...item} size="large" />}
-          // hidePrevButton={currentPage === 1}
-          // hideNextButton={currentPage === totalPage}
+          renderItem={(item) => (
+            <PaginationItem {...item} size={isMobile ? "small" : "large"} />
+          )}
+          hidePrevButton={currentPage === 1}
+          hideNextButton={currentPage === totalPage}
           onChange={handleChange}
         />
       </Stack>

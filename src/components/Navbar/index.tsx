@@ -64,7 +64,7 @@ export default function Navbar({ isLogin = true }: Props) {
   };
   const toggleIsNoti = async () => {
     setIsOpenNoti(!isOpenNoti);
-    if (isOpenNoti) {
+    if (!isOpenNoti) {
       axios.put(
         `/api/notification/update/status/${AuthService.getCurrentUser().id}`
       );

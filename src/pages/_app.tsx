@@ -13,19 +13,23 @@ function MyApp({ Component, pageProps: { ...pageProps } }: AppProps) {
     if (!token) {
       localStorage.removeItem("user");
     }
+    const tokenAgency = getCookie("TFPERSAGENCYTOKEN");
+    if (!tokenAgency) {
+      localStorage.removeItem("agency");
+    }
   });
 
   return (
     <HeadTitleContext.Provider value={{ headTitle, setHeadTitle }}>
-        <Head>
-          <title>TFPERS {headTitle && `- ${headTitle}`}</title>
-          <link
-            rel="icon"
-            href="/images/TFPERSLOGO.png"
-            type="image/icon type"
-          ></link>
-        </Head>
-        <Component {...pageProps} />
+      <Head>
+        <title>TFPERS {headTitle && `- ${headTitle}`}</title>
+        <link
+          rel="icon"
+          href="/images/TFPERSLOGO.png"
+          type="image/icon type"
+        ></link>
+      </Head>
+      <Component {...pageProps} />
     </HeadTitleContext.Provider>
   );
 }

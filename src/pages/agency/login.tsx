@@ -13,7 +13,7 @@ const login = () => {
     password: "",
   });
   useEffect(() => {
-    AuthAgencyService.getCurrentUser() ? router.push("/agency/dashboard") : "";
+    AuthAgencyService.checkToken() ? router.push("/agency/dashboard") : "";
   });
   const onFormValueChange = (event: any) => {
     const { name, value } = event.target;
