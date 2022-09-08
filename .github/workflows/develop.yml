@@ -53,11 +53,11 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           script: |
-            sudo echo ${{ secrets.GHCR_PASSWORD  }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
-            sudo docker rmi ghcr.io/tfpers/tfpers-ui:dev
-            sudo docker rmi ghcr.io/tfpers/tfpers-nginx:dev
-            sudo docker pull ghcr.io/tfpers/tfpers-ui:dev
-            sudo docker pull ghcr.io/tfpers/tfpers-nginx:dev
+            echo ${{ secrets.GHCR_PASSWORD  }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
+            docker rmi ghcr.io/tfpers/tfpers-ui:dev
+            docker rmi ghcr.io/tfpers/tfpers-nginx:dev
+            docker pull ghcr.io/tfpers/tfpers-ui:dev
+            docker pull ghcr.io/tfpers/tfpers-nginx:dev
             cd FrontEnd
-            sudo git pull
-            sudo docker-compose up -d --build
+            git pull
+            docker-compose up -d --build
