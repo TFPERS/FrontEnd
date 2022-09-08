@@ -54,6 +54,7 @@ export default function Navbar({ isLogin = true }: Props) {
   };
 
   const logOut = async () => {
+    console.log();
     AuthService.logout();
     await router.push("/");
     setCurrentUser(AuthService.getCurrentUser());
