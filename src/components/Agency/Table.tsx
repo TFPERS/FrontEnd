@@ -65,11 +65,7 @@ const Table = ({ petitions, isShowModal = false, submit }: Props) => {
     const format = dayjs(date).format("DD/MM/YYYY \n HH:mm A");
     return <div>{format}</div>;
   };
-  const formatTypePetition = (type: any) => {
-    if (type === "extendPayment") {
-      return "ขยายเวลาชำระเงิน";
-    }
-  };
+
   const [selectedPetition, setSelectedPetition] = useState<any>(null);
   const [selectedStatus, setSelectedStatus] = useState("");
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -132,7 +128,7 @@ const Table = ({ petitions, isShowModal = false, submit }: Props) => {
             <div>
               <span>ประเภทคำร้อง</span>
               <div className="border p-2 rounded-[0.625rem] bg-gray-200 cursor-not-allowed">
-                {formatTypePetition(selectedPetition.type)}
+                {selectedPetition.type}
               </div>
             </div>
             <div>
