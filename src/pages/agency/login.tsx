@@ -67,9 +67,12 @@ const login = () => {
       }, 1200);
     } catch (err: any) {
       const { data } = err.response;
-      toast.error(data.message, {
-        theme: "dark",
-      });
+      data
+        ? toast.error(data.message, {
+            theme: "dark",
+          })
+        : "";
+
       setTimeout(() => {
         setIsLoading(false);
       }, 500);

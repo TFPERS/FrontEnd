@@ -16,9 +16,9 @@ const application = () => {
   const [reducerValue, forceUpdate] = useReducer((x) => x + 1, 0);
   const [searchWord, setSearchWord] = useState("");
 
-  const submit = (petitionId: any, status: any) => {
+  const submit = async (petitionId: any, status: any) => {
     try {
-      Petition.updateStatus(petitionId, status);
+      await Petition.updateStatus(petitionId, status);
       Swal.fire({
         background: "#FA4616",
         color: "#fff",
