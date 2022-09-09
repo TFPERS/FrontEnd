@@ -20,15 +20,6 @@ const notification = () => {
     AuthService.checkToken() ? fetchNoti() : "";
   }, []);
 
-  useEffect(() => {
-    console.log(isMobile);
-    if (isMobile) {
-      console.log("d");
-    } else {
-      console.log("dd");
-    }
-  }, []);
-
   return (
     <Layout>
       <div className=" mt-4 pb-2 max-w-5xl mx-auto">

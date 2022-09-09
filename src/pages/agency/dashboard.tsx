@@ -11,6 +11,7 @@ import Paginate from "../../components/Paginate";
 import Table from "../../components/Agency/Table";
 import { useRouter } from "next/router";
 import AuthAgencyService from "../../services/authAgency.service";
+import Petition from "../../services/petition.service";
 
 const dashboard = () => {
   const [numberStudent, setNumberStudent] = useState<number>(0);
@@ -21,6 +22,7 @@ const dashboard = () => {
   const [currentPage, setcurrentPage] = useState(1);
   const [reducerValue, forceUpdate] = useReducer((x) => x + 1, 0);
   const [searchWord, setSearchWord] = useState("");
+  const [size, setSize] = useState(7);
   const fetchNumberStudent = async () => {
     const { data } = await axios.get(`/api/agency/numberOfStudent`);
     setNumberStudent(data.numberAllStudent);
@@ -47,9 +49,8 @@ const dashboard = () => {
   ) => {
     if (value !== currentPage) {
       setcurrentPage(value);
-      const { data } = await axios.get(
-        `/api/petition/paginate?page=${value - 1}&size=7&search=${searchWord}`
-      );
+      const page = value - 1;
+      const { data } = await Petition.getPetitionAll(page, size, searchWord);
       setPetitions(data.content);
     }
   };
@@ -60,19 +61,6 @@ const dashboard = () => {
     forceUpdate();
   };
 
-  const searchSubmit = async () => {
-    const { data } = await axios.get(
-      `/api/petition/paginate?page=0&size=7&search=${searchWord}`
-    );
-    setPetitions(data.content);
-    setTotalPage(data.totalPages);
-    setcurrentPage(1);
-  };
-
-  const formatDD = (date: any) => {
-    const format = dayjs(date).format("DD/MM/YYYY \n HH:mm A");
-    return <div>{format}</div>;
-  };
   useEffect(() => {
     AuthAgencyService.checkToken() ? "" : router.push("/agency");
     fetchNumberStudent();
@@ -82,9 +70,8 @@ const dashboard = () => {
 
   useEffect(() => {
     const fetchPetitions = async () => {
-      const { data } = await axios.get(
-        `/api/petition/paginate?page=0&size=7&search=${searchWord}`
-      );
+      const page = 0;
+      const { data } = await Petition.getPetitionAll(page, size, searchWord);
       setPetitions(data.content);
       setTotalPage(data.totalPages);
       setcurrentPage(1);
@@ -103,27 +90,6 @@ const dashboard = () => {
               placeholder="ค้นหา"
               className="border p-1 px-3 w-full rounded-[0.625rem] focus:outline-none focus:border-primary-light-orange focus:border-2"
             />
-            {/* <button
-              onClick={searchSubmit}
-              type="submit"
-              className="p-2.5 ml-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            >
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                ></path>
-              </svg>
-              <span className="sr-only">Search</span>
-            </button> */}
           </div>
         </div>
         <div className="flex space-x-5">

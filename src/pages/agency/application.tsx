@@ -15,6 +15,7 @@ const application = () => {
   const router = useRouter();
   const [reducerValue, forceUpdate] = useReducer((x) => x + 1, 0);
   const [searchWord, setSearchWord] = useState("");
+  const [size, setSize] = useState(8);
 
   const submit = async (petitionId: any, status: any) => {
     try {
@@ -48,34 +49,22 @@ const application = () => {
   ) => {
     if (value !== currentPage) {
       setcurrentPage(value);
-      const { data } = await axios.get(
-        `/api/petition/paginate?page=${value - 1}&size=8`
-      );
+      const page = value - 1;
+      const { data } = await Petition.getPetitionAll(page, size, searchWord);
       setPetitions(data.content);
     }
   };
 
   const changeInput = async (event: any) => {
     await setSearchWord(event.target.value);
-    forceUpdate();
-  };
-
-  const searchSubmit = async () => {
-    const { data } = await axios.get(
-      `/api/petition/paginate?page=0&size=7&search=${searchWord}`
-    );
-    setPetitions(data.content);
-    setTotalPage(data.totalPages);
     setcurrentPage(1);
+    forceUpdate();
   };
 
   useEffect(() => {
     const fetchPetitions = async () => {
-      const { data } = await axios.get(
-        `/api/petition/paginate?page=${
-          currentPage - 1
-        }&size=8&search=${searchWord}`
-      );
+      const page = currentPage - 1;
+      const { data } = await Petition.getPetitionAll(page, size, searchWord);
       setPetitions(data.content);
       setTotalPage(data.totalPages);
     };

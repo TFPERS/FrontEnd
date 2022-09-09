@@ -15,6 +15,7 @@ import { useHeadTitle } from "../context/HeadContext";
 import { WindowSize } from "../helper/useBreakpoint";
 import { faculties } from "../data/faculties";
 import { majors } from "../data/majors";
+import StudentService from "../services/student.service";
 
 function Profile() {
   const { setHeadTitle } = useHeadTitle();
@@ -32,8 +33,8 @@ function Profile() {
     setHeadTitle("ข้อมูลส่วนตัว");
     const user = localStorage.getItem("user");
     const fetchData = async () => {
-      const { data } = await axios.get(
-        `/api/student/me/${AuthService.getCurrentUser().id}`
+      const { data } = await StudentService.getStudentById(
+        AuthService.getCurrentUser().id
       );
       await setProfile(data);
       if (data) {
@@ -65,13 +66,12 @@ function Profile() {
   const updateProfile = async (formData: any) => {
     // event.preventDefault();
     try {
-      const { data } = await axios.put(
-        `/api/student/update/${AuthService.getCurrentUser().id}`,
-        formData,
-        { headers: authHeader() as any }
+      const { data } = await StudentService.updateProfile(
+        AuthService.getCurrentUser().id,
+        formData
       );
-      const student = await axios.get(
-        `/api/student/me/${AuthService.getCurrentUser().id}`
+      const student = await StudentService.getStudentById(
+        AuthService.getCurrentUser().id
       );
       const {
         firstname,

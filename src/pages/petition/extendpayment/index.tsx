@@ -16,6 +16,7 @@ import { faculties } from "../../../data/faculties";
 import { majors } from "../../../data/majors";
 import { StatusPetition } from "../../../enum/StatusPetition";
 import { TypePetition } from "../../../enum/TypePetition";
+import StudentService from "../../../services/student.service";
 interface Student {
   id?: string;
   firstname?: string;
@@ -46,8 +47,8 @@ function ExtentPayment() {
   useEffect(() => {
     setHeadTitle("แจ้งคำร้องขยายเวลาชำระเงิน");
     const fetchUser = async () => {
-      const { data } = await axios.get(
-        `/api/student/me/${AuthService.getCurrentUser().id}`
+      const { data } = await StudentService.getStudentById(
+        AuthService.getCurrentUser().id
       );
       await setUser(data);
     };

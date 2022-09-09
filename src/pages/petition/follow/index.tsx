@@ -10,6 +10,7 @@ import { useHeadTitle } from "../../../context/HeadContext";
 import { WindowSize } from "../../../helper/useBreakpoint";
 import Paginate from "../../../components/Paginate/index";
 import { StatusPetition } from "../../../enum/StatusPetition";
+import Petition from "../../../services/petition.service";
 
 function Follow() {
   const { setHeadTitle } = useHeadTitle();
@@ -18,16 +19,19 @@ function Follow() {
   const [isLoading, setIsLoading] = useState(false);
   const [searchWord, setSearchWord] = useState("");
   const [reducerValue, forceUpdate] = useReducer((x) => x + 1, 0);
+  const [size, setSize] = useState(5);
   const handleChange = async (
     event: React.ChangeEvent<unknown>,
     value: number
   ) => {
     if (value !== currentPage) {
       setcurrentPage(value);
-      const { data } = await axios.get(
-        `/api/petition/me/${AuthService.getCurrentUser().id}?page=${
-          value - 1
-        }&size=5&search=${searchWord}`
+      const page = value - 1;
+      const { data } = await Petition.getPetitionByStudentId(
+        AuthService.getCurrentUser().id,
+        page,
+        size,
+        searchWord
       );
       setPetitions(data.content);
     }
@@ -40,10 +44,12 @@ function Follow() {
   const router = useRouter();
   useEffect(() => {
     const fetchPetition = async () => {
-      const { data } = await axios.get(
-        `/api/petition/me/${AuthService.getCurrentUser().id}?page=${
-          currentPage - 1
-        }&size=5&search=${searchWord}`
+      const page = currentPage - 1;
+      const { data } = await Petition.getPetitionByStudentId(
+        AuthService.getCurrentUser().id,
+        page,
+        size,
+        searchWord
       );
       setPetitions(data.content);
       setTotalPage(data.totalPages);
