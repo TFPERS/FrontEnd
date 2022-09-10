@@ -1,11 +1,12 @@
 import Button from "../../components/Button";
 import Image from "next/image";
 import AuthService from "../../services/auth.service";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useReducer } from "react";
 import { useRouter } from "next/router";
 import { WindowSize } from "../../helper/useBreakpoint";
 import Notification from "../../services/notification.service";
 import axios from "../../config/axios.config";
+import socket from "../../config/socketIo.config";
 
 type Props = {
   isLogin?: boolean;
@@ -47,6 +48,7 @@ export default function Navbar({ isLogin = true }: Props) {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [isOpenNoti, setIsOpenNoti] = useState(false);
   const [isReadNoti, setIsReadNoti] = useState(false);
+  const [reducerValue, forceUpdate] = useReducer((x) => x + 1, 0);
 
   let profileRef = useRef<any>();
   const toggleIsProfile = () => {
@@ -103,7 +105,12 @@ export default function Navbar({ isLogin = true }: Props) {
       setStdNotifications(data.studentNotification);
     };
     AuthService.checkToken() ? fetchNoti() : "";
-  }, []);
+  }, [reducerValue]);
+  useEffect(() => {
+    socket.on("receive_noti", () => {
+      forceUpdate();
+    });
+  }, [socket]);
 
   return (
     <header

@@ -7,6 +7,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Swal from "sweetalert2";
 import Notification from "../../services/notification.service";
 import { useRouter } from "next/router";
+import socket from "../../config/socketIo.config";
+
 const notice = () => {
   const [notiDescription, setNotiDescription] = useState("");
   const [agency, setAgency] = useState<any>(null);
@@ -45,6 +47,8 @@ const notice = () => {
         confirmButtonColor: "#17A87B",
         allowEnterKey: true,
       });
+      socket.emit("send_noti");
+      setValue("notiDescription", "");
     } catch (err) {
       Swal.fire({
         background: "#FA4616",

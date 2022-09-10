@@ -28,6 +28,7 @@
     "react-dom": "18.0.0",
     "react-hook-form": "^7.31.1",
     "react-toastify": "^9.0.1",
+    "socket.io-client": "^4.5.2",
     "sweetalert2": "^11.4.15",
     "use-breakpoint": "^3.0.2",
     "yup": "^0.32.11"

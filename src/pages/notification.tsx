@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import Layout from "../components/Layout";
 import Notification from "../services/notification.service";
 import AuthService from "../services/auth.service";
 import Image from "next/image";
 import { WindowSize } from "../helper/useBreakpoint";
 import { useRouter } from "next/router";
+import socket from "../config/socketIo.config";
 
 const notification = () => {
   const [stdNotifications, setStdNotification] = useState<any>([]);
   const { isMobile, isTablet, isDesktop } = WindowSize();
+  const [reducerValue, forceUpdate] = useReducer((x) => x + 1, 0);
   const router = useRouter();
   useEffect(() => {
     const fetchNoti = async () => {
@@ -18,7 +20,11 @@ const notification = () => {
       setStdNotification(data.studentNotification);
     };
     AuthService.checkToken() ? fetchNoti() : "";
-  }, []);
+  }, [reducerValue]);
+
+  socket.on("receive_noti", () => {
+    forceUpdate();
+  });
 
   return (
     <Layout>

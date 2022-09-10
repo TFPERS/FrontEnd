@@ -1,22 +1,28 @@
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useReducer, useState } from "react";
 import Card from "../Agency/Card";
 import Sidebar from "../Agency/Sidebar";
 import Image from "next/image";
 import Notification from "../../services/notification.service";
-
+import socket from "../../config/socketIo.config";
 type Props = {
   children: ReactNode;
 };
 
 const Agency = ({ children }: Props) => {
   const [notis, setNotis] = useState<any>([]);
+  const [reducerValue, forceUpdate] = useReducer((x) => x + 1, 0);
   useEffect(() => {
     const fetchNoti = async () => {
       const { data } = await Notification.getNotificationOfAgency();
       setNotis(data);
     };
     fetchNoti();
-  }, []);
+  }, [reducerValue]);
+
+  socket.on("receive_noti", () => {
+    forceUpdate();
+  });
+
   return (
     <div className="flex min-h-screen">
       <div className="bg-slate-700 min-w-[16.875rem]">
