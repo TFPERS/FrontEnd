@@ -193,7 +193,7 @@ function Profile() {
                   isMobile ? (
                     <>
                       <span>ชื่อ : {profile.firstname}</span>
-                      <span>นามสกุล : {profile.firstname}</span>
+                      <span>นามสกุล : {profile.lastname}</span>
                     </>
                   ) : (
                     <>
