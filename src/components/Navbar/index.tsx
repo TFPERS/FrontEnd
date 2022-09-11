@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { WindowSize } from "../../helper/useBreakpoint";
 import Notification from "../../services/notification.service";
 import axios from "../../config/axios.config";
-import socket from "../../config/socketIo.config";
+// import socket from "../../config/socketIo.config";
 
 type Props = {
   isLogin?: boolean;
@@ -106,11 +106,11 @@ export default function Navbar({ isLogin = true }: Props) {
     };
     AuthService.checkToken() ? fetchNoti() : "";
   }, [reducerValue]);
-  useEffect(() => {
-    socket.on("receive_noti", () => {
-      forceUpdate();
-    });
-  }, [socket]);
+  // useEffect(() => {
+  //   socket.on("receive_noti", () => {
+  //     forceUpdate();
+  //   });
+  // }, [socket]);
 
   return (
     <header

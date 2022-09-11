@@ -5,7 +5,7 @@ import AuthService from "../services/auth.service";
 import Image from "next/image";
 import { WindowSize } from "../helper/useBreakpoint";
 import { useRouter } from "next/router";
-import socket from "../config/socketIo.config";
+// import socket from "../config/socketIo.config";
 
 const notification = () => {
   const [stdNotifications, setStdNotification] = useState<any>([]);
@@ -22,9 +22,9 @@ const notification = () => {
     AuthService.checkToken() ? fetchNoti() : "";
   }, [reducerValue]);
 
-  socket.on("receive_noti", () => {
-    forceUpdate();
-  });
+  // socket.on("receive_noti", () => {
+  //   forceUpdate();
+  // });
 
   return (
     <Layout>
