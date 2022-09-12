@@ -3,7 +3,7 @@ import Card from "../Agency/Card";
 import Sidebar from "../Agency/Sidebar";
 import Image from "next/image";
 import Notification from "../../services/notification.service";
-import socket from "../../config/socketIo.config";
+// import socket from "../../config/socketIo.config";
 type Props = {
   children: ReactNode;
 };
@@ -19,9 +19,9 @@ const Agency = ({ children }: Props) => {
     fetchNoti();
   }, [reducerValue]);
 
-  socket.on("receive_noti", () => {
-    forceUpdate();
-  });
+  // socket.on("receive_noti", () => {
+  //   forceUpdate();
+  // });
 
   return (
     <div className="flex min-h-screen">
