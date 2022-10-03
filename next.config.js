@@ -3,6 +3,7 @@
 const nextConfig = {
   publicRuntimeConfig: {
     backendUrl: process.env.BACKEND_URL,
+    frontendUrl: process.env.FRONTEND_URL,
   },
   // reactStrictMode: true,
   eslint: {
