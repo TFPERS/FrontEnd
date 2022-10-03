@@ -72,6 +72,7 @@ function ExtentPayment() {
     setValue,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
+
   const submit = async ({ note }: any) => {
     if (note) {
       if (step === 1) {

@@ -13,6 +13,7 @@
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "@hookform/resolvers": "^2.8.10",
+    "@mui/icons-material": "^5.10.6",
     "@mui/material": "^5.8.1",
     "@mui/styled-engine-sc": "^5.8.0",
     "@svgr/webpack": "^6.3.1",

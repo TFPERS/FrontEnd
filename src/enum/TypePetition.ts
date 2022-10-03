@@ -1,3 +1,4 @@
 export enum TypePetition {
-    extendPayment = "ขยายเวลาชำระเงิน"
+    extendPayment = "ขยายเวลาชำระเงิน",
+    waiverfees = "ผ่อนผันค่าเล่าเรียน"
 }

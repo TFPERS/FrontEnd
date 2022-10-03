@@ -60,6 +60,7 @@ export default function Petition() {
                 ผ่อนผันค่าเล่าเรียน
               </span>
             }
+            path="/petition/waiverfees"
           />
           <PetitionBox
             image="/images/search.png"
