@@ -53,7 +53,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           script: |
-            echo ${{ secrets.GITHUB_TOKEN  }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
+            sudo docker login ghcr.io -u ${{ github.repository_owner }} -p ${{ secrets.GITHUB_TOKEN }}
             sudo docker rmi ghcr.io/tfpers/tfpers-ui:dev
             sudo docker rmi ghcr.io/tfpers/tfpers-nginx:dev
             sudo docker pull ghcr.io/tfpers/tfpers-ui:dev
