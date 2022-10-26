@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useRef } from "react";
 import Link from "next/link";
 import Layout from "../../../components/Layout/index";
 import { useState, useEffect } from "react";
@@ -11,8 +11,29 @@ import { WindowSize } from "../../../helper/useBreakpoint";
 import Paginate from "../../../components/Paginate/index";
 import { StatusPetition } from "../../../enum/StatusPetition";
 import Petition from "../../../services/petition.service";
+import Modal from "../../../components/Student/Modal";
+
+const useOutsideAlerter = (ref: any, handler: any) => {
+  useEffect(() => {
+    function handlerClickOutside(event: any) {
+      if (ref.current && !ref.current.contains(event.target)) {
+        handler();
+      }
+    }
+
+    document.addEventListener("mousedown", handlerClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handlerClickOutside);
+    };
+  }, [ref]);
+};
 
 function Follow() {
+  const wrapperRef = useRef(null);
+  useOutsideAlerter(wrapperRef, () => {
+    setIsOpenModal(false);
+  });
+  const [isOpenModal, setIsOpenModal] = useState(false);
   const { setHeadTitle } = useHeadTitle();
   const [currentPage, setcurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
@@ -108,6 +129,17 @@ function Follow() {
         </div>
       );
     }
+    if (status === StatusPetition.Cancel) {
+      return (
+        <div
+          className={`bg-[#FA2816] text-primary-white rounded-[0.625rem] flex items-center justify-center
+        ${isMobile ? "w-[8.125rem] h-[1.875rem]" : "w-[11.25rem] h-[3.75rem]"}
+        `}
+        >
+          {StatusPetition.Cancel}
+        </div>
+      );
+    }
   };
   const formatDD = (date: any) => {
     const format = dayjs(date).format("DD/MM/YYYY \n HH:mm A");
@@ -115,10 +147,11 @@ function Follow() {
   };
 
   const { isMobile, isTablet, isDesktop } = WindowSize();
+  const [selectedPetition, setSelectedPetition] = useState<any>(null);
 
   return (
     <Layout>
-      <div className="bg-primary-white rounded-[0.625rem] min-h-[67vh] shadow-4xl h-full flex flex-col max-w-7xl mx-auto mt-10">
+      <div className="bg-primary-white rounded-[0.625rem] min-h-[67vh] shadow-4xl h-full flex flex-col max-w-7xl mx-auto mt-10 relative">
         <div className="flex justify-between items-center">
           <div
             className={`${
@@ -145,12 +178,19 @@ function Follow() {
               <th className={`${isMobile ? "p-1" : "p-3"}`}>หมายเลขคำร้อง</th>
               <th>ประเภทคำร้อง</th>
               <th>สถานะคำร้อง</th>
-              <th>วันที่</th>
+              <th>เทอม</th>
             </tr>
           </thead>
           <tbody className={`${isMobile ? "" : "text-2xl"} `}>
             {petitions.map((petition: any) => (
-              <tr key={petition.id}>
+              <tr
+                key={petition.id}
+                onClick={() => {
+                  setIsOpenModal(true);
+                  setSelectedPetition(petition);
+                }}
+                className="cursor-pointer hover:bg-slate-100"
+              >
                 <td className="py-7">{petition.id}</td>
                 <td className="overflow-auto">{petition.type}</td>
                 <td>
@@ -158,7 +198,7 @@ function Follow() {
                     {formatStatus(petition.status)}
                   </div>
                 </td>
-                <td>{formatDD(petition.createdAt)}</td>
+                <td>{petition.term}</td>
               </tr>
             ))}
           </tbody>
@@ -167,6 +207,14 @@ function Follow() {
           <div className="text-center h-4/6 my-auto text-3xl">ไม่มีคำร้อง</div>
         ) : (
           ""
+        )}
+        {isOpenModal && selectedPetition && (
+          <div
+            ref={wrapperRef}
+            className="p-10 absolute z-20 bg-primary-white h-full w-2/4 top-0 right-0 border-4 border-black rounded-[0.625rem] overflow-auto"
+          >
+            <Modal petition={selectedPetition} />
+          </div>
         )}
       </div>
       {totalPage === 1 || totalPage === 0 ? (

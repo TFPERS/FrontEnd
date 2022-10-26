@@ -7,6 +7,7 @@ import AuthAgencyService from "../../services/authAgency.service";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 import Petition from "../../services/petition.service";
+import FileService from "../../services/file.service";
 
 const application = () => {
   const [petitions, setPetitions] = useState<any>([]);
@@ -17,9 +18,10 @@ const application = () => {
   const [searchWord, setSearchWord] = useState("");
   const [size, setSize] = useState(8);
 
-  const submit = async (petitionId: any, status: any) => {
+  const submit = async (petitionId: any, status: any, note: any) => {
     try {
-      await Petition.updateStatus(petitionId, status);
+      console.log(note);
+      await Petition.update(petitionId, status, note);
       Swal.fire({
         background: "#FA4616",
         color: "#fff",
@@ -81,27 +83,6 @@ const application = () => {
               placeholder="ค้นหา"
               className="border p-1 px-3 w-full rounded-[0.625rem] focus:outline-none focus:border-primary-light-orange focus:border-2"
             />
-            {/* <button
-              onClick={searchSubmit}
-              type="submit"
-              className="p-2.5 ml-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            >
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                ></path>
-              </svg>
-              <span className="sr-only">Search</span>
-            </button> */}
           </div>
         </div>
 

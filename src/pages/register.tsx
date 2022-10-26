@@ -21,7 +21,6 @@ function Register() {
   const { setHeadTitle } = useHeadTitle();
   setHeadTitle("สมัครสมาชิก");
   const register = async (formData: any) => {
-    console.log(formData);
     await setIsLoading(true);
     try {
       const data = await AuthService.register(formData);
@@ -57,8 +56,11 @@ function Register() {
     // .required("ต้องการเบอร์โทร")
     email: string()
       .required("ต้องการอีเมล")
-      .matches(
-        /^\w+([-+.']\w+)*@?(mail.kmutt.ac.th)$/,
+      .notOneOf(
+        [
+          `${/^\w+([-+.']\w+)*@?(mail.kmutt.ac.th)$/}`,
+          `${`${/^\w+([-+.']\w+)*@?(kmutt.ac.th)$/}`}`,
+        ],
         "รูปแบบอีเมลไม่ถูกต้อง"
       ),
     id: string()
@@ -108,7 +110,7 @@ function Register() {
               <input
                 id="email"
                 className="border rounded-[0.625rem] p-2"
-                placeholder="xxx.xxx@mail.kmutt.ac.th"
+                placeholder="xxx.xxx@mail.kmutt.ac.th หรือ kmutt.ac.th"
                 {...methods.register("email")}
               />
               <div className="text-sm text-red-500">

@@ -2,9 +2,11 @@ import axios from "../config/axios.config";
 import getConfig from "next/config";
 const { publicRuntimeConfig } = getConfig();
 
-const updateStatus = (petitionId, status) => {
-  return axios.put(`/api/petition/update/status/${petitionId}`, {
+const update = (petitionId, status, note) => {
+  console.log(note);
+  return axios.put(`/api/petition/update/${petitionId}`, {
     status: status,
+    note: note,
   });
 };
 const getPetitionByStudentId = (studentId, page, size, searchWord) => {
@@ -18,13 +20,12 @@ const getPetitionAll = (page, size, searchWord) => {
   );
 };
 const uploadFile = (files, studentId) => {
-  console.log(files, studentId);
   return axios.post(`/api/petition/waiverfees?studentId=${studentId}`, files, {
     headers: { "Content-Type": "multipart/form-data" },
   });
 };
 const Petition = {
-  updateStatus,
+  update,
   getPetitionByStudentId,
   getPetitionAll,
   uploadFile,

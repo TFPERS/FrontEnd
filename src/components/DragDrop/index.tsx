@@ -60,18 +60,18 @@ const DragDrop = ({ onFileChange }: Props) => {
       onDragEnter={onDragEnter}
       onDragLeave={onDragLeave}
       onDrop={onDrop}
-      className={`flex flex-col items-center border-4 rounded-[0.625rem] bg-slate-50 p-5 relative 
+      className={`flex flex-col items-center border-4 rounded-[0.625rem] bg-slate-50 p-5 relative p-10
       ${fileList.length < 2 ? "hover:bg-slate-100 hover:opacity-95" : ""}
       `}
     >
       {fileList.length > 0 ? (
-        <div className="flex space-x-10 w-full justify-around">
+        <div className="flex flex-col w-full">
           {fileList.map((item: any, index) => (
             <div key={index}>
-              <div className="relative z-50 hover:bg-white p-4 rounded-[0.625rem]">
-                <Image src="/images/pdf.png" alt="" width={95} height={95} />
-                <div>{item.name}</div>
-                <div className="absolute -right-2 -top-2">
+              <div className="flex items-center space-x-4 relative z-50 hover:bg-white p-4 rounded-[0.625rem]">
+                <Image src="/images/pdf.png" alt="" width={40} height={40} />
+                <div className="mr-auto">{item.name}</div>
+                <div className="absolute right-4">
                   <DeleteIcon
                     sx={{ color: red[500] }}
                     onClick={() => fileRemove(index)}

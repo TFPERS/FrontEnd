@@ -17,6 +17,7 @@ import { majors } from "../../../data/majors";
 import { StatusPetition } from "../../../enum/StatusPetition";
 import { TypePetition } from "../../../enum/TypePetition";
 import StudentService from "../../../services/student.service";
+import TermService from "../../../services/term";
 interface Student {
   id?: string;
   firstname?: string;
@@ -88,6 +89,8 @@ function ExtentPayment() {
             type,
             status,
             description: note,
+            note: "",
+            term: TermService.dateOfTerm(),
             studentId: user.id,
           });
           Swal.fire({
@@ -160,7 +163,7 @@ function ExtentPayment() {
             </li>
           </ul>
         </section>
-        <div className="bg-primary-white mx-auto rounded-[0.625rem] mt-10 pt-16 pb-8">
+        <div className="bg-primary-white mx-auto rounded-[0.625rem] mt-10 pt-6 pb-5">
           <div className="max-w-5xl mx-auto p-2 px-3">
             <div
               className={`${isMobile ? "text-2xl text-center" : "text-4xl"} ${
@@ -211,13 +214,23 @@ function ExtentPayment() {
                   </div>
                 </div>
               )}
+              <div className={`${isMobile ? "text-2xl" : "text-[2rem]"}`}>
+                ปีการศึกษา
+                <div
+                  className={`${
+                    isMobile ? "text-xl" : "text-2xl"
+                  } pl-6 bg-[#C4C4C4] rounded-lg p-2 cursor-not-allowed`}
+                >
+                  {TermService.dateOfTerm()}
+                </div>
+              </div>
 
               <div className="flex flex-col">
                 <label
                   htmlFor="note"
                   className={`${isMobile ? "text-2xl" : "text-[2rem]"}`}
                 >
-                  หมายเหตุ
+                  รายละเอียด
                 </label>
                 {step === 1 ? (
                   <>

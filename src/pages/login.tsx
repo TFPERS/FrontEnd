@@ -7,16 +7,61 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import LoadingCircle from "../components/Loading/Circle";
 import { useHeadTitle } from "../context/HeadContext";
-
+import getConfig from "next/config";
+import { initFirebase } from "../config/firebase.config";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
+import AuthGoogleService from "../services/authGoogle.service";
+import Swal from "sweetalert2";
 function Login() {
-  const { setHeadTitle } = useHeadTitle();
-  const router = useRouter();
   useEffect(() => {
     if (AuthService.getCurrentUser()) {
       router.push("/petition");
     }
+
     setHeadTitle("เข้าสู่ระบบ");
   });
+  const app = initFirebase();
+  const provider = new GoogleAuthProvider();
+  const auth = getAuth();
+  const [user, loading] = useAuthState(auth);
+
+  const signInGoogle = async () => {
+    try {
+      const result = await signInWithPopup(auth, provider);
+      console.log("result ", result.user);
+      const data = await AuthGoogleService.login(result.user.email);
+      await toast.success(data.message, {
+        theme: "dark",
+      });
+      await setTimeout(() => {
+        router.push("/petition");
+      }, 1200);
+    } catch (error: any) {
+      const { data } = error.response;
+      Swal.fire({
+        title: data.message,
+        // text: "ถ้ายกเลิกคำขอแล้ว คำขอนี้จะไม่สามารถดำเนินการต่อ",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#30d64c",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "ตกลง",
+        cancelButtonText: "ยกเลิก",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          router.push("/register");
+        }
+      });
+      await toast.error(data.message, {
+        theme: "dark",
+      });
+    }
+  };
+
+  const { setHeadTitle } = useHeadTitle();
+  const router = useRouter();
+
   const [isLoading, setIsLoading] = useState(false);
   const [form, setForm] = useState({
     username: "",
@@ -114,7 +159,9 @@ function Login() {
               className="border rounded-[0.625rem] p-2"
             />
           </div>
-          <div className="self-end">ลืมรหัสผ่าน ?</div>
+          <Link href="/forgettenpassword">
+            <div className="self-end cursor-pointer">ลืมรหัสผ่าน ?</div>
+          </Link>
           {!isLoading ? (
             <>
               <button
@@ -138,7 +185,10 @@ function Login() {
             <span className="px-10">Or</span>
             <div className="h-[10px] w-1/2 mx-8 bg-secondary-gray rounded-lg" />
           </div>
-          <div className="flex items-center justify-center mt-6">
+          <div
+            onClick={() => signInGoogle()}
+            className="flex items-center justify-center mt-6 cursor-pointer"
+          >
             <Image src="/images/LogoGoogle.png" width={50} height={50} />
           </div>
           <div className="mt-6 space-x-2">
