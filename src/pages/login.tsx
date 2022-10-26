@@ -37,29 +37,29 @@ function Login() {
         router.push("/petition");
       }, 1200);
     } catch (error: any) {
-      if (error) {
-        if (error.response) {
-          const { data } = error.response;
-          console.log("data", data);
-          Swal.fire({
-            title: data.message,
-            // text: "ถ้ายกเลิกคำขอแล้ว คำขอนี้จะไม่สามารถดำเนินการต่อ",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#30d64c",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "ตกลง",
-            cancelButtonText: "ยกเลิก",
-          }).then((result) => {
-            if (result.isConfirmed) {
-              router.push("/register");
-            }
-          });
-          await toast.error(data.message, {
-            theme: "dark",
-          });
-        }
-      }
+      // if (error) {
+      //   if (error.response) {
+      //     const { data } = error.response;
+      //     console.log("data", data);
+      //     Swal.fire({
+      //       title: data.message,
+      //       // text: "ถ้ายกเลิกคำขอแล้ว คำขอนี้จะไม่สามารถดำเนินการต่อ",
+      //       icon: "warning",
+      //       showCancelButton: true,
+      //       confirmButtonColor: "#30d64c",
+      //       cancelButtonColor: "#d33",
+      //       confirmButtonText: "ตกลง",
+      //       cancelButtonText: "ยกเลิก",
+      //     }).then((result) => {
+      //       if (result.isConfirmed) {
+      //         router.push("/register");
+      //       }
+      //     });
+      //     await toast.error(data.message, {
+      //       theme: "dark",
+      //     });
+      //   }
+      // }
       console.log(error);
     }
   };
