@@ -85,6 +85,16 @@ const Table = ({ petitions, isShowModal = false, submit }: Props) => {
   const [isShowSelectedStatus, setIsShowSelectedStatus] = useState(false);
   const [note, setNote] = useState<any>();
 
+  const onFormValueChange = (event: any) => {
+    setNote(event.target.value);
+  };
+
+  useEffect(() => {
+    if (selectedPetition) {
+      setNote(selectedPetition.note);
+    }
+  }, [selectedPetition]);
+
   return (
     <div className="h-full relative border rounded-[0.625rem]">
       <table className={`table-fixed w-full text-center overflow-auto `}>
@@ -283,8 +293,8 @@ const Table = ({ petitions, isShowModal = false, submit }: Props) => {
                 <textarea
                   className="resize-none border p-2 rounded-[0.625rem] break-words h-[5rem] overflow-auto w-full"
                   placeholder="กรอกหมายเหตุ"
-                  value={selectedPetition.note}
-                  onChange={(e) => setNote(e.target.value)}
+                  value={note}
+                  onChange={(e) => onFormValueChange(e)}
                 />
               ) : (
                 <div className="resize-none border p-2 rounded-[0.625rem] break-words h-[5rem] overflow-auto w-full bg-gray-200 cursor-not-allowed">
