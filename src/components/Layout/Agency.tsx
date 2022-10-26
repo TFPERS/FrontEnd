@@ -4,6 +4,7 @@ import Sidebar from "../Agency/Sidebar";
 import Image from "next/image";
 import Notification from "../../services/notification.service";
 // import socket from "../../config/socketIo.config";
+import AuthAgencyService from "../../services/authAgency.service";
 type Props = {
   children: ReactNode;
 };
@@ -11,11 +12,13 @@ type Props = {
 const Agency = ({ children }: Props) => {
   const [notis, setNotis] = useState<any>([]);
   const [reducerValue, forceUpdate] = useReducer((x) => x + 1, 0);
+  const [AgencyName, setAgencyName] = useState();
   useEffect(() => {
     const fetchNoti = async () => {
       const { data } = await Notification.getNotificationOfAgency();
       setNotis(data);
     };
+    setAgencyName(AuthAgencyService.getCurrentUser().name);
     fetchNoti();
   }, [reducerValue]);
 
@@ -38,7 +41,7 @@ const Agency = ({ children }: Props) => {
               width={150}
               height={150}
             />
-            <div className="text-xl">กลุ่มงานช่วยเหลือทางการเงินนักศึกษา</div>
+            <div className="text-xl">{AgencyName}</div>
           </div>
         </Card>
         <Card>
