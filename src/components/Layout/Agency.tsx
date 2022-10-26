@@ -5,6 +5,7 @@ import Image from "next/image";
 import Notification from "../../services/notification.service";
 // import socket from "../../config/socketIo.config";
 import AuthAgencyService from "../../services/authAgency.service";
+import dayjs from "dayjs";
 type Props = {
   children: ReactNode;
 };
@@ -22,9 +23,10 @@ const Agency = ({ children }: Props) => {
     fetchNoti();
   }, [reducerValue]);
 
-  // socket.on("receive_noti", () => {
-  //   forceUpdate();
-  // });
+  const formatDD = (date: any) => {
+    const format = dayjs(date).format("DD/MM/YYYY \n HH:mm A");
+    return <div>{format}</div>;
+  };
 
   return (
     <div className="flex min-h-screen">
@@ -67,6 +69,9 @@ const Agency = ({ children }: Props) => {
                     </div>
                     <div className="text-sm break-words">
                       {noti.description}
+                    </div>
+                    <div className="text-sm break-words">
+                      {formatDD(noti.createdAt)}
                     </div>
                   </div>
                 </div>

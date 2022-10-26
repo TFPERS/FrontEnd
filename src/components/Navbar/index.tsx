@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { WindowSize } from "../../helper/useBreakpoint";
 import Notification from "../../services/notification.service";
 import axios from "../../config/axios.config";
+import dayjs from "dayjs";
 // import socket from "../../config/socketIo.config";
 
 type Props = {
@@ -106,11 +107,11 @@ export default function Navbar({ isLogin = true }: Props) {
     };
     AuthService.checkToken() ? fetchNoti() : "";
   }, [reducerValue]);
-  // useEffect(() => {
-  //   socket.on("receive_noti", () => {
-  //     forceUpdate();
-  //   });
-  // }, [socket]);
+
+  const formatDD = (date: any) => {
+    const format = dayjs(date).format("DD/MM/YYYY \n HH:mm A");
+    return <div>{format}</div>;
+  };
 
   return (
     <header
@@ -264,6 +265,9 @@ export default function Navbar({ isLogin = true }: Props) {
                                   </span>
                                   <span className="break-words">
                                     {noti.notification.description}
+                                  </span>
+                                  <span className="break-words">
+                                    {formatDD(noti.notification.createdAt)}
                                   </span>
                                 </div>
                               </div>

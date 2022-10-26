@@ -5,6 +5,7 @@ import AuthService from "../services/auth.service";
 import Image from "next/image";
 import { WindowSize } from "../helper/useBreakpoint";
 import { useRouter } from "next/router";
+import dayjs from "dayjs";
 // import socket from "../config/socketIo.config";
 
 const notification = () => {
@@ -22,9 +23,10 @@ const notification = () => {
     AuthService.checkToken() ? fetchNoti() : "";
   }, [reducerValue]);
 
-  // socket.on("receive_noti", () => {
-  //   forceUpdate();
-  // });
+  const formatDD = (date: any) => {
+    const format = dayjs(date).format("DD/MM/YYYY \n HH:mm A");
+    return <div>{format}</div>;
+  };
 
   return (
     <Layout>
@@ -34,6 +36,7 @@ const notification = () => {
           <div className="">
             {
               stdNotifications.map((noti: any) => {
+                console.log(noti.notification);
                 return (
                   <div
                     key={noti.notification.id}
@@ -55,6 +58,7 @@ const notification = () => {
                         <span className="break-words">
                           {noti.notification.description}
                         </span>
+                        <span>{formatDD(noti.notification.createdAt)}</span>
                       </div>
                     </div>
                   </div>
