@@ -27,8 +27,8 @@ function Login() {
   const [user, loading] = useAuthState(auth);
 
   const signInGoogle = async () => {
+    const result = await signInWithPopup(auth, provider);
     try {
-      const result = await signInWithPopup(auth, provider);
       const data = await AuthGoogleService.login(result.user.email);
       await toast.success(data.message, {
         theme: "dark",
