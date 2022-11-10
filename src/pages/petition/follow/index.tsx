@@ -58,12 +58,10 @@ function Follow() {
     }
   };
 
-  useEffect(() => {
-    setHeadTitle("ติดตามคำร้องและสถานะ");
-  });
   const [petitions, setPetitions] = useState<any>([]);
   const router = useRouter();
   useEffect(() => {
+    setHeadTitle("ติดตามคำร้องและสถานะ");
     const fetchPetition = async () => {
       const page = currentPage - 1;
       const { data } = await Petition.getPetitionByStudentId(
