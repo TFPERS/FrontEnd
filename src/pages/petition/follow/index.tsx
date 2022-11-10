@@ -149,13 +149,17 @@ function Follow() {
   const { isMobile, isTablet, isDesktop } = WindowSize();
   const [selectedPetition, setSelectedPetition] = useState<any>(null);
 
+  const closeModal = () => {
+    setIsOpenModal(false);
+  };
+
   return (
     <Layout>
       <div className="bg-primary-white rounded-[0.625rem] min-h-[67vh] shadow-4xl h-full flex flex-col max-w-7xl mx-auto mt-10 relative">
         <div className="flex justify-between items-center">
           <div
             className={`${
-              isMobile ? "text-xl p-4 text-center" : "text-4xl p-8"
+              isMobile ? "text-sm p-4 text-center" : "text-4xl p-8"
             } font-semibold `}
           >
             ติดตามคำร้องและสถานะ
@@ -211,9 +215,11 @@ function Follow() {
         {isOpenModal && selectedPetition && (
           <div
             ref={wrapperRef}
-            className="p-10 absolute z-20 bg-primary-white h-full w-2/4 top-0 right-0 border-4 border-black rounded-[0.625rem] overflow-auto"
+            className={`${
+              isMobile ? "" : "w-2/4"
+            } absolute z-20 bg-primary-white h-full top-0 right-0 border-4 border-black rounded-[0.625rem] overflow-auto`}
           >
-            <Modal petition={selectedPetition} />
+            <Modal petition={selectedPetition} closeModal={closeModal} />
           </div>
         )}
       </div>

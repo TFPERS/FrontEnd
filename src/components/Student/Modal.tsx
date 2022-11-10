@@ -5,11 +5,13 @@ import FileService from "../../services/file.service";
 import { StatusPetition } from "../../enum/StatusPetition";
 import PetitionService from "../../services/petition.service";
 import Swal from "sweetalert2";
+import { WindowSize } from "../../helper/useBreakpoint";
 type Props = {
   petition: any;
+  closeModal: any;
 };
 
-const Modal = ({ petition }: Props) => {
+const Modal = ({ petition, closeModal }: Props) => {
   const [reducerValue, forceUpdate] = useReducer((x) => x + 1, 0);
   const formatDD = (date: any) => {
     const format = dayjs(date).format("DD/MM/YYYY \n HH:mm A");
@@ -39,9 +41,11 @@ const Modal = ({ petition }: Props) => {
       }
     });
   };
+
+  const { isMobile, isTablet, isDesktop } = WindowSize();
   return (
-    <div>
-      <div className="flex flex-col space-y-5">
+    <div className="relative">
+      <div className="flex flex-col space-y-5 p-10 ">
         <div>
           <span className="font-bold text-xl">หมายเลขคำร้อง</span>
           <div className="border p-2 rounded-[0.625rem] bg-gray-200 cursor-not-allowed">
@@ -80,14 +84,14 @@ const Modal = ({ petition }: Props) => {
         </div>
         <div>
           <span className="font-bold text-xl">รายละเอียด</span>
-          <div className="border p-2 rounded-[0.625rem] bg-gray-200 cursor-not-allowed">
+          <div className="border p-2 rounded-[0.625rem] bg-gray-200 cursor-not-allowed h-[5rem]  overflow-auto break-words">
             {petition.description}
           </div>
         </div>
         <div>
           <span className="font-bold text-xl">ไฟล์เอกสาร</span>
           <div
-            className={`border p-2 rounded-[0.625rem]  overflow-auto
+            className={`border p-2 rounded-[0.625rem] overflow-auto
         ${
           petition.files.length !== 0
             ? "h-[4rem]"
@@ -122,17 +126,36 @@ const Modal = ({ petition }: Props) => {
             {petition.note ? petition.note : "-"}
           </div>
         </div>
+        <div className="flex justify-between">
+          <button
+            // onClick={cancelPetition}
+            className={`${
+              isMobile ? "text-sm" : ""
+            } text-white bg-primary-light-yellow shadow-3xl font-bold p-1 mt-5 rounded-[0.625rem] w-24`}
+          >
+            แก้ไข
+          </button>
+
+          {petition.status === StatusPetition.Pending ? (
+            <button
+              onClick={cancelPetition}
+              className={`${
+                isMobile ? "text-sm" : ""
+              } text-white bg-red-500 shadow-3xl font-bold p-1 mt-5 rounded-[0.625rem] w-24`}
+            >
+              ยกเลิกคำขอ
+            </button>
+          ) : (
+            ""
+          )}
+        </div>
       </div>
-      {petition.status !== StatusPetition.Cancel ? (
-        <button
-          onClick={cancelPetition}
-          className="text-white bg-red-500 shadow-3xl text-xl font-bold p-2 mt-5 rounded-[0.625rem]"
-        >
-          ยกเลิกคำขอ
-        </button>
-      ) : (
-        ""
-      )}
+      <div
+        className="absolute top-4 right-4 cursor-pointer"
+        onClick={closeModal}
+      >
+        X
+      </div>
     </div>
   );
 };

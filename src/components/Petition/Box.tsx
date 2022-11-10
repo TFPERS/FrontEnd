@@ -7,7 +7,7 @@ interface Props {
   width: number;
   height: number;
   htmlText: any;
-  path?: string;
+  path: string;
 }
 
 export default function PetitionBox({
@@ -16,7 +16,7 @@ export default function PetitionBox({
   width,
   height,
   htmlText,
-  path = "/petition",
+  path,
 }: Props) {
   return (
     <Link href={path}>

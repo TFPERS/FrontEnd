@@ -183,57 +183,70 @@ const WaiverFees = () => {
         <div className="bg-primary-white mx-auto rounded-[0.625rem] mt-10 pt-16 pb-8">
           <div className="max-w-5xl mx-auto p-2 px-3">
             <div
-              className={`${isMobile ? "text-2xl text-center" : "text-4xl"} ${
+              className={`${isMobile ? "text-xl text-center" : "text-4xl"} ${
                 isTablet ? "" : ""
               } font-semibold`}
             >
               แจ้งคำร้องขอผ่อนผันค่าเล่าเรียน
             </div>
             {step === 1 && (
-              <div className="flex justify-around space-x-9 p-10">
-                <a
-                  href={`${backendURL}/api/petition/downloadRO01`}
-                  download
-                  className="flex flex-col items-center border-4 rounded-[0.625rem] p-6 relative cursor-pointer max-w-[600px] w-full"
+              <div>
+                <div
+                  className={`flex justify-around  p-10
+              ${isMobile ? "flex-col space-y-5" : "space-x-9"}
+              `}
                 >
-                  <div>
-                    <Image
-                      src="/images/pdf.png"
-                      alt="pdf"
-                      width={100}
-                      height={100}
-                    />
-                  </div>
-                  ใบคำร้องขอผ่อนผันค่าเทอมระดับปริญญาตรี.pdf
-                  <div className="absolute top-2 right-5">
-                    <DownloadSvg />
-                  </div>
-                </a>
-                <a
-                  href={`${backendURL}/api/petition/downloadRO03`}
-                  download
-                  className="flex flex-col items-center border-4 rounded-[0.625rem] p-6 relative cursor-pointer max-w-[600px] w-full"
+                  <a
+                    href={`${backendURL}/api/petition/downloadRO01`}
+                    download
+                    className="flex flex-col items-center border-4 rounded-[0.625rem] p-6 relative cursor-pointer max-w-[600px] w-full"
+                  >
+                    <div>
+                      <Image
+                        src="/images/pdf.png"
+                        alt="pdf"
+                        width={isMobile ? 50 : 100}
+                        height={isMobile ? 50 : 100}
+                      />
+                    </div>
+                    ใบคำร้องขอผ่อนผันค่าเทอมระดับปริญญาตรี.pdf
+                    <div className="absolute top-2 right-5">
+                      <DownloadSvg />
+                    </div>
+                  </a>
+                  <a
+                    href={`${backendURL}/api/petition/downloadRO03`}
+                    download
+                    className="flex flex-col items-center border-4 rounded-[0.625rem] p-6 relative cursor-pointer max-w-[600px] w-full"
+                  >
+                    <div>
+                      <Image
+                        src="/images/pdf.png"
+                        alt="pdf"
+                        width={isMobile ? 50 : 100}
+                        height={isMobile ? 50 : 100}
+                      />
+                    </div>
+                    หนังสือรับรองของผู้ปกครอง.pdf
+                    <div className="absolute top-2 right-5">
+                      <DownloadSvg />
+                    </div>
+                  </a>
+                </div>
+                <div
+                  className={`font-semibold ${
+                    isMobile ? "text-sm" : "text-lg"
+                  }`}
                 >
-                  <div>
-                    <Image
-                      src="/images/pdf.png"
-                      alt="pdf"
-                      width={100}
-                      height={100}
-                    />
-                  </div>
-                  หนังสือรับรองของผู้ปกครอง.pdf
-                  <div className="absolute top-2 right-5">
-                    <DownloadSvg />
-                  </div>
-                </a>
+                  แนะนำ: ให้ดาวน์โหลดเอกสารและอัพโหลดเอกสารเป็น .PDF
+                </div>
               </div>
             )}
             {step === 2 && (
               <div className="mt-10 max-h-[360px] overflow-auto">
                 <div className="text-black mb-5">
                   <div>
-                    <div className={`${isMobile ? "text-2xl" : "text-[2rem]"}`}>
+                    <div className={`${isMobile ? "text-xl" : "text-[2rem]"}`}>
                       รหัสนักศึกษา
                       <div
                         className={`${
@@ -243,7 +256,7 @@ const WaiverFees = () => {
                         {user.id}
                       </div>
                     </div>
-                    <div className={`${isMobile ? "text-2xl" : "text-[2rem]"}`}>
+                    <div className={`${isMobile ? "text-xl" : "text-[2rem]"}`}>
                       ชื่อ-นามสกุล
                       <div
                         className={`${
@@ -257,12 +270,12 @@ const WaiverFees = () => {
                   {user && (
                     <div
                       className={`flex w-full ${
-                        isMobile ? "space-x-5" : "space-x-16"
+                        isMobile ? "flex-col" : "space-x-16"
                       }`}
                     >
-                      <div className="w-1/2">
+                      <div className={`${isMobile ? "w-full" : "w-1/2"}`}>
                         <div
-                          className={`${isMobile ? "text-2xl" : "text-[2rem]"}`}
+                          className={`${isMobile ? "text-xl" : "text-[2rem]"}`}
                         >
                           คณะ
                         </div>
@@ -276,9 +289,9 @@ const WaiverFees = () => {
                           </div>
                         )}
                       </div>
-                      <div className="w-1/2">
+                      <div className={`${isMobile ? "w-full" : "w-1/2"}`}>
                         <div
-                          className={`${isMobile ? "text-2xl" : "text-[2rem]"}`}
+                          className={`${isMobile ? "text-xl" : "text-[2rem]"}`}
                         >
                           สาขา
                         </div>
@@ -294,7 +307,7 @@ const WaiverFees = () => {
                       </div>
                     </div>
                   )}
-                  <div className={`${isMobile ? "text-2xl" : "text-[2rem]"}`}>
+                  <div className={`${isMobile ? "text-xl" : "text-[2rem]"}`}>
                     ปีการศึกษา
                     <div
                       className={`${
@@ -304,6 +317,10 @@ const WaiverFees = () => {
                       {TermService.dateOfTerm()}
                     </div>
                   </div>
+                </div>
+                <div className={`font-semibold ${isMobile ? "" : "text-lg"}`}>
+                  แนะนำ: ให้ดาวน์โหลดเอกสารและอัพโหลดเอกสารเป็น .PDF
+                  และสามารถอัปโหลดไฟล์ได้ 2 ไฟล์
                 </div>
                 <DragDrop onFileChange={(files: any) => onFileChange(files)} />
               </div>
@@ -323,7 +340,7 @@ const WaiverFees = () => {
                     onClick={decreaseStep}
                     className="bg-[#FA2816] text-primary-white shadow-3xl rounded-[0.625rem] py-2 w-[6.25rem] flex justify-center"
                   >
-                    แก้ไข
+                    ย้อนกลับ
                   </button>
                 </>
               )}

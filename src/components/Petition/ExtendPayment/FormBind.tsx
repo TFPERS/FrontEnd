@@ -10,10 +10,10 @@ function FormBind({ label, value }: Props) {
   const { isMobile } = WindowSize();
   return (
     <div>
-      <div className={`${isMobile ? "text-2xl" : "text-[2rem]"}`}>{label}</div>
+      <div className={`${isMobile ? "text-xl" : "text-[2rem]"}`}>{label}</div>
       <div
         className={`${
-          isMobile ? "text-xl" : "text-2xl"
+          isMobile ? "text-lg" : "text-2xl"
         } pl-6 bg-[#C4C4C4] rounded-lg p-2 cursor-not-allowed`}
       >
         {value}

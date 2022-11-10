@@ -101,7 +101,9 @@ const Table = ({ petitions, isShowModal = false, submit }: Props) => {
         <thead className="bg-primary-light-orange text-white text-2xl">
           <tr>
             <th className="py-9 rounded-tl-[0.625rem]">หมายเลขคำร้อง</th>
+            <th>ชื่อ</th>
             <th>รหัสนักศึกษา</th>
+            <th>คณะ</th>
             <th>สถานะคำร้อง</th>
             <th className="py-9 rounded-tr-[0.625rem]">เทอม</th>
           </tr>
@@ -120,7 +122,13 @@ const Table = ({ petitions, isShowModal = false, submit }: Props) => {
             >
               <td className="py-7">{petition.id}</td>
               <td className="overflow-auto">
+                {petition.student ? petition.student.firstname : ""}
+              </td>
+              <td className="overflow-auto">
                 {petition.student ? petition.student.id : ""}
+              </td>
+              <td className="overflow-auto">
+                {petition.student ? petition.student.faculty : ""}
               </td>
               <td>
                 <div className="flex justify-center">

@@ -4,12 +4,14 @@ import Image from "next/image";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { red } from "@mui/material/colors";
 import Swal from "sweetalert2";
+import { WindowSize } from "../../helper/useBreakpoint";
 
 type Props = {
   onFileChange: any;
 };
 
 const DragDrop = ({ onFileChange }: Props) => {
+  const { isMobile, isTablet, isDesktop } = WindowSize();
   const wrapperRef = useRef<any>(null);
   const [fileList, setFileList] = useState([]);
   const onDragEnter = () => wrapperRef.current.classList.add("dragover");
@@ -87,7 +89,11 @@ const DragDrop = ({ onFileChange }: Props) => {
           <div>
             <FolderSVG />
           </div>
-          <div className="text-3xl mt-5">ลากและวางไฟล์ที่ต้องการอัปโหลด</div>
+          <div
+            className={`${isMobile ? "text-xl text-center" : "text-3xl mt-5"}`}
+          >
+            ลากและวางไฟล์ที่ต้องการอัปโหลด
+          </div>
         </>
       )}
 
