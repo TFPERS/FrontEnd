@@ -29,7 +29,7 @@ const Agency = ({ children }: Props) => {
   };
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen ">
       <div className="bg-slate-700 min-w-[16.875rem]">
         <Sidebar />
       </div>
@@ -71,7 +71,7 @@ const Agency = ({ children }: Props) => {
                       {noti.description}
                     </div>
                     <div className="text-sm break-words">
-                      {formatDD(noti.createdAt)}
+                      {formatDD(noti.updatedAt)}
                     </div>
                   </div>
                 </div>

@@ -141,3 +141,7 @@
 .current-item .progress-count {
   color: #ffffff;
 }
+
+.my-swal {
+  z-index: 10000;
+}

@@ -44,7 +44,7 @@ const useNotiOutside = (ref: any, handler: any) => {
 
 export default function Navbar({ isLogin = true }: Props) {
   const router = useRouter();
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState<any>(null);
   const [isProfile, setIsProfile] = useState(false);
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [isOpenNoti, setIsOpenNoti] = useState(false);
@@ -57,7 +57,6 @@ export default function Navbar({ isLogin = true }: Props) {
   };
 
   const logOut = async () => {
-    console.log();
     AuthService.logout();
     await router.push("/");
     setCurrentUser(AuthService.getCurrentUser());
@@ -96,6 +95,7 @@ export default function Navbar({ isLogin = true }: Props) {
     };
     fetch();
   }, []);
+  console.log(currentUser);
   const [stdNotifications, setStdNotifications] = useState<any>([]);
   useEffect(() => {
     const fetchNoti = async () => {
@@ -300,8 +300,19 @@ export default function Navbar({ isLogin = true }: Props) {
                         <span className="material-icons-outlined cursor-pointer text-4xl relative">
                           account_circle
                         </span>
-                        <span>ข้อมูลส่วนตัวของคุณ</span>
+                        <span>
+                          {currentUser.firstname} {currentUser.lastname}
+                        </span>
                       </li>
+                      {/* <li
+                        onClick={routeToProfile}
+                        className="flex items-center cursor-pointer space-x-2 hover:bg-slate-200 p-1 rounded-[0.625rem]"
+                      >
+                        <span className="material-icons-outlined cursor-pointer text-4xl relative">
+                          account_circle
+                        </span>
+                        <span>ข้อมูลส่วนตัวของคุณ</span>
+                      </li> */}
                       <li
                         onClick={logOut}
                         className="z-50 flex items-center cursor-pointer space-x-2 hover:bg-slate-200 p-1 rounded-[0.625rem]"

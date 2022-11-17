@@ -122,7 +122,9 @@ const Table = ({ petitions, isShowModal = false, submit }: Props) => {
             >
               <td className="py-7">{petition.id}</td>
               <td className="overflow-auto">
-                {petition.student ? petition.student.firstname : ""}
+                {petition.student
+                  ? `${petition.student.firstname} ${petition.student.lastname}`
+                  : ""}
               </td>
               <td className="overflow-auto">
                 {petition.student ? petition.student.id : ""}
