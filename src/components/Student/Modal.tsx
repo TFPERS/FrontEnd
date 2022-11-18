@@ -127,14 +127,14 @@ const Modal = ({ petition, closeModal }: Props) => {
           </div>
         </div>
         <div className="flex justify-between">
-          <button
+          {/* <button
             // onClick={cancelPetition}
             className={`${
               isMobile ? "text-sm" : ""
             } text-white bg-primary-light-yellow shadow-3xl font-bold p-1 mt-5 rounded-[0.625rem] w-24`}
           >
             แก้ไข
-          </button>
+          </button> */}
 
           {petition.status === StatusPetition.Pending ? (
             <button
