@@ -11,9 +11,10 @@ import { useRouter } from "next/router";
 type Props = {
   petition: any;
   closeModal: any;
+  cancelPetition: any;
 };
 
-const Modal = ({ petition, closeModal }: Props) => {
+const Modal = ({ cancelPetition, petition, closeModal }: Props) => {
   const router = useRouter();
   const [reducerValue, forceUpdate] = useReducer((x) => x + 1, 0);
   const formatDD = (date: any) => {
@@ -24,26 +25,7 @@ const Modal = ({ petition, closeModal }: Props) => {
   const downloadFilePdf = (filename: any) => {
     FileService.getFilePdf(filename);
   };
-  const cancelPetition = () => {
-    const cancel = StatusPetition.Cancel;
-    const note = StatusPetition.Cancel;
-    Swal.fire({
-      title: "คุณต้องยกเลิกคำขอหรือไม่",
-      text: "ถ้ายกเลิกคำขอแล้ว คำขอนี้จะไม่สามารถดำเนินการต่อ",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#30d64c",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "ตกลง",
-      cancelButtonText: "ยกเลิก",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        PetitionService.update(petition.id, cancel, note);
-        Swal.fire("ยกเลิกคำขอแล้ว", "คำขอนี้ถูกยกเลิกแล้ว", "success");
-        forceUpdate();
-      }
-    });
-  };
+
   const editPetition = (petitionId: any, petitionType: any) => {
     console.log(petitionType);
     if (TypePetition.extendPayment === petitionType) {
@@ -141,20 +123,26 @@ const Modal = ({ petition, closeModal }: Props) => {
           </div>
         </div>
         <div className="flex justify-between">
-          <button
-            onClick={() => {
-              editPetition(petition.id, petition.type);
-            }}
-            className={`${
-              isMobile ? "text-sm" : ""
-            } text-white bg-primary-light-yellow shadow-3xl font-bold p-1 mt-5 rounded-[0.625rem] w-24`}
-          >
-            แก้ไข
-          </button>
+          {petition.status === StatusPetition.Pending ? (
+            <button
+              onClick={() => {
+                editPetition(petition.id, petition.type);
+              }}
+              className={`${
+                isMobile ? "text-sm" : ""
+              } text-white bg-primary-light-yellow shadow-3xl font-bold p-1 mt-5 rounded-[0.625rem] w-24`}
+            >
+              แก้ไข
+            </button>
+          ) : (
+            ""
+          )}
 
           {petition.status === StatusPetition.Pending ? (
             <button
-              onClick={cancelPetition}
+              onClick={() => {
+                cancelPetition(petition.id);
+              }}
               className={`${
                 isMobile ? "text-sm" : ""
               } text-white bg-red-500 shadow-3xl font-bold p-1 mt-5 rounded-[0.625rem] w-24`}

@@ -12,6 +12,8 @@ import Paginate from "../../../components/Paginate/index";
 import { StatusPetition } from "../../../enum/StatusPetition";
 import Petition from "../../../services/petition.service";
 import Modal from "../../../components/Student/Modal";
+import Swal from "sweetalert2";
+import PetitionService from "../../../services/petition.service";
 
 const useOutsideAlerter = (ref: any, handler: any) => {
   useEffect(() => {
@@ -80,6 +82,27 @@ function Follow() {
   const changeInput = async (event: any) => {
     await setSearchWord(event.target.value);
     forceUpdate();
+  };
+
+  const cancelPetition = (petitionId: any) => {
+    const cancel = StatusPetition.Cancel;
+    const note = StatusPetition.Cancel;
+    Swal.fire({
+      title: "คุณต้องยกเลิกคำขอหรือไม่",
+      text: "ถ้ายกเลิกคำขอแล้ว คำขอนี้จะไม่สามารถดำเนินการต่อ",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#30d64c",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "ตกลง",
+      cancelButtonText: "ยกเลิก",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        PetitionService.update(petitionId, cancel, note);
+        Swal.fire("ยกเลิกคำขอแล้ว", "คำขอนี้ถูกยกเลิกแล้ว", "success");
+        forceUpdate();
+      }
+    });
   };
 
   const formatStatus = (status: any) => {
@@ -217,7 +240,11 @@ function Follow() {
               isMobile ? "" : "w-2/4"
             } absolute z-20 bg-primary-white h-full top-0 right-0 border-4 border-black rounded-[0.625rem] overflow-auto`}
           >
-            <Modal petition={selectedPetition} closeModal={closeModal} />
+            <Modal
+              cancelPetition={cancelPetition}
+              petition={selectedPetition}
+              closeModal={closeModal}
+            />
           </div>
         )}
       </div>
