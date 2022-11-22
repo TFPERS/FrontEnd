@@ -33,7 +33,7 @@ interface Student {
 const edit = () => {
   const router = useRouter();
   const [step, setStep] = useState<any>(1);
-  const [note, setNote] = useState();
+  const [description, setDescription] = useState();
   const [user, setUser] = useState<Student>({});
 
   useEffect(() => {
@@ -48,7 +48,7 @@ const edit = () => {
           petitionId,
           AuthService.getCurrentUser().id
         );
-        setNote(data.petition.note);
+        setDescription(data.petition.description);
       } catch (error: any) {
         const { data } = await error.response;
         if (error.response.status === 404) {
@@ -83,10 +83,10 @@ const edit = () => {
     return maj.label;
   };
   const schema = object({
-    note: string()
+    description: string()
       .trim()
       .max(255, "จำกัดข้อความละ 255 ตัวอักษร")
-      .required("โปรดกรอกหมายเหตุ"),
+      .required("โปรดกรอกรายละเอียด"),
   });
 
   const {
@@ -96,11 +96,11 @@ const edit = () => {
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
-  const submit = async ({ note }: any) => {
+  const submit = async ({ description }: any) => {
     const petitionId = localStorage.getItem("editextendpayment");
-    if (note) {
+    if (description) {
       if (step === 1) {
-        setNote(note);
+        setDescription(description);
         increaseStep();
       }
       if (step === 2) {
@@ -108,10 +108,10 @@ const edit = () => {
         const status = StatusPetition.Pending;
         try {
           increaseStep();
-          const { data } = await PetitionService.update(
+          const { data } = await PetitionService.updateDescription(
             petitionId,
             status,
-            note
+            description
           );
           Swal.fire({
             background: "#FA4616",
@@ -233,19 +233,19 @@ const edit = () => {
 
               <div className="flex flex-col">
                 <label
-                  htmlFor="note"
+                  htmlFor="description"
                   className={`${isMobile ? "text-xl" : "text-[2rem]"}`}
                 >
-                  หมายเหตุ
+                  รายละเอียด
                 </label>
                 {step === 1 ? (
                   <>
                     <textarea
-                      placeholder="หมายเหตุ"
-                      value={note}
-                      {...register("note", {
+                      placeholder="รายละเอียด"
+                      value={description}
+                      {...register("description", {
                         onChange: (e) => {
-                          setNote(e.target.value);
+                          setDescription(e.target.value);
                         },
                       })}
                       className={`
@@ -263,7 +263,7 @@ const edit = () => {
                 ${isMobile ? "text-xl h-20" : "text-2xl h-28"}
                 pl-6 bg-[#C4C4C4] rounded-lg p-2 cursor-not-allowed overflow-auto overflow-x-hidden`}
                     >
-                      <span className="break-words">{note}</span>
+                      <span className="break-words">{description}</span>
                     </div>
                   </>
                 )}

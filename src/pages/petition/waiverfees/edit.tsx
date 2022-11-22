@@ -107,7 +107,6 @@ const edit = () => {
             fileList: fileList,
             oldFiles: oldFiles,
           };
-          console.log("oldFile", oldFiles);
           const jsonNewInfo = JSON.stringify(data);
           const formData = new FormData();
           formData.append("data", jsonNewInfo);

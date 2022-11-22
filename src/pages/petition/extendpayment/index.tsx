@@ -40,7 +40,7 @@ function ExtentPayment() {
     note: string()
       .trim()
       .max(255, "จำกัดข้อความละ 255 ตัวอักษร")
-      .required("โปรดกรอกหมายเหตุ"),
+      .required("โปรดกรอกรายละเอียด"),
   });
 
   const router = useRouter();
@@ -230,12 +230,12 @@ function ExtentPayment() {
                   htmlFor="note"
                   className={`${isMobile ? "text-xl" : "text-[2rem]"}`}
                 >
-                  หมายเหตุ
+                  รายละเอียด
                 </label>
                 {step === 1 ? (
                   <>
                     <textarea
-                      placeholder="หมายเหตุ"
+                      placeholder="รายละเอียด"
                       {...register("note")}
                       className={`
                       ${isMobile ? "text-lg h-20" : "text-2xl h-28"}

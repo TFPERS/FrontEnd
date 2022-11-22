@@ -3,10 +3,15 @@ import getConfig from "next/config";
 const { publicRuntimeConfig } = getConfig();
 
 const update = (petitionId, status, note) => {
-  console.log(note);
   return axios.put(`/api/petition/update/${petitionId}`, {
     status: status,
     note: note,
+  });
+};
+const updateDescription = (petitionId, status, description) => {
+  return axios.put(`/api/petition/update/description/${petitionId}`, {
+    status: status,
+    description: description,
   });
 };
 const getPetitionByStudentId = (studentId, page, size, searchWord) => {
@@ -44,5 +49,6 @@ const Petition = {
   uploadFile,
   getOnePetition,
   updateFile,
+  updateDescription,
 };
 export default Petition;
