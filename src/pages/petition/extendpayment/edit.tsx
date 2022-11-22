@@ -1,23 +1,23 @@
-import Link from "next/link";
 import React from "react";
 import Layout from "../../../components/Layout/";
+import { faculties } from "../../../data/faculties";
+import { majors } from "../../../data/majors";
+import { WindowSize } from "../../../helper/useBreakpoint";
+import FormBind from "../../../components/Petition/ExtendPayment/FormBind";
 import { useEffect, useState } from "react";
+import { StatusPetition } from "../../../enum/StatusPetition";
+import { TypePetition } from "../../../enum/TypePetition";
 import axios from "../../../config/axios.config";
-import AuthService from "../../../services/auth.service";
+import TermService from "../../../services/term";
+import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { string, object } from "yup";
-import FormBind from "../../../components/Petition/ExtendPayment/FormBind";
-import Swal from "sweetalert2";
-import { useRouter } from "next/router";
-import { useHeadTitle } from "../../../context/HeadContext";
-import { WindowSize } from "../../../helper/useBreakpoint";
-import { faculties } from "../../../data/faculties";
-import { majors } from "../../../data/majors";
-import { StatusPetition } from "../../../enum/StatusPetition";
-import { TypePetition } from "../../../enum/TypePetition";
+import AuthService from "../../../services/auth.service";
 import StudentService from "../../../services/student.service";
-import TermService from "../../../services/term";
+import PetitionService from "../../../services/petition.service";
+import { useRouter } from "next/router";
+
 interface Student {
   id?: string;
   firstname?: string;
@@ -30,28 +30,31 @@ interface Student {
   updatedAt?: string;
 }
 
-function ExtentPayment() {
-  const { setHeadTitle } = useHeadTitle();
-  const [user, setUser] = useState<Student>({});
-  const [step, setStep] = useState(1);
-  const [note, setNote] = useState();
-
-  const schema = object({
-    note: string()
-      .trim()
-      .max(255, "จำกัดข้อความละ 255 ตัวอักษร")
-      .required("โปรดกรอกหมายเหตุ"),
-  });
-
+const edit = () => {
   const router = useRouter();
+  const [step, setStep] = useState<any>(1);
+  const [note, setNote] = useState();
+  const [user, setUser] = useState<Student>({});
 
   useEffect(() => {
-    setHeadTitle("แจ้งคำร้องขยายเวลาชำระเงิน");
     const fetchUser = async () => {
+      const petitionId = localStorage.getItem("editextendpayment");
       const { data } = await StudentService.getStudentById(
         AuthService.getCurrentUser().id
       );
       await setUser(data);
+      try {
+        const { data } = await PetitionService.getOnePetition(
+          petitionId,
+          AuthService.getCurrentUser().id
+        );
+        setNote(data.petition.note);
+      } catch (error: any) {
+        const { data } = await error.response;
+        if (error.response.status === 404) {
+          router.push("/");
+        }
+      }
     };
     AuthService.checkToken() ? fetchUser() : router.push("/login");
   }, []);
@@ -67,6 +70,25 @@ function ExtentPayment() {
     }
   };
 
+  const findFaculty = (faculty: any) => {
+    let fac: any = {};
+    fac = faculties.find((fac: any) => fac.value === faculty);
+    return fac.label;
+  };
+
+  const findMajor = (major: any, faculty: any) => {
+    let maj: any = {};
+    maj = majors.find((ma: any) => ma.name === faculty);
+    maj = maj.majors.find((ma: any) => ma.value === major);
+    return maj.label;
+  };
+  const schema = object({
+    note: string()
+      .trim()
+      .max(255, "จำกัดข้อความละ 255 ตัวอักษร")
+      .required("โปรดกรอกหมายเหตุ"),
+  });
+
   const {
     register,
     handleSubmit,
@@ -75,6 +97,7 @@ function ExtentPayment() {
   } = useForm({ resolver: yupResolver(schema) });
 
   const submit = async ({ note }: any) => {
+    const petitionId = localStorage.getItem("editextendpayment");
     if (note) {
       if (step === 1) {
         setNote(note);
@@ -85,18 +108,15 @@ function ExtentPayment() {
         const status = StatusPetition.Pending;
         try {
           increaseStep();
-          const { data } = await axios.post("/api/petition/form", {
-            type,
+          const { data } = await PetitionService.update(
+            petitionId,
             status,
-            description: note,
-            note: "",
-            term: TermService.dateOfTerm(),
-            studentId: user.id,
-          });
+            note
+          );
           Swal.fire({
             background: "#FA4616",
             color: "#fff",
-            title: "กรอกข้อมูลเสร็จสิ้น",
+            title: "อัพเดตข้อมูลเสร็จสิ้น",
             icon: "success",
             iconColor: "#fff",
             confirmButtonText: "ปิด",
@@ -104,7 +124,7 @@ function ExtentPayment() {
             allowEnterKey: true,
           });
           setStep(1);
-          setValue("note", "");
+          // setValue("note", "");
         } catch (error) {
           Swal.fire({
             background: "#FA4616",
@@ -120,21 +140,7 @@ function ExtentPayment() {
     }
   };
 
-  const findFaculty = (faculty: any) => {
-    let fac: any = {};
-    fac = faculties.find((fac: any) => fac.value === faculty);
-    return fac.label;
-  };
-
-  const findMajor = (major: any, faculty: any) => {
-    let maj: any = {};
-    maj = majors.find((ma: any) => ma.name === faculty);
-    maj = maj.majors.find((ma: any) => ma.value === major);
-    return maj.label;
-  };
-
   const { isMobile, isTablet, isDesktop } = WindowSize();
-
   return (
     <Layout>
       <div className="max-w-6xl mx-auto">
@@ -236,10 +242,15 @@ function ExtentPayment() {
                   <>
                     <textarea
                       placeholder="หมายเหตุ"
-                      {...register("note")}
+                      value={note}
+                      {...register("note", {
+                        onChange: (e) => {
+                          setNote(e.target.value);
+                        },
+                      })}
                       className={`
-                      ${isMobile ? "text-lg h-20" : "text-2xl h-28"}
-                      pl-6 rounded-lg p-2 border-4 border-[#C4C4C4] resize-none`}
+                  ${isMobile ? "text-lg h-20" : "text-2xl h-28"}
+                  pl-6 rounded-lg p-2 border-4 border-[#C4C4C4] resize-none`}
                     />
                     <span className="text-red-500">
                       {errors?.note?.message}
@@ -249,8 +260,8 @@ function ExtentPayment() {
                   <>
                     <div
                       className={`
-                    ${isMobile ? "text-xl h-20" : "text-2xl h-28"}
-                    pl-6 bg-[#C4C4C4] rounded-lg p-2 cursor-not-allowed overflow-auto overflow-x-hidden`}
+                ${isMobile ? "text-xl h-20" : "text-2xl h-28"}
+                pl-6 bg-[#C4C4C4] rounded-lg p-2 cursor-not-allowed overflow-auto overflow-x-hidden`}
                     >
                       <span className="break-words">{note}</span>
                     </div>
@@ -283,6 +294,6 @@ function ExtentPayment() {
       </div>
     </Layout>
   );
-}
+};
 
-export default ExtentPayment;
+export default edit;

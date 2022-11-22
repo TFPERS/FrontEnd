@@ -44,6 +44,7 @@ class AuthService {
   }
   logout() {
     localStorage.removeItem("user");
+    localStorage.removeItem("editextendpayment");
     removeCookies("TFPERSTOKEN");
   }
   register({

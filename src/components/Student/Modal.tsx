@@ -3,15 +3,18 @@ import Image from "next/image";
 import dayjs from "dayjs";
 import FileService from "../../services/file.service";
 import { StatusPetition } from "../../enum/StatusPetition";
+import { TypePetition } from "../../enum/TypePetition";
 import PetitionService from "../../services/petition.service";
 import Swal from "sweetalert2";
 import { WindowSize } from "../../helper/useBreakpoint";
+import { useRouter } from "next/router";
 type Props = {
   petition: any;
   closeModal: any;
 };
 
 const Modal = ({ petition, closeModal }: Props) => {
+  const router = useRouter();
   const [reducerValue, forceUpdate] = useReducer((x) => x + 1, 0);
   const formatDD = (date: any) => {
     const format = dayjs(date).format("DD/MM/YYYY \n HH:mm A");
@@ -40,6 +43,17 @@ const Modal = ({ petition, closeModal }: Props) => {
         forceUpdate();
       }
     });
+  };
+  const editPetition = (petitionId: any, petitionType: any) => {
+    console.log(petitionType);
+    if (TypePetition.extendPayment === petitionType) {
+      localStorage.setItem("editextendpayment", petitionId);
+      router.push("/petition/extendpayment/edit");
+    }
+    if (TypePetition.waiverfees === petitionType) {
+      localStorage.setItem("editwaiverfees", petitionId);
+      router.push("/petition/waiverfees/edit");
+    }
   };
 
   const { isMobile, isTablet, isDesktop } = WindowSize();
@@ -127,14 +141,16 @@ const Modal = ({ petition, closeModal }: Props) => {
           </div>
         </div>
         <div className="flex justify-between">
-          {/* <button
-            // onClick={cancelPetition}
+          <button
+            onClick={() => {
+              editPetition(petition.id, petition.type);
+            }}
             className={`${
               isMobile ? "text-sm" : ""
             } text-white bg-primary-light-yellow shadow-3xl font-bold p-1 mt-5 rounded-[0.625rem] w-24`}
           >
             แก้ไข
-          </button> */}
+          </button>
 
           {petition.status === StatusPetition.Pending ? (
             <button

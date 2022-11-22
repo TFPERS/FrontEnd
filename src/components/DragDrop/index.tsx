@@ -8,12 +8,13 @@ import { WindowSize } from "../../helper/useBreakpoint";
 
 type Props = {
   onFileChange: any;
+  fileList: any;
 };
 
-const DragDrop = ({ onFileChange }: Props) => {
+const DragDrop = ({ fileList, onFileChange }: Props) => {
   const { isMobile, isTablet, isDesktop } = WindowSize();
   const wrapperRef = useRef<any>(null);
-  const [fileList, setFileList] = useState([]);
+  // const [fileList, setFileList] = useState([]);
   const onDragEnter = () => wrapperRef.current.classList.add("dragover");
   const onDragLeave = () => wrapperRef.current.classList.remove("dragover");
   const onDrop = () => wrapperRef.current.classList.remove("dragover");
@@ -33,7 +34,7 @@ const DragDrop = ({ onFileChange }: Props) => {
           });
         } else {
           const updatedList: any = [...fileList, newFile];
-          setFileList(updatedList);
+          // setFileList(updatedList);
           onFileChange(updatedList);
         }
       } else {
@@ -53,7 +54,7 @@ const DragDrop = ({ onFileChange }: Props) => {
   const fileRemove = (index: any) => {
     const updatedList = [...fileList];
     updatedList.splice(index, 1);
-    setFileList(updatedList);
+    // setFileList(updatedList);
     onFileChange(updatedList);
   };
   return (
@@ -68,11 +69,11 @@ const DragDrop = ({ onFileChange }: Props) => {
     >
       {fileList.length > 0 ? (
         <div className="flex flex-col w-full">
-          {fileList.map((item: any, index) => (
+          {fileList.map((item: any, index: any) => (
             <div key={index}>
               <div className="flex items-center space-x-4 relative z-50 hover:bg-white p-4 rounded-[0.625rem]">
                 <Image src="/images/pdf.png" alt="" width={40} height={40} />
-                <div className="mr-auto">{item.name}</div>
+                <div className="mr-auto">{item.name || item.originalName}</div>
                 <div className="absolute right-4">
                   <DeleteIcon
                     sx={{ color: red[500] }}

@@ -24,10 +24,25 @@ const uploadFile = (files, studentId) => {
     headers: { "Content-Type": "multipart/form-data" },
   });
 };
+const getOnePetition = (petitionId, studentId) => {
+  return axios.get(`/api/petition/one/${petitionId}/${studentId}`);
+};
+const updateFile = (files, studentId, petitionId) => {
+  return axios.put(
+    `/api/petition/update/waiverfees/${petitionId}?studentId=${studentId}`,
+    files,
+    {
+      headers: { "Content-Type": "multipart/form-data" },
+    }
+  );
+};
+
 const Petition = {
   update,
   getPetitionByStudentId,
   getPetitionAll,
   uploadFile,
+  getOnePetition,
+  updateFile,
 };
 export default Petition;

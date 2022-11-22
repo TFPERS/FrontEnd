@@ -31,9 +31,10 @@ interface Student {
   createdAt?: string;
   updatedAt?: string;
 }
-const WaiverFees = () => {
+const edit = () => {
   const [fileList, setFileList] = useState<any>([]);
-  const [step, setStep] = useState(1);
+  const [oldFiles, setOldFiles] = useState<any>([]);
+  const [step, setStep] = useState(2);
   const [user, setUser] = useState<Student>({});
   const router = useRouter();
   const schema = object({});
@@ -51,10 +52,19 @@ const WaiverFees = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
+      const petitionId = localStorage.getItem("editwaiverfees");
       const { data } = await StudentService.getStudentById(
         AuthService.getCurrentUser().id
       );
       await setUser(data);
+      try {
+        const { data } = await PetitionService.getOnePetition(
+          petitionId,
+          AuthService.getCurrentUser().id
+        );
+        setFileList(data.petition.files);
+        setOldFiles(data.petition.files);
+      } catch (error) {}
     };
     AuthService.checkToken() ? fetchUser() : router.push("/login");
   }, [reducerValue]);
@@ -64,6 +74,7 @@ const WaiverFees = () => {
       increaseStep();
     }
     if (step === 2) {
+      const petitionId = localStorage.getItem("editwaiverfees");
       try {
         if (fileList.length === 0) {
           Swal.fire({
@@ -93,7 +104,10 @@ const WaiverFees = () => {
             term: TermService.dateOfTerm(),
             description: "แจ้งคำร้องขอผ่อนผันค่าเล่าเรียน",
             studentId: studentId,
+            fileList: fileList,
+            oldFiles: oldFiles,
           };
+          console.log("oldFile", oldFiles);
           const jsonNewInfo = JSON.stringify(data);
           const formData = new FormData();
           formData.append("data", jsonNewInfo);
@@ -101,7 +115,7 @@ const WaiverFees = () => {
             formData.append("files", fileList[i]);
           }
           increaseStep();
-          await PetitionService.uploadFile(formData, studentId);
+          await PetitionService.updateFile(formData, studentId, petitionId);
           await Swal.fire({
             background: "#FA4616",
             color: "#fff",
@@ -112,8 +126,7 @@ const WaiverFees = () => {
             confirmButtonColor: "#17A87B",
             allowEnterKey: true,
           });
-          setFileList([]);
-          setStep(1);
+          setStep(2);
         }
       } catch (error: any) {
         Swal.fire({
@@ -124,7 +137,7 @@ const WaiverFees = () => {
           text: `${error}`,
           confirmButtonText: "ปิด",
         });
-        setStep(1);
+        setStep(2);
       }
     }
   };
@@ -355,4 +368,4 @@ const WaiverFees = () => {
   );
 };
 
-export default WaiverFees;
+export default edit;

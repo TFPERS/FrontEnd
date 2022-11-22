@@ -95,7 +95,6 @@ export default function Navbar({ isLogin = true }: Props) {
     };
     fetch();
   }, []);
-  console.log(currentUser);
   const [stdNotifications, setStdNotifications] = useState<any>([]);
   useEffect(() => {
     const fetchNoti = async () => {
