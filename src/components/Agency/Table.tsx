@@ -105,7 +105,7 @@ const Table = ({ petitions, isShowModal = false, submit }: Props) => {
             <th>รหัสนักศึกษา</th>
             <th>คณะ</th>
             <th>สถานะคำร้อง</th>
-            <th className="py-9 rounded-tr-[0.625rem]">เทอม</th>
+            <th className="py-9 rounded-tr-[0.625rem]">วันที่</th>
           </tr>
         </thead>
         <tbody>
@@ -137,7 +137,7 @@ const Table = ({ petitions, isShowModal = false, submit }: Props) => {
                   {formatStatus(petition.status)}
                 </div>
               </td>
-              <td>{petition.term}</td>
+              <td>{formatDD(petition.updatedAt)}</td>
             </tr>
           ))}
         </tbody>

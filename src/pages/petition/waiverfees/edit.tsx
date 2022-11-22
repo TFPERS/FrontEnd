@@ -118,7 +118,7 @@ const edit = () => {
           await Swal.fire({
             background: "#FA4616",
             color: "#fff",
-            title: "กรอกข้อมูลเสร็จสิ้น",
+            title: "อัพเดตข้อมูลเสร็จสิ้น",
             icon: "success",
             iconColor: "#fff",
             confirmButtonText: "ปิด",
