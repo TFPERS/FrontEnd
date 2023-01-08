@@ -15,6 +15,7 @@ type Props = {
 };
 
 const Modal = ({ cancelPetition, petition, closeModal }: Props) => {
+  //router
   const router = useRouter();
   const [reducerValue, forceUpdate] = useReducer((x) => x + 1, 0);
   const formatDD = (date: any) => {
