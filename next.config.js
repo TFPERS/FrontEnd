@@ -1,9 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-<<<<<<< HEAD
-  reactStrictMode: true,
-}
-=======
   publicRuntimeConfig: {
     backendUrl: process.env.BACKEND_URL,
     frontendUrl: process.env.FRONTEND_URL,
@@ -30,6 +26,5 @@ const nextConfig = {
     return config;
   },
 };
->>>>>>> develop
 
-module.exports = nextConfig
+module.exports = nextConfig;
