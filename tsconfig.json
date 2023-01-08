@@ -15,9 +15,6 @@
     "jsx": "preserve",
     "incremental": true
   },
-<<<<<<< HEAD
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-=======
   "include": [
     "next-env.d.ts",
     "**/*.ts",
@@ -28,6 +25,5 @@
     "src/context/head-context.js",
     "src/data/icons.js"
   ],
->>>>>>> develop
   "exclude": ["node_modules"]
 }
