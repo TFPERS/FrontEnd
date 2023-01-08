@@ -59,5 +59,6 @@ jobs:
             sudo docker pull ghcr.io/tfpers/tfpers-ui:dev
             sudo docker pull ghcr.io/tfpers/tfpers-nginx:dev
             cd FrontEnd
+            sudo git checkout develop
             sudo git pull
             sudo docker-compose up -d --build
