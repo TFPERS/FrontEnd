@@ -1,0 +1,26 @@
+version: "3"
+
+networks:
+  https:
+    external:
+      name: serviceapi_api_service
+
+services:
+  nextjs:
+    image: ghcr.io/tfpers/tfpers-ui:dev
+    restart: on-failure
+    env_file:
+      - ./.env.development
+    networks:
+      - https
+  nginx:
+    # build: ./nginx
+    image: ghcr.io/tfpers/tfpers-nginx:dev
+    restart: on-failure
+    volumes:
+      - ./nginx/ssl:/etc/nginx/ssl
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - https
